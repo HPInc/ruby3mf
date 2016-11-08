@@ -1,11 +1,31 @@
 require 'spec_helper'
 
 describe Ruby3mf do
+  before do
+    Log3mf.reset_log
+  end
+
   it 'has a version number' do
     expect(Ruby3mf::VERSION).not_to be nil
   end
 
-  it 'does something useful' do
-    expect(false).to eq(false)
+  it 'parses a valid file without errors' do
+    Log3mf.context "box.3mf" do |l|
+      Zip3mf.new('spec/examples/box.3mf')
+    end
+
+    expect(Log3mf.count_entries(:error, :fatal_error)).to eq(0)
   end
+
+  it 'parses a invalid file reporting 1 error' do
+    Log3mf.context "3d_model_invalid_xml.3mf" do |l|
+      Zip3mf.new('spec/examples/3d_model_invalid_xml.3mf')
+    end
+
+    expect(Log3mf.count_entries(:error, :fatal_error)).to eq(1)
+    log = JSON.parse(Log3mf.to_json)
+    fatal_error = log.select { |entry| entry["severity"]=="fatal_error" }.first
+    expect(fatal_error["message"]).to include("Model file invalid XML")
+  end
+
 end
