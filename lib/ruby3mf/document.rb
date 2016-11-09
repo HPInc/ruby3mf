@@ -43,8 +43,8 @@ class Document
 
             l.context "relationships" do |l|
               # 2. Get Relationships
-              rel_folders = zip_file.glob('**/_rels')
-              l.fatal_error "Missing any _rels folder", page: 4 unless rel_folders.size>0
+              # rel_folders = zip_file.glob('**/_rels')
+              # l.fatal_error "Missing any _rels folder", page: 4 unless rel_folders.size>0
 
               # 2.1 Validate that the top level _rels/.rel file exists
               rel_file = zip_file.glob('_rels/.rels').first

@@ -6,7 +6,7 @@ class Relationships
       begin
         # Parse Relationships XML
         doc = Nokogiri::XML(zip_entry.get_input_stream) do |config|
-          config.strict.nonet
+          config.strict.nonet.noblanks
         end
 
         # Verify <Relationships><Relationship/></Relationships>

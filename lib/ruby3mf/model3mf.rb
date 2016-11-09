@@ -18,7 +18,7 @@ class Model3mf
       begin
         # parse model
         doc = Nokogiri::XML(zip_entry.get_input_stream) do |config|
-          config.strict.nonet
+          config.strict.nonet.noblanks
         end
 
         l.info "We Found a Model, and it's XML!"

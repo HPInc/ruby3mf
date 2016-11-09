@@ -7,7 +7,7 @@ class ContentTypes
       begin
 
         doc = Nokogiri::XML(zip_entry.get_input_stream) do |config|
-          config.strict.nonet
+          config.strict.nonet.noblanks
         end
 
         l.warning '[Content_Types].xml must contain exactly one root node' unless doc.children.size == 1
