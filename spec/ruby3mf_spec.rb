@@ -29,18 +29,18 @@ describe Ruby3mf do
   end
 
 
-
-  describe "model" do
-    it 'should return a model' do
+  describe "Document" do
+    it 'should return a Document' do
       doc=Document.read('spec/examples/box.3mf')
       expect(doc).to be_a(Document)
     end
 
-    context "model#mesh" do
+    context "document.model" do
       before do
         @doc3mf=Document.read('spec/examples/box.3mf')
       end
-      it 'should be a collection of Mesh objects' do
+
+      it 'should be a collection of model Hashes' do
         expect(@doc3mf.models).to be_an(Array)
         expect(@doc3mf.models.size).to be(1)
         @doc3mf.models.each do |model|
