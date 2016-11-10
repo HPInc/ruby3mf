@@ -22,6 +22,7 @@ class Document
     begin
       Log3mf.context "examining zip" do |l|
         begin
+          Zip.warn_invalid_date = false
           Zip::File.open(input_file) do |zip_file|
 
             # puts "Zip contents:"

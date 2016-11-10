@@ -68,19 +68,25 @@ class Log3mf
   end
 
   def log(severity, message, options={})
-    add_to_ledger(caller[1], severity, message, options[:page]) if [:error, :fatal_error].include?(severity)
-
     @log_list << ["#{@context_stack.join("/")}", severity, message, options] unless severity==:debug && ENV['LOGDEBUG'].nil?
     #puts "[#{@context_stack.join("/")}] #{severity.to_s.upcase} #{message}"
     raise FatalError if severity == :fatal_error
   end
 
   def count_entries(*levels)
-    @log_list.select { |i| levels.include? i[1] }.count
+    entries(*levels).count
   end
 
   def self.count_entries(*l)
     Log3mf.instance.count_entries(*l)
+  end
+
+  def entries(*levels)
+    @log_list.select { |i| levels.include? i[1] }
+  end
+
+  def self.entries(*l)
+    Log3mf.instance.entries(*l)
   end
 
   def spec_link(page)
@@ -120,43 +126,6 @@ class Log3mf
 
   def self.to_pp
     Log3mf.instance.to_pp
-  end
-
-  def reconcile_ledger
-    expected_errors = CSV.read("spec/expected_errors.csv")
-
-    {expected_errors_not_found: expected_errors - @ledger,
-    unexpected_errors: @ledger - expected_errors }
-  end
-
-  def expected_error_messages_for_testcase(filename)
-    expected_errors = CSV.read("spec/expected_errors.csv")
-    relevant_errors = expected_errors.select { |error| filename.split("/").last.include? error.first }
-    relevant_errors.map { |error| {severity: error[2], csv_safe_msg: error[3], page: error[4] } }
-  end
-
-  def csv_safe_transform(s)
-    s.gsub(",", "_").gsub("\n", " ").gsub("\"", "_")
-  end
-
-  private
-  def add_to_ledger(location, severity, message, page)
-    caller_file=location.split(":").first.split("3mf_validator").last
-
-    csv_safe_msg = csv_safe_transform(message)
-    page ||= -1
-
-    entry = [@context_stack.first, caller_file, severity.to_s, csv_safe_msg, page.to_s]
-    unless @ledger.include? entry
-      @ledger << entry
-      archive_error(entry) if ENV['SAVEERRORS']!=nil
-    end
-  end
-
-  def archive_error(entry)
-    File.open("tmp_expected_errors.csv", 'a') do |file|
-        file.puts entry.join(",")
-    end
   end
 end
 
