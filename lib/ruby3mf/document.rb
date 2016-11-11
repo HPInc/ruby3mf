@@ -2,19 +2,19 @@ class Document
 
   attr_accessor :models
   attr_accessor :thumbnails
-  # attr_accessor :textures
+  attr_accessor :textures
 
   # Relationship Type => Class validating relationship type
   RELATIONSHIP_TYPES = {
     'http://schemas.microsoft.com/3dmanufacturing/2013/01/3dmodel' => {klass: 'Model3mf', collection: :models},
-    'http://schemas.openxmlformats.org/package/2006/relationships/metadata/thumbnail' => {klass: 'Thumbnail3mf', collection: :thumbnails} #,
-    # 'http://schemas.microsoft.com/3dmanufacturing/2013/01/3dtexture' => {klass: 'Texture3d', collection: :textures}
+    'http://schemas.openxmlformats.org/package/2006/relationships/metadata/thumbnail' => {klass: 'Thumbnail3mf', collection: :thumbnails},
+    'http://schemas.microsoft.com/3dmanufacturing/2013/01/3dtexture' => {klass: 'Texture3mf', collection: :textures}
   }
 
   def initialize
     self.models=[]
     self.thumbnails=[]
-    # self.textures=[]
+    self.textures=[]
   end
 
   def self.read(input_file)

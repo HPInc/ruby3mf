@@ -6,6 +6,7 @@ require "ruby3mf/hash"
 require "ruby3mf/model3mf"
 require "ruby3mf/relationships"
 require "ruby3mf/thumbnail3mf"
+require "ruby3mf/texture3mf"
 
 
 

@@ -89,14 +89,21 @@ class Log3mf
     Log3mf.instance.entries(*l)
   end
 
-  def spec_link(page)
-    "http://3mf.io/wp-content/uploads/2016/03/3MFcoreSpec_1.1.pdf#page=#{page}"
+  def spec_link(spec, page)
+    spec = :core unless spec
+    doc_urls={
+      core: 'http://3mf.io/wp-content/uploads/2016/03/3MFcoreSpec_1.1.pdf',
+      material: 'http://3mf.io/wp-content/uploads/2015/04/3MFmaterialsSpec_1.0.1.pdf',
+      production: 'http://3mf.io/wp-content/uploads/2016/07/3MFproductionSpec.pdf',
+      slice: 'http://3mf.io/wp-content/uploads/2016/07/3MFsliceSpec.pdf'
+    }
+    "#{doc_urls[spec]}#page=#{page}"
   end
 
   def to_json
     @log_list.collect { |ent|
       h = { context: ent[0], severity: ent[1], message: ent[2] }
-      h[:spec_ref] = spec_link(ent[3][:page]) if (ent[3] && ent[3][:page])
+      h[:spec_ref] = spec_link(ent[3][:spec], ent[3][:page]) if (ent[3] && ent[3][:page])
       h
     }.to_json
   end
@@ -115,7 +122,7 @@ class Log3mf
     @log_list.each do |logline|
       msg = logline[2]
       if logline[3] && logline[3][:page]
-        msg = "<a href=\"#{spec_link(logline[3][:page])}\" target=\"_blank\">#{msg}</a>"
+        msg = "<a href=\"#{spec_link(logline[3][:spec], logline[3][:page])}\" target=\"_blank\">#{msg}</a>"
       end
       s << "[#{logline[0].ljust(longest_context)}] #{logline[1].to_s.upcase.ljust(longest_severity)} #{msg}"
     end
