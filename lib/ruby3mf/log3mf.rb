@@ -69,7 +69,7 @@ class Log3mf
 
   def log(severity, message, options={})
     @log_list << ["#{@context_stack.join("/")}", severity, message, options] unless severity==:debug && ENV['LOGDEBUG'].nil?
-    #puts "[#{@context_stack.join("/")}] #{severity.to_s.upcase} #{message}"
+    # puts "[#{@context_stack.join("/")}] #{severity.to_s.upcase} #{message}"
     raise FatalError if severity == :fatal_error
   end
 

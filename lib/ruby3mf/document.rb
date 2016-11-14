@@ -3,6 +3,7 @@ class Document
   attr_accessor :models
   attr_accessor :thumbnails
   attr_accessor :textures
+  attr_accessor :objects
 
   # Relationship Type => Class validating relationship type
   RELATIONSHIP_TYPES = {
@@ -11,15 +12,17 @@ class Document
     'http://schemas.microsoft.com/3dmanufacturing/2013/01/3dtexture' => {klass: 'Texture3mf', collection: :textures}
   }
 
-  def initialize
+  def initialize(zip_filename)
     self.models=[]
     self.thumbnails=[]
     self.textures=[]
+    self.objects={}
+    @zip_filename = zip_filename
   end
 
   def self.read(input_file)
-    m=self.new
-    begin
+    m=self.new(input_file)
+    m.zip_filename = input_file    begin
       Log3mf.context "examining zip" do |l|
         begin
           Zip.warn_invalid_date = false
@@ -72,7 +75,7 @@ class Document
                       m.send(relationship_type[:collection]) << {
                         rel_id: rel[:id],
                         target: rel[:target],
-                        object: Object.const_get(relationship_type[:klass]).parse(relationship_file, @relationships)
+                        object: Object.const_get(relationship_type[:klass]).parse(m, relationship_file, @relationships)
                       }
                     end
                   else
@@ -92,5 +95,30 @@ class Document
       #puts "HALTING PROCESSING DUE TO FATAL ERROR"
       return nil
     end
+  end
+
+  def write(output_file = nil)
+    output_file = @zip_filename if output_file.nil?
+
+    input_zip_file = Zip::File.open(@zip_filename)
+
+    buffer = Zip::OutputStream.write_buffer do |out|
+      input_zip_file.entries.each do |e|
+        if e.directory?
+          out.copy_raw_entry(e)
+        else
+          out.put_next_entry(e.name)
+          if objects[e.name]
+            out.write objects[e.name]
+          else
+            out.write e.get_input_stream.read
+          end
+        end
+      end
+    end
+
+    input_zip_file.close
+
+    File.open(output_file, "wb") {|f| f.write(buffer.string) }
   end
 end

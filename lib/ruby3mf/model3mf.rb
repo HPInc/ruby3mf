@@ -12,7 +12,7 @@ class Model3mf
     end
   end
 
-  def self.parse(zip_entry, relationships)
+  def self.parse(document, zip_entry, relationships)
     model_hash = {}
     Log3mf.context "parsing model" do |l|
       begin

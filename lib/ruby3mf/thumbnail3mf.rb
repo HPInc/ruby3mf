@@ -1,6 +1,6 @@
 class Thumbnail3mf
 
-  def self.parse(relationship_file, relationships)
+  def self.parse(doc, relationship_file, relationships)
     img_type = MimeMagic.by_magic(relationship_file.get_input_stream)
     Log3mf.context "Thumbnail3mf" do |l|
       l.debug "thumbnail is of type: #{img_type}"

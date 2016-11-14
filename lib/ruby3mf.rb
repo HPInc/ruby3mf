@@ -8,8 +8,6 @@ require "ruby3mf/relationships"
 require "ruby3mf/thumbnail3mf"
 require "ruby3mf/texture3mf"
 
-
-
 require 'zip'
 require 'nokogiri'
 require 'json'

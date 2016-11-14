@@ -29,6 +29,7 @@ describe Ruby3mf do
   end
 
 
+
   describe "Document" do
     it 'should return a Document' do
       doc=Document.read('spec/examples/box.3mf')
@@ -36,8 +37,11 @@ describe Ruby3mf do
     end
 
     context "document.model" do
+
+      let(:source_file) { 'spec/examples/box.3mf' }
+
       before do
-        @doc3mf=Document.read('spec/examples/box.3mf')
+        @doc3mf=Document.read(source_file)
       end
 
       it 'should be a collection of model Hashes' do
@@ -47,6 +51,55 @@ describe Ruby3mf do
           expect(model).to be_a(Hash)
         end
       end
+
+      it 'should write a copy of the zipfile' do
+        output_file = Tempfile.new('foo')
+        output_file.close
+        @doc3mf.write(output_file.path)
+
+        Zip::File.open(source_file) do |source_zip|
+          source_entries={}
+          source_zip.entries.each do | src_entry |
+            source_entries[src_entry.name]=src_entry
+          end
+          Zip::File.open(output_file.path) do |dest_zip|
+            dest_zip.entries.each do | dest_entry |
+              if dest_entry.directory?
+                expect(source_entries[dest_entry.name].directory?).to be_truthy
+              else
+                expect(source_entries.key?(dest_entry.name)).to be_truthy
+                expect(source_entries[dest_entry.name].get_input_stream.read).to eq(dest_entry.get_input_stream.read)
+              end
+              source_entries.delete(dest_entry.name)
+            end
+          end
+          expect(source_entries.size).to be(0)
+        end
+
+        output_file.unlink
+      end
+
+      context 'when changing a texture' do
+        let(:source_file) { "spec/ruby3mf-testfiles/passing_cases/cube_horizQR.3mf" }
+
+        it 'should write the changed texture' do
+          png_bytes = File.open("spec/examples/qr_code_google.png", 'rb') { |f| f.read }
+          t = @doc3mf.textures.first
+          t[:object].update(png_bytes)
+          name = t[:object].name
+          output_file = Tempfile.new('changed_png')
+          output_file.close
+          @doc3mf.write(output_file.path)
+
+          Zip::File.open(output_file.path) do |dest_zip|
+            png_entry = dest_zip.glob(name).first
+            expect(png_entry.name).to eq(name)
+            expect(png_entry.get_input_stream.read).to eq(png_bytes)
+          end
+        end
+
+      end
+
     end
   end
 
