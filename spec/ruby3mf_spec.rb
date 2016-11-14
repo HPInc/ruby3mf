@@ -79,14 +79,15 @@ describe Ruby3mf do
         output_file.unlink
       end
 
-      context 'when changing a texture' do
+      context 'dealing with textures' do
         let(:source_file) { "spec/ruby3mf-testfiles/passing_cases/cube_horizQR.3mf" }
+
 
         it 'should write the changed texture' do
           png_bytes = File.open("spec/examples/qr_code_google.png", 'rb') { |f| f.read }
-          t = @doc3mf.textures.first
-          t[:object].update(png_bytes)
-          name = t[:object].name
+          t = @doc3mf.textures.first[:object]
+          t.update(png_bytes)
+          name = t.name
           output_file = Tempfile.new('changed_png')
           output_file.close
           @doc3mf.write(output_file.path)
@@ -96,8 +97,32 @@ describe Ruby3mf do
             expect(png_entry.name).to eq(name)
             expect(png_entry.get_input_stream.read).to eq(png_bytes)
           end
+          output_file.unlink
         end
 
+        it 'should return the original bytes when texture has not been modified' do
+          orig_png_bytes = File.open("spec/examples/orig_cube_qr.png", 'rb') { |f| f.read }
+          t = @doc3mf.textures.first[:object]
+          expect(t.contents).to eq(orig_png_bytes)
+        end
+
+        it 'should return the correct bytes when the output file has not yet been written' do
+          png_bytes = File.open("spec/examples/qr_code_google.png", 'rb') { |f| f.read }
+          t = @doc3mf.textures.first[:object]
+          t.update(png_bytes)
+          expect(t.contents).to eq(png_bytes)
+        end
+
+        it 'should return the correct bytes after the output file has been written' do
+          png_bytes = File.open("spec/examples/qr_code_google.png", 'rb') { |f| f.read }
+          t = @doc3mf.textures.first[:object]
+          t.update(png_bytes)
+          output_file = Tempfile.new('changed_png')
+          output_file.close
+          @doc3mf.write(output_file.path)
+          expect(t.contents).to eq(png_bytes)
+          output_file.unlink
+        end
       end
 
     end

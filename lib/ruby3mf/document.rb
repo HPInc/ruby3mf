@@ -121,4 +121,11 @@ class Document
 
     File.open(output_file, "wb") {|f| f.write(buffer.string) }
   end
+
+  def contents_for(path)
+    Zip::File.open(@zip_filename) do |zip_file|
+      zip_file.glob(path).first.get_input_stream.read
+    end
+  end
+
 end

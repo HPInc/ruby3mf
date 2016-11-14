@@ -22,4 +22,8 @@ class Texture3mf
     @doc.objects[name]=bytes
   end
 
+  def contents
+    @doc.objects[name] || @doc.contents_for(name)
+  end
+
 end
