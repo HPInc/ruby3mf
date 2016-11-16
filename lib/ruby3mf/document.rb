@@ -23,15 +23,10 @@ class Document
   def self.read(input_file)
     m=self.new(input_file)
     m.zip_filename = input_file    begin
-      Log3mf.context "examining zip" do |l|
+      Log3mf.context "zip" do |l|
         begin
           Zip.warn_invalid_date = false
           Zip::File.open(input_file) do |zip_file|
-
-            # puts "Zip contents:"
-            # zip_file.each do |entry|
-            #   puts entry
-            # end
 
             l.info "Zip file is valid"
 
