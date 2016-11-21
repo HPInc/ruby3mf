@@ -4,6 +4,7 @@ class Document
   attr_accessor :thumbnails
   attr_accessor :textures
   attr_accessor :objects
+  attr_accessor :zip_filename
 
   # Relationship Type => Class validating relationship type
   RELATIONSHIP_TYPES = {
@@ -21,8 +22,10 @@ class Document
   end
 
   def self.read(input_file)
-    m=self.new(input_file)
-    m.zip_filename = input_file    begin
+
+    m = new(input_file)
+ 
+    begin
       Log3mf.context "zip" do |l|
         begin
           Zip.warn_invalid_date = false
@@ -69,7 +72,7 @@ class Document
                     else
                       m.send(relationship_type[:collection]) << {
                         rel_id: rel[:id],
-                        target: rel[:target],
+                        target: target,
                         object: Object.const_get(relationship_type[:klass]).parse(m, relationship_file, @relationships)
                       }
                     end
@@ -93,32 +96,33 @@ class Document
   end
 
   def write(output_file = nil)
-    output_file = @zip_filename if output_file.nil?
+    output_file = zip_filename if output_file.nil?
 
-    input_zip_file = Zip::File.open(@zip_filename)
+    Zip::File.open(zip_filename) do |input_zip_file|
 
-    buffer = Zip::OutputStream.write_buffer do |out|
-      input_zip_file.entries.each do |e|
-        if e.directory?
-          out.copy_raw_entry(e)
-        else
-          out.put_next_entry(e.name)
-          if objects[e.name]
-            out.write objects[e.name]
+      buffer = Zip::OutputStream.write_buffer do |out|
+        input_zip_file.entries.each do |e|
+          if e.directory?
+            out.copy_raw_entry(e)
           else
-            out.write e.get_input_stream.read
+            out.put_next_entry(e.name)
+            if objects[e.name]
+              out.write objects[e.name]
+            else
+              out.write e.get_input_stream.read
+            end
           end
         end
       end
-    end
 
-    input_zip_file.close
+      File.open(output_file, "wb") {|f| f.write(buffer.string) }
+    
+    end  
 
-    File.open(output_file, "wb") {|f| f.write(buffer.string) }
   end
 
   def contents_for(path)
-    Zip::File.open(@zip_filename) do |zip_file|
+    Zip::File.open(zip_filename) do |zip_file|
       zip_file.glob(path).first.get_input_stream.read
     end
   end

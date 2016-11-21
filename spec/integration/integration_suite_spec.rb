@@ -1,9 +1,6 @@
 require_relative '../spec_helper.rb'
 
-describe 'test_suite' do
-  before do
-    Log3mf.reset_log
-  end
+describe 'Integration Tests' do
 
   context 'with passing test case' do
     Dir.glob('spec/ruby3mf-testfiles/passing_cases/*') { |test_file|

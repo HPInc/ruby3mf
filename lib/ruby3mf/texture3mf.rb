@@ -6,7 +6,8 @@ class Texture3mf
   end
 
   def self.parse(document, relationship_file, relationships)
-    t = Texture3mf.new(document)
+    
+    t = new(document)
     t.name = relationship_file.name
 
     img_type = MimeMagic.by_magic(relationship_file.get_input_stream)
