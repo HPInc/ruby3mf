@@ -10,4 +10,4 @@
 .idea
 /spec/ruby3mf-testfiles/
 /profile-run/
-
+.DS_Store
