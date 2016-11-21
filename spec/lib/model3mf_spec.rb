@@ -8,10 +8,6 @@ describe Model3mf do
   let(:document)   		{ Document.read(zip_path) }
  	let(:relationships) { zip_file.glob('**/*.rels').map{|r| Relationships.parse(r)}.flatten }
 
-	describe ".extract_paths" do
-
-	end
-
 	describe ".parse" do
 
 		it "should have parse/build the model inside document" do
