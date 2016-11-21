@@ -1,7 +1,13 @@
+require 'fileutils'
+
+require 'simplecov'
+SimpleCov.start
+
 $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
 require 'ruby3mf'
 
 RSpec.configure do |config|
+  
   config.order = 'random'
 
   config.before(:suite) do
@@ -11,4 +17,9 @@ RSpec.configure do |config|
       `cd spec; git clone https://github.com/IPGPTP/ruby3mf-testfiles.git`
     end
   end
+
+  config.before(:example) do
+    Log3mf.reset_log
+  end
+
 end
