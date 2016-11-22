@@ -35,8 +35,6 @@ class ContentTypes
         end
       rescue Nokogiri::XML::SyntaxError => e
         l.error "[Content_Types].xml file is not valid XML. #{e}", page: 15
-      rescue Zip::Error      
-        l.error 'Problem extracting [Content_Types].xml from zip file'
       end
     end
 

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Texture3mf do
+describe Hash do
 
 
 end
