@@ -12,6 +12,7 @@ class Model3mf
     end
   end
 
+
   def self.parse(document, zip_entry, relationships)
     model_hash = {}
     Log3mf.context "parsing model" do |l|
@@ -25,7 +26,6 @@ class Model3mf
         model_hash = Hash.from_xml(doc)
       rescue Nokogiri::XML::SyntaxError => e
         l.fatal_error "Model file invalid XML. Exception #{e}"
-        doc.errors.each { |error| l.error error } #this line is never reached
       end
 
       l.context "verifying 3D payload required resources" do |l|

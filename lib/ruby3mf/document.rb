@@ -24,7 +24,7 @@ class Document
   def self.read(input_file)
 
     m = new(input_file)
- 
+
     begin
       Log3mf.context "zip" do |l|
         begin
@@ -86,7 +86,6 @@ class Document
           return m
         rescue Zip::Error
           l.fatal_error 'File provided is not a valid ZIP archive', page: 9
-          return nil
         end
       end
     rescue Log3mf::FatalError
@@ -116,8 +115,8 @@ class Document
       end
 
       File.open(output_file, "wb") {|f| f.write(buffer.string) }
-    
-    end  
+
+    end
 
   end
 
