@@ -25,7 +25,7 @@ class Model3mf
         model_hash = Hash.from_xml(doc)
       rescue Nokogiri::XML::SyntaxError => e
         l.fatal_error "Model file invalid XML. Exception #{e}"
-        doc.errors.each { |error| l.error error }
+        doc.errors.each { |error| l.error error } #this line is never reached
       end
 
       l.context "verifying 3D payload required resources" do |l|

@@ -44,4 +44,21 @@ describe ContentTypes do
     end
   end
 
+  describe "when xml contains unexpected element" do
+    let(:content_xml) {
+      '<?xml version="1.0" encoding="UTF-8"?>
+      <Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">
+        <Foo Extension="rels" ContentType="invalid content type for foo element" />
+        <Default Extension="rels" ContentType="invalid content type" />
+        <Default Extension="model" ContentType="application/vnd.ms-package.3dmanufacturing-3dmodel+xml" />
+      </Types>'
+    }
+    let(:message) { 'contains unexpected element' }
+    it 'should report unexpected element warning' do
+      ContentTypes.parse(zip_entry)
+      expect(Log3mf.count_entries(:warning)).to be == 1
+      expect(Log3mf.entries(:warning).first[2]).to include message
+    end
+  end
+
 end
