@@ -14,8 +14,8 @@ class ContentTypes
         l.warning '[Content_Types].xml must contain root name Types' unless doc.children.first.name == "Types"
 
         required_content_types = ['application/vnd.openxmlformats-package.relationships+xml', 'application/vnd.ms-package.3dmanufacturing-3dmodel+xml']
-        optional_content_types = ['application/vnd.ms-printing.printticket+xml']
-        all_types = required_content_types + optional_content_types
+        #optional_content_types = ['application/vnd.ms-printing.printticket+xml']
+        #all_types = required_content_types + optional_content_types
 
         types_node = doc.children.first
         types_node.children.each do |node|
