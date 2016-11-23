@@ -31,7 +31,7 @@ describe Relationships do
     end
 
     it "should parse relationshios prolerly" do
-      inputs = rels.map{|r| Relationships.parse(r)}
+      rels.map{|r| Relationships.parse(r)}
       expect(Log3mf.count_entries(:error, :fatal_error)).to be == 0
     end
 
@@ -69,7 +69,7 @@ describe Relationships do
     end
 
     it "should parse relationshios prolerly" do
-      inputs = rels.map{|r| Relationships.parse(r)}
+      rels.map{|r| Relationships.parse(r)}
       expect(Log3mf.count_entries(:error, :fatal_error)).to be == 0
       expect(Log3mf.entries(:info)[1][2]).to include message
     end
