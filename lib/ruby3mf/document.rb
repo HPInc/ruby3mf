@@ -72,7 +72,7 @@ class Document
                     else
                       m.send(relationship_type[:collection]) << {
                         rel_id: rel[:id],
-                        target: target,
+                        target: rel[:target],
                         object: Object.const_get(relationship_type[:klass]).parse(m, relationship_file, @relationships)
                       }
                     end
