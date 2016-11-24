@@ -37,7 +37,7 @@ describe Texture3mf do
     let(:texture)   { Texture3mf.parse(document, relationship_file, :relationships) }
     let(:new_data)  { 'Dale Timbers !!!'.bytes}
 
-    it "Should log error when no png or jpeg" do
+    it "Should update texture content" do
       expect(texture.contents).not_to eq(new_data)
       texture.update(new_data)
       expect(texture.contents).to eq(new_data)
