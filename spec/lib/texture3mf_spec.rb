@@ -22,7 +22,7 @@ describe Texture3mf do
     end
   end
 
-  context ".parse good ContentType" do
+  context ".parse bad ContentType" do
     let(:img_type)  { double('ImgType', :type => 'foo/bar')}
     let(:message)   { 'Expected a png or jpeg texture but the texture was of type'}
 
