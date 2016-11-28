@@ -1,47 +1,23 @@
 class Model3mf
 
-  def self.extract_paths(value)
-    if value.is_a? Array
-      value.map { |v| extract_paths(v) }
-    else
-      if value.is_a? Hash
-        value[:path]
-      else
-        nil
-      end
-    end
-  end
-
-
   def self.parse(document, zip_entry, relationships)
-    model_hash = {}
+    model_doc = nil
+
     Log3mf.context "parsing model" do |l|
       begin
-        # parse model
-        doc = Nokogiri::XML(zip_entry.get_input_stream) do |config|
+        model_doc = Nokogiri::XML(zip_entry.get_input_stream) do |config|
           config.strict.nonet.noblanks
         end
-
         l.info "We Found a Model, and it's XML!"
-        model_hash = Hash.from_xml(doc)
       rescue Nokogiri::XML::SyntaxError => e
         l.fatal_error "Model file invalid XML. Exception #{e}"
       end
 
       l.context "verifying 3D payload required resources" do |l|
-        # find all resources (that are not the object) in model_hash
-
-        required_resources = []
-
-        model_hash[:model][:resources].each do |key, value|
-          required_resources << extract_paths(value)
-        end
-
-        required_resources.flatten!
-        required_resources.compact!
+        # results = model_doc.css("model resources m:texture2d")
+        required_resources = model_doc.css("//model//resources//*[path]").collect { |n| n["path"] }
 
         # for each, ensure that they exist in @relationships
-
         relationship_resources = relationships.map { |relationship| relationship[:target] }
 
         missing_resources = (required_resources - relationship_resources)
@@ -55,6 +31,6 @@ class Model3mf
 
       end
     end
-    model_hash
+    model_doc
   end
 end
