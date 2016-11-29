@@ -15,15 +15,14 @@ describe Model3mf do
      [
        { :target=>"/3D/Texture/texture1.texture",
          :type=>"http://schemas.microsoft.com/3dmanufacturing/2013/01/3dtexture",
-         :id=>"rel1"},
+         :id=>"rel1" },
        { :target=>"/3D/Texture/texture2.texture",
          :type=>"http://schemas.microsoft.com/3dmanufacturing/2013/01/3dtexture",
-         :id=>"rel2"},
+         :id=>"rel2" },
        { :target=>"/3D/3dmodel.model",
          :type=>"http://schemas.microsoft.com/3dmanufacturing/2013/01/3dmodel",
-         :id=>"rel0"
-        }
-      ]
+         :id=>"rel0" }
+     ]
      }
 
     let(:model_content) {

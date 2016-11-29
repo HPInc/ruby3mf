@@ -42,7 +42,7 @@ describe Log3mf do
       }
     }
 
-    it 'should be set default core and page spec' do
+    it 'should default to core spec' do
       log.context "context for test spec links" do |l|
         log.error("Fatal Error", page: 11)
         json = JSON.parse(Log3mf.to_json)
@@ -50,7 +50,7 @@ describe Log3mf do
       end
     end
 
-    it 'should be set default core and page spec' do
+    it 'should reference proper specification when supplied' do
       log.context "context for test spec links" do |l|
         specs.each do |k,v|
           log.error("Fatal Error", spec: k.to_sym ,page: 1)

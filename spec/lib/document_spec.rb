@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Document do
- 
+
   it 'parses a valid file without errors' do
     Log3mf.context "box.3mf" do |l|
       Document.read('spec/examples/box.3mf')
@@ -20,7 +20,7 @@ describe Document do
     fatal_error = log.select { |entry| entry["severity"]=="fatal_error" }.first
     expect(fatal_error["message"]).to include("Model file invalid XML")
   end
- 
+
   it 'should return a Document' do
     doc=Document.read('spec/examples/box.3mf')
     expect(doc).to be_a(Document)
@@ -39,11 +39,12 @@ describe Document do
       expect(@doc3mf.models.size).to be(1)
       @doc3mf.models.each do |model|
         expect(model).to be_a(Hash)
+        expect(model[:object]).to be_a(Nokogiri::XML::Document)
       end
     end
 
     it 'should write a copy of the zipfile' do
-      
+
       output_file = Tempfile.new('foo')
       output_file.close
       @doc3mf.write(output_file.path)
