@@ -17,7 +17,7 @@ require 'singleton'
 #   end
 # end
 #
-# Log3mf.pp
+# Log3mf.to_json
 
 
 class Log3mf
@@ -100,39 +100,24 @@ class Log3mf
     "#{doc_urls[spec]}#page=#{page}"
   end
 
-  def to_json
+  def to_hash
     @log_list.collect { |ent|
       h = { context: ent[0], severity: ent[1], message: ent[2] }
       h[:spec_ref] = spec_link(ent[3][:spec], ent[3][:page]) if (ent[3] && ent[3][:page])
       h
-    }.to_json
+    }
+  end
+
+  def self.to_hash
+    Log3mf.instance.to_hash
+  end
+
+  def to_json
+    to_hash.to_json
   end
 
   def self.to_json
     Log3mf.instance.to_json
-  end
-
-  # Pretty print our errors!
-  def to_pp
-    s = []
-    s << "<i>Listing #{@log_list.size} log lines:</i>"
-    longest_context = @log_list.collect { |logline| logline[0].size }.max
-    longest_severity = @log_list.collect { |logline| logline[1].size }.max
-
-    @log_list.each do |logline|
-      msg = logline[2]
-      if logline[3] && logline[3][:page]
-        msg = "<a href=\"#{spec_link(logline[3][:spec], logline[3][:page])}\" target=\"_blank\">#{msg}</a>"
-      end
-      s << "[#{logline[0].ljust(longest_context)}] #{logline[1].to_s.upcase.ljust(longest_severity)} #{msg}"
-    end
-    s << "<br/>"
-    s.map! { |row| row.include?("ERROR") ? "<b>#{row}</b>" : row }
-    s.join("<br/>")
-  end
-
-  def self.to_pp
-    Log3mf.instance.to_pp
   end
 end
 
