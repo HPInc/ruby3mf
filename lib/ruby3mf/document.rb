@@ -1,5 +1,7 @@
 class Document
 
+  attr_accessor :types
+  attr_accessor :relationships
   attr_accessor :models
   attr_accessor :thumbnails
   attr_accessor :textures
@@ -18,6 +20,8 @@ class Document
     self.thumbnails=[]
     self.textures=[]
     self.objects={}
+    self.relationships=[]
+    self.types=[]
     @zip_filename = zip_filename
   end
 
@@ -37,7 +41,7 @@ class Document
               # 1. Get Content Types
               content_type_match = zip_file.glob('\[Content_Types\].xml').first
               if content_type_match
-                @types = ContentTypes.parse(content_type_match)
+                m.types = ContentTypes.parse(content_type_match)
               else
                 l.error "Missing required file: [Content_Types].xml", page: 4
               end
@@ -52,15 +56,14 @@ class Document
               rel_file = zip_file.glob('_rels/.rels').first
               l.fatal_error "Missing required file _rels/.rels", page: 4 unless rel_file
 
-              @relationships=[]
               zip_file.glob('**/*.rels').each do |rel|
-                @relationships += Relationships.parse(rel)
+                m.relationships += Relationships.parse(rel)
               end
             end
 
             l.context "relationship elements" do |l|
               # 3. Validate all relationships
-              @relationships.each do |rel|
+              m.relationships.each do |rel|
                 l.context rel[:target] do |l|
                   target = rel[:target].gsub(/^\//, "")
                   relationship_file = zip_file.glob(target).first
@@ -73,7 +76,7 @@ class Document
                       m.send(relationship_type[:collection]) << {
                         rel_id: rel[:id],
                         target: rel[:target],
-                        object: Object.const_get(relationship_type[:klass]).parse(m, relationship_file, @relationships)
+                        object: Object.const_get(relationship_type[:klass]).parse(m, relationship_file)
                       }
                     end
                   else

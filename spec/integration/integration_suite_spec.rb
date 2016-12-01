@@ -33,7 +33,9 @@ describe 'Integration Tests' do
       'missing_rels_folder.3mf' => [["zip/relationships", :fatal_error, "Missing required file _rels/.rels", {:page=>4}]],
       'no_3d_model.3mf' => [["zip/relationship elements//3D/3dmodel.model", :error, "Relationship Target file /3D/3dmodel.model not found", {:page=>11}]],
       'not_a_zip.3mf' => [["zip", :fatal_error, "File provided is not a valid ZIP archive", {:page=>9}]],
-      'invalid_texture_path_in_model.3mf' => [["zip/relationship elements//3D/3dmodel.model/parsing model/verifying 3D payload required resources", :error, "Missing required resource: /3D/Textures/wrong-file-name.png Resource referenced in model, but not in .rels relationship file", {:page=>10}]]
+      'invalid_texture_path_in_model.3mf' => [["zip/relationship elements//3D/3dmodel.model/parsing model/verifying 3D payload required resources", :error, "Missing required resource: /3D/Textures/wrong-file-name.png Resource referenced in model, but not in .rels relationship file", {:page=>10}]],
+      'zero_size_texture.3mf' => [["zip/relationship elements//3D/Textures/texture.png/Texture3mf", :fatal_error, "Texture file must be valid image file", {:spec=>:material, :page=>16}]],
+      'bad_image_type.3mf' => [["zip/relationship elements//3D/3dmodel.model/parsing model/verifying 3D payload required resources/verifying 3D resource types", :error, "resource in model has invalid contenttype image/ping", {:page=>10}]],
     } }
 
     Dir.glob('spec/ruby3mf-testfiles/failing_cases/*') { |test_file|
