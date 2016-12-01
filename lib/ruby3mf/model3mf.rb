@@ -1,6 +1,6 @@
 class Model3mf
 
-  def self.parse(document, zip_entry, relationships)
+  def self.parse(document, zip_entry)
     model_doc = nil
 
     Log3mf.context "parsing model" do |l|
@@ -17,8 +17,8 @@ class Model3mf
         # results = model_doc.css("model resources m:texture2d")
         required_resources = model_doc.css("//model//resources//*[path]").collect { |n| n["path"] }
 
-        # for each, ensure that they exist in @relationships
-        relationship_resources = relationships.map { |relationship| relationship[:target] }
+        # for each, ensure that they exist in m.relationships
+        relationship_resources = document.relationships.map { |relationship| relationship[:target] }
 
         missing_resources = (required_resources - relationship_resources)
         if missing_resources.empty?
@@ -27,6 +27,23 @@ class Model3mf
           missing_resources.each { |mr|
             l.error "Missing required resource: #{mr} Resource referenced in model, but not in .rels relationship file", page: 10
           }
+        end
+
+        l.context "verifying 3D resource types" do |l|
+          model_types = model_doc.css("//model//resources//*[path]").collect { |t| t["contenttype"] }
+
+          #for each, ensure they exist in ContentTypes
+          all_types = document.types.map { |t, v| v }
+
+          bad_types = (model_types - all_types)
+          if bad_types.empty?
+            l.info "All model resource contenttypes are valid"
+          else
+            bad_types.each { |bt|
+              puts "bad type: #{bt}"
+              l.error "resource in model has invalid contenttype #{bt}", page: 10
+            }
+          end
         end
 
       end

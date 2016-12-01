@@ -11,7 +11,7 @@ describe Thumbnail3mf do
     it "Should not log error and only log debug for content type image/jpeg or image/png" do
       ENV['LOGDEBUG']='true'
       allow(MimeMagic).to receive(:by_magic).and_return(img_type)
-      Thumbnail3mf.parse(:doc, images.first, :relationships)
+      Thumbnail3mf.parse(:doc, images.first)
       expect(Log3mf.entries(:debug).first[2]).to include message
     end
   end
@@ -24,7 +24,7 @@ describe Thumbnail3mf do
 
     it "Should log error when no png or jpeg" do
       allow(MimeMagic).to receive(:by_magic).and_return(img_type)
-      Thumbnail3mf.parse(:doc, images.first, :relationships)
+      Thumbnail3mf.parse(:doc, images.first)
       expect(Log3mf.entries(:error).first[2]).to include message
     end
   end

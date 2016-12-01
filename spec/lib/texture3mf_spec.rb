@@ -17,7 +17,7 @@ describe Texture3mf do
 
     it "Should not log error and only log debug for content type image/jpeg or image/png" do
       ENV['LOGDEBUG']='true'
-      Texture3mf.parse(:doc, relationship_file, :relationships)
+      Texture3mf.parse(:doc, relationship_file)
       expect(Log3mf.entries(:debug).first[2]).to include message
     end
   end
@@ -27,14 +27,14 @@ describe Texture3mf do
     let(:message)   { 'Expected a png or jpeg texture but the texture was of type'}
 
     it "Should log error when no png or jpeg" do
-      Texture3mf.parse(:doc, relationship_file, :relationships)
+      Texture3mf.parse(:doc, relationship_file)
       expect(Log3mf.entries(:error).first[2]).to include message
     end
   end
 
   context "#update @doc content" do
     let(:img_type)  { double('ImgType', :type => 'image/jpeg')}
-    let(:texture)   { Texture3mf.parse(document, relationship_file, :relationships) }
+    let(:texture)   { Texture3mf.parse(document, relationship_file) }
     let(:new_data)  { 'Dale Timbers !!!'.bytes}
 
     it "Should update texture content" do
@@ -46,7 +46,7 @@ describe Texture3mf do
 
   context ".contents should return texture bytes content" do
     let(:img_type)  { double('ImgType', :type => 'image/jpeg')}
-    let(:texture)   { Texture3mf.parse(document, relationship_file, :relationships) }
+    let(:texture)   { Texture3mf.parse(document, relationship_file) }
 
     it "#contents should return content for relationship_file" do
       expect(texture.contents).to eq(bytes)

@@ -3,27 +3,27 @@ require 'spec_helper'
 describe Model3mf do
 
   let(:zip_entry) { double('ZipEntry') }
+  let(:document) { double('Document') }
+  let(:ctypes) { {'jpg' => 'image/jpeg',
+                  'jpeg' => 'image/jpeg',
+                  'png' => 'image/png'} }
   before do
     allow(zip_entry).to receive(:get_input_stream).and_return(model_content)
+    allow(document).to receive(:relationships).and_return(relationships)
+    allow(document).to receive(:types).and_return(ctypes)
   end
 
-  let(:document) { double('Document') }
+  describe ".parse good file" do
 
-	describe ".parse good file" do
-
-    let(:relationships) {
-     [
-       { :target=>"/3D/Texture/texture1.texture",
-         :type=>"http://schemas.microsoft.com/3dmanufacturing/2013/01/3dtexture",
-         :id=>"rel1" },
-       { :target=>"/3D/Texture/texture2.texture",
-         :type=>"http://schemas.microsoft.com/3dmanufacturing/2013/01/3dtexture",
-         :id=>"rel2" },
-       { :target=>"/3D/3dmodel.model",
-         :type=>"http://schemas.microsoft.com/3dmanufacturing/2013/01/3dmodel",
-         :id=>"rel0" }
-     ]
-     }
+    let(:relationships) { [{:target => "/3D/Texture/texture1.texture",
+                            :type => "http://schemas.microsoft.com/3dmanufacturing/2013/01/3dtexture",
+                            :id => "rel1"},
+                           {:target => "/3D/Texture/texture2.texture",
+                            :type => "http://schemas.microsoft.com/3dmanufacturing/2013/01/3dtexture",
+                            :id => "rel2"},
+                           {:target => "/3D/3dmodel.model",
+                            :type => "http://schemas.microsoft.com/3dmanufacturing/2013/01/3dmodel",
+                            :id => "rel0"}] }
 
     let(:model_content) {
       '<?xml version="1.0" encoding="UTF-8"?>
@@ -66,29 +66,28 @@ describe Model3mf do
       </model>'
     }
 
-		it "should have no error on log" do
-	   Model3mf.parse(document, zip_entry, relationships)
-     expect(Log3mf.count_entries(:error, :fatal_error)).to be == 0
-     expect(Log3mf.count_entries(:fatal_error)).to be <= 1
+    it "should have no error on log" do
+      Model3mf.parse(document, zip_entry)
+      expect(Log3mf.count_entries(:error, :fatal_error)).to be == 0
+      expect(Log3mf.count_entries(:fatal_error)).to be <= 1
     end
-
-	end
+  end
 
   describe ".parse bad file" do
 
     context "missing resource" do
 
       let(:relationships) {
-       [
-         { :target=>"/3D/Texture/texture2.texture",
-           :type=>"http://schemas.microsoft.com/3dmanufacturing/2013/01/3dtexture",
-           :id=>"rel2"},
-         { :target=>"/3D/3dmodel.model",
-           :type=>"http://schemas.microsoft.com/3dmanufacturing/2013/01/3dmodel",
-           :id=>"rel0"
+        [
+          {:target => "/3D/Texture/texture2.texture",
+           :type => "http://schemas.microsoft.com/3dmanufacturing/2013/01/3dtexture",
+           :id => "rel2"},
+          {:target => "/3D/3dmodel.model",
+           :type => "http://schemas.microsoft.com/3dmanufacturing/2013/01/3dmodel",
+           :id => "rel0"
           }
         ]
-       }
+      }
 
       let(:model_content) {
         '<?xml version="1.0" encoding="UTF-8"?>
@@ -134,9 +133,9 @@ describe Model3mf do
       let(:message) { 'Missing required resource' }
 
       it "should have no error on log" do
-       Model3mf.parse(document, zip_entry, relationships)
-       expect(Log3mf.count_entries(:error, :fatal_error)).to be == 1
-       expect(Log3mf.entries(:error).first[2]).to include message
+        Model3mf.parse(document, zip_entry)
+        expect(Log3mf.count_entries(:error, :fatal_error)).to be == 1
+        expect(Log3mf.entries(:error).first[2]).to include message
       end
 
     end
@@ -145,18 +144,18 @@ describe Model3mf do
 
       let(:relationships) {
         [
-          { :target=>"/3D/Texture/texture1.texture",
-            :type=>"http://schemas.microsoft.com/3dmanufacturing/2013/01/3dtexture",
-            :id=>"rel1"},
-          { :target=>"/3D/Texture/texture2.texture",
-            :type=>"http://schemas.microsoft.com/3dmanufacturing/2013/01/3dtexture",
-            :id=>"rel2"},
-          { :target=>"/3D/3dmodel.model",
-            :type=>"http://schemas.microsoft.com/3dmanufacturing/2013/01/3dmodel",
-            :id=>"rel0"
-           }
-         ]
-       }
+          {:target => "/3D/Texture/texture1.texture",
+           :type => "http://schemas.microsoft.com/3dmanufacturing/2013/01/3dtexture",
+           :id => "rel1"},
+          {:target => "/3D/Texture/texture2.texture",
+           :type => "http://schemas.microsoft.com/3dmanufacturing/2013/01/3dtexture",
+           :id => "rel2"},
+          {:target => "/3D/3dmodel.model",
+           :type => "http://schemas.microsoft.com/3dmanufacturing/2013/01/3dmodel",
+           :id => "rel0"
+          }
+        ]
+      }
 
       let(:model_content) {
         'var string = "this is not valid xml";'
@@ -165,7 +164,7 @@ describe Model3mf do
       let(:message) { 'Model file invalid XML' }
 
       it "should have no error on log" do
-        expect { Model3mf.parse(document, zip_entry, relationships) }.to raise_error {|e|
+        expect { Model3mf.parse(document, zip_entry) }.to raise_error { |e|
           expect(e).to be_a(Log3mf::FatalError)
         }
         expect(Log3mf.count_entries(:fatal_error)).to be == 1
@@ -173,6 +172,6 @@ describe Model3mf do
       end
     end
 
-	end
+  end
 
 end

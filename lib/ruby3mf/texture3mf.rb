@@ -5,14 +5,14 @@ class Texture3mf
     @doc = document
   end
 
-  def self.parse(document, relationship_file, relationships)
+  def self.parse(document, relationship_file)
 
     t = new(document)
     t.name = relationship_file.name
     stream = relationship_file.get_input_stream
     img_type = MimeMagic.by_magic(stream)
-    @bytes = stream.read
     Log3mf.context "Texture3mf" do |l|
+      l.fatal_error "Texture file must be valid image file", spec: :material, page: 16 unless img_type
       l.debug "texture is of type: #{img_type}"
       l.error "Expected a png or jpeg texture but the texture was of type #{img_type}", spec: :material, page: 16 unless ['image/png', 'image/jpeg'].include? img_type.type
     end
