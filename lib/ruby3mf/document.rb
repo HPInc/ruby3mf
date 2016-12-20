@@ -33,6 +33,12 @@ class Document
       Log3mf.context "zip" do |l|
         begin
           Zip.warn_invalid_date = false
+
+          # check for the general purpose flag set - if so, warn that 3mf may not work on some systems
+          if File.read(input_file)[6] == "\b"
+            l.warning "File format: this file may not open on all systems"
+          end
+
           Zip::File.open(input_file) do |zip_file|
 
             l.info "Zip file is valid"
