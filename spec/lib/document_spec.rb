@@ -10,6 +10,14 @@ describe Document do
     expect(Log3mf.count_entries(:error, :fatal_error)).to eq(0)
   end
 
+  it 'should detect a wonky Microsoft file and throw a warning' do
+    Log3mf.context "Win10.3mf" do |l|
+      Document.read('spec/examples/Win10.3mf')
+    end
+
+    expect(Log3mf.count_entries(:warning)).to eq(1)
+  end
+
   it 'parses a invalid file reporting 1 error' do
     Log3mf.context "3d_model_invalid_xml.3mf" do |l|
       Document.read('spec/examples/3d_model_invalid_xml.3mf')
