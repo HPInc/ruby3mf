@@ -35,4 +35,5 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'rubyzip'
   spec.add_runtime_dependency 'nokogiri', '~>1.6.8'
   spec.add_runtime_dependency 'mimemagic'
+  spec.add_runtime_dependency 'mini_magick', '~> 4.6'
 end
