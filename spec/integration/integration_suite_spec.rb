@@ -25,6 +25,7 @@ describe 'Integration Tests' do
       'dot_rels_file_no_relationship_element.3mf' => [["zip/relationships/parsing relationships", :error, "No relationship elements found", {:page=>4}]],
       'invalid_content_type.3mf' => [["zip/content types/parse", :error, "[Content_Types].xml is missing required ContentType \"application/vnd.openxmlformats-package.relationships+xml\"", {:page=>10}]],
       'invalid_startpart_type.3mf' => [["zip/relationships/parsing relationships/Verifying StartPart", :error, "rels/.rels Relationship file has an invalide attribute type for the root 3D Model (StartPart).\n                         The correct attribute type should be \"http://schemas.microsoft.com/3dmanufacturing/2013/01/3dmodel\"", {:page=>10}]],
+      'invalid_thumbnail_colorspace.3mf' => [["zip/relationship elements//Metadata/thumbnail.jpg/Thumbnail3mf", :fatal_error, "CMYK JPEG images must not be used for the thumbnail", :page => 36]],
       'invalid_thumbnail_file_type.3mf' => [["zip/relationship elements//Metadata/thumbnail.gif/Thumbnail3mf", :error, "Expected a png or jpeg thumbnail but the thumbnail was of type image/gif", {:page=>12}]],
       'invalid_texture_file_type.3mf' => [["zip/relationship elements//3D/Textures/texture.gif/Texture3mf", :error, "Expected a png or jpeg texture but the texture was of type image/gif", {:spec=>:material, :page=>16}]],
       'missing_content_types.3mf' => [["zip/content types", :error, "Missing required file: [Content_Types].xml", {:page=>4}]],
