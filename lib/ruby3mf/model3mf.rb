@@ -42,8 +42,7 @@ class Model3mf
             l.info "All model resource contenttypes are valid"
           else
             bad_types.each { |bt|
-              puts "bad type: #{bt}"
-              l.error "resource in model has invalid contenttype #{bt}", page: 10
+              l.error :resource_contentype_invalid, bt: bt
             }
           end
         end

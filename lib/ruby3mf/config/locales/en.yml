@@ -1,0 +1,4 @@
+en:
+  resource_contentype_invalid:
+    msg: "resource in model has invalid contenttype %{bt}"
+    page: 10

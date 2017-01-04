@@ -23,7 +23,7 @@ describe Log3mf do
       ENV['LOGDEBUG']='true'
       log_levels.each do |level|
         log.context "context for #{level} test" do |l|
-          log.send(level.to_sym, level) rescue nil
+          log.send(level.to_sym, level.to_s) rescue nil
           expect(Log3mf.entries(level.to_sym).count).to be >= 1
           expect(Log3mf.count_entries(level.to_sym)).to be >= 1
         end
