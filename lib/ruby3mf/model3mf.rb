@@ -13,6 +13,8 @@ class Model3mf
         l.fatal_error "Model file invalid XML. Exception #{e}"
       end
 
+      GlobalXMLValidations.validate(model_doc)
+
       l.context "verifying 3D payload required resources" do |l|
         # results = model_doc.css("model resources m:texture2d")
         required_resources = model_doc.css("//model//resources//*[path]").collect { |n| n["path"] }

@@ -9,6 +9,8 @@ class Relationships
           config.strict.nonet.noblanks
         end
 
+        GlobalXMLValidations.validate(doc)
+
         # Verify <Relationships><Relationship/></Relationships>
         root_element = doc.children[0]
         if root_element.name == "Relationships"

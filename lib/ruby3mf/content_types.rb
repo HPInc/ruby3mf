@@ -10,6 +10,8 @@ class ContentTypes
           config.strict.nonet.noblanks
         end
 
+        GlobalXMLValidations.validate(doc)
+
         l.warning '[Content_Types].xml must contain exactly one root node' unless doc.children.size == 1
         l.warning '[Content_Types].xml must contain root name Types' unless doc.children.first.name == "Types"
 

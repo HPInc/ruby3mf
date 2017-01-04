@@ -6,6 +6,7 @@ require_relative "ruby3mf/model3mf"
 require_relative "ruby3mf/relationships"
 require_relative "ruby3mf/thumbnail3mf"
 require_relative "ruby3mf/texture3mf"
+require_relative "ruby3mf/global_xml_validations"
 
 require 'zip'
 require 'nokogiri'
