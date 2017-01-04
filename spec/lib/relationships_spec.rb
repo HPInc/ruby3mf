@@ -28,6 +28,7 @@ describe Relationships do
     before do
       allow(model_zip_entry).to receive(:get_input_stream).and_return(model_xml)
       allow(texture_zip_entry).to receive(:get_input_stream).and_return(texture_xml)
+      allow(GlobalXMLValidations).to receive(:validate).and_return(false)
     end
 
     it "should parse relationshios prolerly" do

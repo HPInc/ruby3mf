@@ -5,6 +5,7 @@ describe Thumbnail3mf do
   before do
     allow(MiniMagick::Image).to receive(:read).and_return(img_colorspace)
     allow(MimeMagic).to receive(:by_magic).and_return(img_type)
+    allow(GlobalXMLValidations).to receive(:validate).and_return(false)
   end
 
   context ".parse good ContentType" do
@@ -22,7 +23,7 @@ describe Thumbnail3mf do
   end
 
   context ".parse bad ContentType" do
-    let(:img_type)  { double('ImgType', :type => 'foo/bar')} 
+    let(:img_type)  { double('ImgType', :type => 'foo/bar')}
     let(:zip_entry) { double('ZipEntry', :get_input_stream => img_type)}
     let(:images)    { double('Images', :first => zip_entry) }
     let(:message)   { 'Expected a png or jpeg thumbnail but the thumbnail was of type'}
@@ -46,7 +47,7 @@ describe Thumbnail3mf do
     context "when the jpeg is a CMYK image" do
       let(:img_colorspace) { double('String', :colorspace => 'DirectClass CMYK Matte')}
       let(:message) { 'CMYK JPEG images must not be used for the thumbnail'}
-      let(:img_type)  { double('ImgType', :type => 'foo/bar')}  
+      let(:img_type)  { double('ImgType', :type => 'foo/bar')}
 
       it 'should log a an error' do
         expect { Thumbnail3mf.parse(:doc, zip_entry) }.to raise_error { |e|

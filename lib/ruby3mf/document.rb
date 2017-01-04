@@ -28,7 +28,6 @@ class Document
   def self.read(input_file)
 
     m = new(input_file)
-
     begin
       Log3mf.context "zip" do |l|
         begin
