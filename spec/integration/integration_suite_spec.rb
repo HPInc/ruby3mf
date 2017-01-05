@@ -40,7 +40,8 @@ describe 'Integration Tests' do
       'resource_contentype_invalid.3mf' => [["zip/relationship elements//3D/3dmodel.model/parsing model/verifying 3D payload required resources/verifying 3D resource types", :error, "resource in model has invalid contenttype image/ping", {:page => 10}]],
       'clockwise_normal.3mf' => [["zip/relationship elements//3D/3dmodel.model/parsing model/validating geometry", :fatal_error, "Non-manifold edge in 3dmodel", {:page=>27}]],
       'cube_with_hole.3mf' => [["zip/relationship elements//3D/3dmodel.model/parsing model/validating geometry", :fatal_error, "Non-manifold edge in 3dmodel", {:page=>27}]],
-      'nonmanifold_cubes.3mf' => [["zip/relationship elements//3D/3dmodel.model/parsing model/validating geometry", :fatal_error, "Non-manifold edge in 3dmodel", {:page=>27}]]
+      'nonmanifold_cubes.3mf' => [["zip/relationship elements//3D/3dmodel.model/parsing model/validating geometry", :fatal_error, "Non-manifold edge in 3dmodel", {:page=>27}]],
+      'hidden_file.3mf' => [["zip/part names /3D/.zip", :error, "Other than /_rels/.rels, no segment of a 3MF part name may start with the '.' character", {:page=>13}]]
     } }
 
     context 'global validations' do

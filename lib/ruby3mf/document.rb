@@ -52,18 +52,13 @@ class Document
                   begin
                     u = URI part.name
                   rescue ArgumentError
-                    # :err_uri_bad
-                    l.error 'Path names must be valid Open Package Convention URIs or IRIs', page: 13
+                    l.error :err_uri_bad
                     next
                   end
 
-                  #No segement of a part name may be empty or start with '.' except for the package relations part (_rels/.rels)
                   u.path.split('/').each do |segment|
-                    # :err_uri_empty_segment
-                    l.error 'No segment of a 3MF part name path may be empty', page: 13 if segment.empty?
-
-                    # :err_uri_hidden_file
-                    l.error "Other than /_rels/.rels, no segment of a 3MF part name may start with the '.' character", page: 13 if (segment.start_with? '.') && !(segment.end_with? '.rels')
+                    l.error :err_uri_empty_segment if segment.empty?
+                    l.error :err_uri_hidden_file if (segment.start_with? '.') && !(segment.end_with? '.rels')
                   end
                 end
               end
