@@ -53,11 +53,11 @@ class MeshAnalyzer
               result = validate_object(resource)
 
               if result == :bad_orientation
-                l.fatal_error "Bad triangle orientation", page: 27
+                l.fatal_error :resource_3dmodel_orientation
               elsif result == :hole
-                l.fatal_error "Hole in model", page: 27
+                l.fatal_error :resource_3dmodel_hole
               elsif result == :nonmanifold
-                l.fatal_error "Non-manifold edge in 3dmodel", page: 27
+                l.fatal_error :resource_3dmodel_nonmanifold
               end
             end
           end
