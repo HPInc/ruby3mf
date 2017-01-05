@@ -37,7 +37,8 @@ describe 'Integration Tests' do
       'not_a_zip.3mf' => [["zip", :fatal_error, "File provided is not a valid ZIP archive", {:page => 9}]],
       'invalid_texture_path_in_model.3mf' => [["zip/relationship elements//3D/3dmodel.model/parsing model/verifying 3D payload required resources", :error, "Missing required resource: /3D/Textures/wrong-file-name.png Resource referenced in model, but not in .rels relationship file", {:page => 10}]],
       'zero_size_texture.3mf' => [["zip/relationship elements//3D/Textures/texture.png/Texture3mf", :fatal_error, "Texture file must be valid image file", {:spec => :material, :page => 16}]],
-      'resource_contentype_invalid.3mf' => [["zip/relationship elements//3D/3dmodel.model/parsing model/verifying 3D payload required resources/verifying 3D resource types", :error, "resource in model has invalid contenttype image/ping", {:page => 10}]]
+      'resource_contentype_invalid.3mf' => [["zip/relationship elements//3D/3dmodel.model/parsing model/verifying 3D payload required resources/verifying 3D resource types", :error, "resource in model has invalid contenttype image/ping", {:page => 10}]],
+      'clockwise_normal.3mf' => [["zip/relationship elements//3D/3dmodel.model/parsing model/validating geometry", :fatal_error, "Non-manifold edge in 3dmodel", {:page=>27}]]
     } }
 
     context 'global validations' do

@@ -1,3 +1,5 @@
+require_relative 'mesh_analyzer'
+
 class Model3mf
 
   def self.parse(document, zip_entry)
@@ -43,6 +45,9 @@ class Model3mf
         end
 
       end
+
+      # call the analyzer
+      MeshAnalyzer.validate(model_doc)
     end
     model_doc
   end
