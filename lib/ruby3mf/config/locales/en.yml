@@ -4,8 +4,7 @@ en:
     page: 10
   model_resource_not_in_rels:
     msg: "Missing required resource: %{mr} Resource referenced in model, but not in .rels relationship file"
-    page: 10
-  resource_3dmodel_orientation:
+    page: 10  resource_3dmodel_orientation:
     msg: "Bad triangle orientation"
     page: 27
   resource_3dmodel_hole:

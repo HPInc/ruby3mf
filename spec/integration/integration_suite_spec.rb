@@ -44,7 +44,6 @@ describe 'Integration Tests' do
             end
 
           end
-
         end
       end
     end

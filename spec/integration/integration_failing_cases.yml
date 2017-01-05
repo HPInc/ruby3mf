@@ -1,0 +1,6 @@
+missing_rels_entry_for_resources.3mf:
+  error:
+    model_resource_not_in_rels
+invalid_texture_path_in_model.3mf:
+  error:
+    model_resource_not_in_rels
