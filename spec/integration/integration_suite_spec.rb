@@ -37,47 +37,51 @@ describe 'Integration Tests' do
       'not_a_zip.3mf' => [["zip", :fatal_error, "File provided is not a valid ZIP archive", {:page => 9}]],
       'invalid_texture_path_in_model.3mf' => [["zip/relationship elements//3D/3dmodel.model/parsing model/verifying 3D payload required resources", :error, "Missing required resource: /3D/Textures/wrong-file-name.png Resource referenced in model, but not in .rels relationship file", {:page => 10}]],
       'zero_size_texture.3mf' => [["zip/relationship elements//3D/Textures/texture.png/Texture3mf", :fatal_error, "Texture file must be valid image file", {:spec => :material, :page => 16}]],
-      'resource_contentype_invalid.3mf' => [["zip/relationship elements//3D/3dmodel.model/parsing model/verifying 3D payload required resources/verifying 3D resource types", :error, "resource in model has invalid contenttype image/ping", {:page => 10}]],
-      'has_xml_space_attribute.3mf' => [["foo", :error, "found an xml:space attribute when it is not allowed", {:page => 16}]]
+      'resource_contentype_invalid.3mf' => [["zip/relationship elements//3D/3dmodel.model/parsing model/verifying 3D payload required resources/verifying 3D resource types", :error, "resource in model has invalid contenttype image/ping", {:page => 10}]]
     } }
 
     context 'global validations' do
-      let(:global_failures) {
-        [["zip/content types/parse/global xml validations", :error, "found an xml:space attribute when it is not allowed", {:page => 16}]]
-      }
+      let(:global_failures) { {
+        'has_xml_space_attribute.3mf' => [["zip/content types/parse/global xml validations", :error, "found an xml:space attribute when it is not allowed", {:page => 16}]],
+        'wrong_encoding.3mf' => [["zip/content types/parse/global xml validations", :error, "found XML content that was not UTF8 encoded", {:page => 15}]]
+      } }
 
-      before do
-        Document.read('spec/ruby3mf-testfiles/failing_cases/has_xml_space_attribute.3mf')
-      end
-
-      it 'should have errors' do
-        expect(Log3mf.count_entries(:error)).to be >= 1
-      end
-
-      it 'should log the correct errors' do
-        expect(Log3mf.entries(:error)).to eq(global_failures)
-      end
-    end
-
-
-    Dir.glob('spec/ruby3mf-testfiles/failing_cases/*') { |test_file|
-      unless test_file == 'spec/ruby3mf-testfiles/failing_cases/has_xml_space_attribute.3mf'
+      Dir.glob('spec/ruby3mf-testfiles/failing_cases/global/*') { |test_file|
         context test_file do
           before do
-            allow(GlobalXMLValidations).to receive(:validate).and_return(false)
             Document.read(test_file)
           end
 
-          it "should have errors" do
-            expect(Log3mf.count_entries(:error, :fatal_error)).to be >= 1
-            expect(Log3mf.count_entries(:fatal_error)).to be <= 1
+          it 'should have errors' do
+            expect(Log3mf.count_entries(:error)).to be >= 1
           end
 
           it 'should log the correct errors' do
-            expect(Log3mf.entries(:error, :fatal_error)).to eq(failures[test_file.split('/').last])
+            expect(Log3mf.entries(:error, :fatal_error)).to eq(global_failures[test_file.split('/').last])
           end
         end
+      }
+    end
+
+
+    Dir.glob('spec/ruby3mf-testfiles/failing_cases/*.3mf') { |test_file|
+      #unless test_file == 'spec/ruby3mf-testfiles/failing_cases/global/*'
+      context test_file do
+        before do
+          allow(GlobalXMLValidations).to receive(:validate).and_return(false)
+          Document.read(test_file)
+        end
+
+        it "should have errors" do
+          expect(Log3mf.count_entries(:error, :fatal_error)).to be >= 1
+          expect(Log3mf.count_entries(:fatal_error)).to be <= 1
+        end
+
+        it 'should log the correct errors' do
+          expect(Log3mf.entries(:error, :fatal_error)).to eq(failures[test_file.split('/').last])
+        end
       end
+      #end
     }
   end
 
