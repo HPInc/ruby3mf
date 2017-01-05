@@ -42,6 +42,38 @@ class Document
 
             l.info "Zip file is valid"
 
+            # check for valid, absolute URI's for each path name
+
+            zip_file.each do |part|
+
+              l.context "part names /#{part.name}" do |l|
+                unless (part.name == '[Content_Types].xml')
+                  begin
+                    u = URI "/#{part.name}"
+                  rescue ArgumentError
+                    # :err_uri_bad
+                    l.error 'Path names must be valid Open Package Convention URIs or IRIs', page: 13
+                    next
+                  end
+
+                  #No segement of a part name may be empty or start with '.' except for the package relations part (_rels/.rels)
+                  u.component.each do |segment|
+                    # :err_uri_empty_segment
+                    if segment.nil?
+                      l.error 'No segment of a 3MF part name path may be empty', page: 13
+                    end
+                    if segment.to_s.start_with? '.'
+                      #ignore .rels files, misnamed .rels should result in "missing .rels error" later
+                      unless segment.to_s.end_with? '.rels'
+                        # :err_uri_invalid_name
+                        l.error "Other than /_rels/.rels, no segment of a 3MF part name may start with the '.' character", page: 13
+                      end
+                    end
+                  end
+                end
+              end
+            end
+
             l.context "content types" do |l|
               # 1. Get Content Types
               content_type_match = zip_file.glob('\[Content_Types\].xml').first
@@ -70,6 +102,22 @@ class Document
               # 3. Validate all relationships
               m.relationships.each do |rel|
                 l.context rel[:target] do |l|
+
+                  begin
+                    u = URI rel[:target]
+                  rescue ArgumentError
+                    # :err_uri_bad
+                    l.error 'Part names must be valid Open Package Convention URIs or IRIs', page: 13
+                    next
+                  end
+
+                  #URI:relative? and .absolute? seem to be giving the wrong answer
+                  unless u.to_s.start_with? '/'
+                    # :err_uri_relative_path
+                    puts "Relative path is #{u.to_s}"
+                    l.error 'Part names must not include relative paths', page: 13
+                  end
+
                   target = rel[:target].gsub(/^\//, "")
                   relationship_file = zip_file.glob(target).first
 
@@ -91,6 +139,7 @@ class Document
               end
             end
           end
+
           return m
         rescue Zip::Error
           l.fatal_error 'File provided is not a valid ZIP archive', page: 9
@@ -122,7 +171,7 @@ class Document
         end
       end
 
-      File.open(output_file, "wb") {|f| f.write(buffer.string) }
+      File.open(output_file, "wb") { |f| f.write(buffer.string) }
 
     end
 

@@ -12,6 +12,7 @@ require 'zip'
 require 'nokogiri'
 require 'json'
 require 'mimemagic'
+require 'uri'
 require 'I18n'
 
 I18n.load_path = ["lib/ruby3mf/config/locales/en.yml"]
