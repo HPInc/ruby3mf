@@ -47,9 +47,10 @@ class Document
             zip_file.each do |part|
 
               l.context "part names /#{part.name}" do |l|
-                unless (part.name == '[Content_Types].xml')
+                puts part.name
+                unless part.name.end_with? '[Content_Types].xml'
                   begin
-                    u = URI "/#{part.name}"
+                    u = URI part.name
                   rescue ArgumentError
                     # :err_uri_bad
                     l.error 'Path names must be valid Open Package Convention URIs or IRIs', page: 13
@@ -57,18 +58,12 @@ class Document
                   end
 
                   #No segement of a part name may be empty or start with '.' except for the package relations part (_rels/.rels)
-                  u.component.each do |segment|
+                  u.path.split('/').each do |segment|
                     # :err_uri_empty_segment
-                    if segment.nil?
-                      l.error 'No segment of a 3MF part name path may be empty', page: 13
-                    end
-                    if segment.to_s.start_with? '.'
-                      #ignore .rels files, misnamed .rels should result in "missing .rels error" later
-                      unless segment.to_s.end_with? '.rels'
-                        # :err_uri_invalid_name
-                        l.error "Other than /_rels/.rels, no segment of a 3MF part name may start with the '.' character", page: 13
-                      end
-                    end
+                    l.error 'No segment of a 3MF part name path may be empty', page: 13 if segment.empty?
+
+                    # :err_uri_hidden_file
+                    l.error "Other than /_rels/.rels, no segment of a 3MF part name may start with the '.' character", page: 13 if (segment.start_with? '.') && !(segment.end_with? '.rels')
                   end
                 end
               end
