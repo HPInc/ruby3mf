@@ -3,9 +3,6 @@ require 'mini_magick'
 class Thumbnail3mf
 
   def self.parse(doc, relationship_file)
-
-    GlobalXMLValidations.validate(doc)
-
     img_type = MimeMagic.by_magic(relationship_file.get_input_stream)
     img_colorspace = MiniMagick::Image.read(relationship_file.get_input_stream).colorspace
 

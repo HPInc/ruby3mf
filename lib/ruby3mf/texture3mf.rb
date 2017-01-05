@@ -6,9 +6,6 @@ class Texture3mf
   end
 
   def self.parse(document, relationship_file)
-
-    GlobalXMLValidations.validate(document)
-
     t = new(document)
     t.name = relationship_file.name
     stream = relationship_file.get_input_stream

@@ -5,15 +5,10 @@ class Model3mf
 
     Log3mf.context "parsing model" do |l|
       begin
-        model_doc = Nokogiri::XML(zip_entry.get_input_stream) do |config|
-          config.strict.nonet.noblanks
-        end
-        l.info "We Found a Model, and it's XML!"
+        model_doc = GlobalXMLValidations.validate_parse(zip_entry)
       rescue Nokogiri::XML::SyntaxError => e
         l.fatal_error "Model file invalid XML. Exception #{e}"
       end
-
-      GlobalXMLValidations.validate(model_doc)
 
       l.context "verifying 3D payload required resources" do |l|
         # results = model_doc.css("model resources m:texture2d")

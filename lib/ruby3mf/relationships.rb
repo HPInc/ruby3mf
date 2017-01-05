@@ -5,11 +5,7 @@ class Relationships
     Log3mf.context "parsing relationships" do |l|
       begin
         # Parse Relationships XML
-        doc = Nokogiri::XML(zip_entry.get_input_stream) do |config|
-          config.strict.nonet.noblanks
-        end
-
-        GlobalXMLValidations.validate(doc)
+        doc = GlobalXMLValidations.validate_parse(zip_entry)
 
         # Verify <Relationships><Relationship/></Relationships>
         root_element = doc.children[0]
