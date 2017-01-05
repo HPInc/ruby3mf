@@ -24,7 +24,7 @@ class Model3mf
           l.info "All model required resources are defined in .rels relationship files."
         else
           missing_resources.each { |mr|
-            l.error "Missing required resource: #{mr} Resource referenced in model, but not in .rels relationship file", page: 10
+            l.error :model_resource_not_in_rels, mr: mr
           }
         end
 

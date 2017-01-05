@@ -1,3 +1,4 @@
+require 'yaml'
 require_relative '../spec_helper.rb'
 
 describe 'Integration Tests' do
@@ -66,13 +67,13 @@ describe 'Integration Tests' do
       }
     end
 
+    failing_cases = YAML.load_file('spec/integration/integration_failing_cases.yml')
+    failing_cases.each do |test_file, config|
 
-    Dir.glob('spec/ruby3mf-testfiles/failing_cases/*.3mf') { |test_file|
-      #unless test_file == 'spec/ruby3mf-testfiles/failing_cases/global/*'
       context test_file do
         before do
           allow(GlobalXMLValidations).to receive(:validate).and_return(false)
-          Document.read(test_file)
+          Document.read("spec/ruby3mf-testfiles/failing_cases/#{test_file}")
         end
 
         it "should have errors" do
@@ -81,11 +82,19 @@ describe 'Integration Tests' do
         end
 
         it 'should log the correct errors' do
-          expect(Log3mf.entries(:error, :fatal_error)).to eq(failures[test_file.split('/').last])
+          error_keys = config["error"].split(" ")
+          error_keys.each do |key|
+
+            #TODO: Need to verify that the expected error msg was actually generated. Will need to
+            #ignore the string interpolation placeholders when comparing
+            expected_error_msg = I18n.t("#{key}.msg")
+
+            #expect(Log3mf.entries(:error, :fatal_error)).to eq(failures[test_file.split('/').last])
+          end
         end
       end
-      #end
-    }
+    end
+
   end
 
 end
