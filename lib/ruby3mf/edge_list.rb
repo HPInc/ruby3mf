@@ -31,7 +31,7 @@ class EdgeList
       edge = "#{second_vertex}:#{first_vertex}"
     end
 
-    return @edges[edge]
+    @edges[edge]
   end
 
   def print_list()
@@ -41,13 +41,13 @@ class EdgeList
     end
   end
 
-  def manifold_edges()
+  def manifold_edges?()
     @edges.each do |key, value|
       (pos, neg) = value
       return false if (pos != 1 or neg != 1)
     end
 
-    return true
+    true
   end
 
 end

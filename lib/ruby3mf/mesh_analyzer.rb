@@ -7,8 +7,9 @@ def find_child(node, child_name)
       return child
     end
   end
-end
 
+  nil
+end
 
 
 class MeshAnalyzer
@@ -17,21 +18,25 @@ class MeshAnalyzer
     list = EdgeList.new
 
     mesh = find_child(object, "mesh")
-    triangles = find_child(mesh, "triangles")
+    if mesh
+      triangles = find_child(mesh, "triangles")
 
-    triangles.children.each do |triangle|
-      v1 = triangle.attributes["v1"].to_s().to_i()
-      v2 = triangle.attributes["v2"].to_s().to_i()
-      v3 = triangle.attributes["v3"].to_s().to_i()
+      if triangles
+        triangles.children.each do |triangle|
+          v1 = triangle.attributes["v1"].to_s().to_i()
+          v2 = triangle.attributes["v2"].to_s().to_i()
+          v3 = triangle.attributes["v3"].to_s().to_i()
 
-      list.add_edge(v1, v2)
-      list.add_edge(v2, v3)
-      list.add_edge(v3, v1)
+          list.add_edge(v1, v2)
+          list.add_edge(v2, v3)
+          list.add_edge(v3, v1)
+        end
+
+        return list.manifold_edges?()
+      end
     end
 
-    manifold = list.manifold_edges()
-
-    return manifold
+    true
   end
 
   def self.validate(model_doc)
