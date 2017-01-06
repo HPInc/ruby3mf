@@ -45,9 +45,7 @@ class Document
             # check for valid, absolute URI's for each path name
 
             zip_file.each do |part|
-
               l.context "part names /#{part.name}" do |l|
-                puts part.name
                 unless part.name.end_with? '[Content_Types].xml'
                   begin
                     u = URI part.name
@@ -57,7 +55,6 @@ class Document
                   end
 
                   u.path.split('/').each do |segment|
-                    l.error :err_uri_empty_segment if segment.empty?
                     l.error :err_uri_hidden_file if (segment.start_with? '.') && !(segment.end_with? '.rels')
                   end
                 end
@@ -96,19 +93,14 @@ class Document
                   begin
                     u = URI rel[:target]
                   rescue ArgumentError
-                    # :err_uri_bad
-                    l.error 'Part names must be valid Open Package Convention URIs or IRIs', page: 13
-                    next
+                    l.error :err_uri_bad
                   end
 
-                  #URI:relative? and .absolute? seem to be giving the wrong answer
-                  unless u.to_s.start_with? '/'
-                    # :err_uri_relative_path
-                    puts "Relative path is #{u.to_s}"
-                    l.error 'Part names must not include relative paths', page: 13
-                  end
+                  l.error :err_uri_relative_path unless u.to_s.start_with? '/'
 
                   target = rel[:target].gsub(/^\//, "")
+                  l.error :err_uri_empty_segment if target.end_with? '/' or target.include? '//'
+                  l.error :err_uri_relative_path if target.include? '/../'
                   relationship_file = zip_file.glob(target).first
 
                   if relationship_file

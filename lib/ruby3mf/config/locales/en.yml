@@ -11,3 +11,6 @@ en:
   err_uri_bad:
     msg: 'Path names must be valid Open Package Convention URIs or IRIs'
     page: 13
+  err_uri_relative_path:
+    msg: 'Part names must not include relative paths'
+    page: 13

@@ -41,7 +41,11 @@ describe 'Integration Tests' do
       'clockwise_normal.3mf' => [["zip/relationship elements//3D/3dmodel.model/parsing model/validating geometry", :fatal_error, "Non-manifold edge in 3dmodel", {:page=>27}]],
       'cube_with_hole.3mf' => [["zip/relationship elements//3D/3dmodel.model/parsing model/validating geometry", :fatal_error, "Non-manifold edge in 3dmodel", {:page=>27}]],
       'nonmanifold_cubes.3mf' => [["zip/relationship elements//3D/3dmodel.model/parsing model/validating geometry", :fatal_error, "Non-manifold edge in 3dmodel", {:page=>27}]],
-      'hidden_file.3mf' => [["zip/part names /3D/.zip", :error, "Other than /_rels/.rels, no segment of a 3MF part name may start with the '.' character", {:page=>13}]]
+      'hidden_file.3mf' => [["zip/part names /3D/.3dmodel.model", :error, "Other than /_rels/.rels, no segment of a 3MF part name may start with the '.' character", {:page=>13}]],
+      'empty_path_segment.3mf' => [["zip/relationship elements//3D//3dmodel.model", :error, "No segment of a 3MF part name path may be empty", {:page=>13}], ["zip/relationship elements//3D//3dmodel.model", :error, "Relationship Target file /3D//3dmodel.model not found", {:page=>11}]],
+      'relative_path.3mf' => [["zip/relationship elements/../3D/3dmodel.model", :error, "Part names must not include relative paths", {:page=>13}], ["zip/relationship elements/../3D/3dmodel.model", :error, "Relationship Target file ../3D/3dmodel.model not found", {:page=>11}]],
+      'relative_path_segment.3mf' => [["zip/relationship elements//3D/../3D/3dmodel.model", :error, "Part names must not include relative paths", {:page=>13}], ["zip/relationship elements//3D/../3D/3dmodel.model", :error, "Relationship Target file /3D/../3D/3dmodel.model not found", {:page=>11}]],
+      'empty_part.3mf' => [["zip/relationship elements//empty/", :error, "No segment of a 3MF part name path may be empty", {:page=>13}], ["zip/relationship elements//empty/", :error, "Relationship Target file /empty/ not found", {:page=>11}]]
     } }
 
     context 'global validations' do
