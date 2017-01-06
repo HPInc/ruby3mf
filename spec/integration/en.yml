@@ -1,0 +1,82 @@
+en:
+#   missing_rels_entry_for_resources:
+#     error:
+#       - model_resource_not_in_rels
+#   invalid_texture_path_in_model:
+#     error:
+#       - model_resource_not_in_rels
+#   3d_model_invalid_xml:
+#     fatal_error:
+#       - 3d_model_invalid_xml
+#   3d_payload_files:
+#     error:
+#       - 3d_payload_files
+#   content_types_invalid_xml:
+#     error:
+#       - content_types_invalid_xml
+#   dot_rels_file_has_invalid_xml:
+#     error:
+#       - dot_rels_file_has_invalid_xml
+#   dot_rels_file_missing_relationships_element:
+#     error:
+#       - dot_rels_file_missing_relationships_element
+#   dot_rels_file_no_relationship_element:
+#     error:
+#       - dot_rels_file_no_relationship_element
+#   invalid_content_type:
+#     error:
+#       - invalid_content_type
+#   invalid_startpart_type:
+#     error:
+#       - invalid_startpart_type
+#   invalid_thumbnail_colorspace:
+#     fatal_error:
+#       - invalid_thumbnail_colorspace
+#   invalid_thumbnail_file_type:
+#     error:
+#       - invalid_thumbnail_file_type
+#   invalid_texture_file_type:
+#     error:
+#       - invalid_texture_file_type
+#   missing_content_types:
+#     error:
+#       - missing_content_types
+#   missing_dot_rels_file:
+#     fatal_error:
+#       - missing_dot_rels_file
+#   missing_rels_entry_for_resources:
+#     error:
+#       - missing_rels_entry_for_resources
+#   missing_rels_folder:
+#     fatal_error:
+#       - missing_rels_folder
+#   no_3d_model:
+#     error:
+#       - no_3d_model
+#   not_a_zip:
+#     fatal_error:
+#       - not_a_zip
+#   invalid_texture_path_in_model:
+#     error:
+#       - invalid_texture_path_in_model
+#   zero_size_texture:
+#     fatal_error:
+#       - zero_size_texture
+#   resource_contentype_invalid:
+#     error:
+#       - resource_contentype_invalid
+#   clockwise_normal:
+#     fatal_error:
+#       - clockwise_normal
+#   cube_with_hole:
+#     fatal_error:
+#       - cube_with_hole
+#   nonmanifold_cubes:
+#     fatal_error:
+#       - nonmanifold_cubes
+  global/has_xml_space_attribute:
+    error:
+      - has_xml_space_attribute
+  global/wrong_encoding:
+    error:
+      - wrong_encoding

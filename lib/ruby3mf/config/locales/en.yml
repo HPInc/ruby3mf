@@ -1,16 +1,91 @@
 en:
-  resource_contentype_invalid:
-    msg: "resource in model has invalid contenttype %{bt}"
-    page: 10
-  model_resource_not_in_rels:
-    msg: "Missing required resource: %{mr} Resource referenced in model, but not in .rels relationship file"
-    page: 10
-  resource_3dmodel_orientation:
-    msg: "Bad triangle orientation"
-    page: 27
-  resource_3dmodel_hole:
-    msg: "Hole in model"
-    page: 27
-  resource_3dmodel_nonmanifold:
-    msg: "Non-manifold edge in 3dmodel"
-    page: 27
+  # resource_contentype_invalid:
+  #   msg: "resource in model has invalid contenttype %{bt}"
+  #   page: 10
+  # model_resource_not_in_rels:
+  #   msg: "Missing required resource: %{mr} Resource referenced in model, but not in .rels relationship file"
+  #   page: 10
+  # resource_3dmodel_orientation:
+  #   msg: "Bad triangle orientation"
+  #   page: 27
+  # resource_3dmodel_hole:
+  #   msg: "Hole in model"
+  #   page: 27
+  # resource_3dmodel_nonmanifold:
+  #   msg: "Non-manifold edge in 3dmodel"
+  #   page: 27
+  # 3d_model_invalid_xml:
+  #   msg: "Model file invalid XML. Exception Start tag expected, '<' not found"
+  #   page:
+  # 3d_payload_files:
+  #   msg: "Relationship Target file /3D/Texture/texture2.texture not found"
+  #   page: 11
+  # content_types_invalid_xml:
+  #   msg: "[Content_Types].xml file is not valid XML. Start tag expected, '<' not found"
+  #   page: 15
+  # dot_rels_file_has_invalid_xml:
+  #   msg: "Relationships (.rel) file is not a valid XML file: Start tag expected, '<' not found"
+  #   page: 4
+  # dot_rels_file_missing_relationships_element:
+  #   msg: ".rels XML must have &lt;Relationships&gt; root element"
+  #   page: 4
+  # dot_rels_file_no_relationship_element:
+  #   msg: "No relationship elements found"
+  #   page: 4
+  # invalid_content_type:
+  #   msg: "[Content_Types].xml is missing required ContentType \"application/vnd.openxmlformats-package.relationships+xml\""
+  #   page: 10
+  # invalid_startpart_type:
+  #   msg: "rels/.rels Relationship file has an invalide attribute type for the root 3D Model (StartPart).\n                         The correct attribute type should be \"http://schemas.microsoft.com/3dmanufacturing/2013/01/3dmodel\""
+  #   page: 10
+  # invalid_thumbnail_colorspace:
+  #   msg: "CMYK JPEG images must not be used for the thumbnail"
+  #   page: 36
+  # invalid_thumbnail_file_type:
+  #   msg: "Expected a png or jpeg thumbnail but the thumbnail was of type image/gif"
+  #   page: 36
+  # invalid_texture_file_type:
+  #   msg: "Expected a png or jpeg texture but the texture was of type image/gif"
+  #   page: 16
+  # missing_content_types:
+  #   msg: "Missing required file: [Content_Types].xml"
+  #   page: 4
+  # missing_dot_rels_file:
+  #   msg: "Missing required file _rels/.rels"
+  #   page: 4
+  # missing_rels_entry_for_resources:
+  #   msg: "Missing required resource: /3D/Texture/texture1.texture Resource referenced in model, but not in .rels relationship file"
+  #   page: 10
+  # missing_rels_folder:
+  #   msg: "Missing required file _rels/.rels"
+  #   page: 4
+  # no_3d_model:
+  #   msg: "Relationship Target file /3D/3dmodel.model not found"
+  #   page: 11
+  # not_a_zip:
+  #   msg: "File provided is not a valid ZIP archive"
+  #   page: 9
+  # invalid_texture_path_in_model:
+  #   msg: "Missing required resource: /3D/Textures/wrong-file-name.png Resource referenced in model, but not in .rels relationship file"
+  #   page: 10
+  # zero_size_texture:
+  #   msg: "Texture file must be valid image file"
+  #   page: 16
+  # resource_contentype_invalid:
+  #   msg: "resource in model has invalid contenttype image/ping"
+  #   page: 10
+  # clockwise_normal:
+  #   msg: "Bad triangle orientation"
+  #   page: 27
+  # cube_with_hole:
+  #   msg: "Hole in model"
+  #   page: 27
+  # nonmanifold_cubes:
+  #   msg: "Non-manifold edge in 3dmodel"
+  #   page: 27
+  has_xml_space_attribute:
+    msg: "found an xml:space attribute when it is not allowed"
+    page: 16
+  wrong_encoding:
+    msg: "found XML content that was not UTF8 encoded"
+    page: 15

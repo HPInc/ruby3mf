@@ -131,4 +131,3 @@ class Log3mf
     Log3mf.instance.to_json
   end
 end
-
