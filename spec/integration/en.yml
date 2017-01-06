@@ -67,13 +67,13 @@ en:
       - resource_contentype_invalid
   clockwise_normal:
     fatal_error:
-      - clockwise_normal
+      - resource_3dmodel_orientation
   cube_with_hole:
     fatal_error:
-      - cube_with_hole
+      - resource_3dmodel_hole
   nonmanifold_cubes:
     fatal_error:
-      - nonmanifold_cubes
+      - resource_3dmodel_nonmanifold
   has_xml_space_attribute:
     error:
       - has_xml_space_attribute
