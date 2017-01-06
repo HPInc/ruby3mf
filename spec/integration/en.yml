@@ -104,4 +104,6 @@ en:
   two_model_elements:
     error:
       - root_3dmodel_element_not_model
-
+  missing_object_pid:
+    error:
+      - missing_object_pid
