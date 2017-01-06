@@ -7,7 +7,6 @@ describe 'Integration Tests' do
     Dir.glob('spec/ruby3mf-testfiles/passing_cases/*') { |test_file|
       context test_file do
         before do
-          allow(GlobalXMLValidations).to receive(:validate).and_return(false)
           Document.read(test_file)
         end
         it "should NOT have errors" do
@@ -36,9 +35,6 @@ describe 'Integration Tests' do
         it 'should log the correct errors' do
           errors.each do |error_type, references|
             references.each do |reference|
-              #TODO: Need to verify that the expected error msg was actually generated. Will need to
-              #ignore the string interpolation placeholders when comparing
-
               expected_error_msg = I18n.t("#{reference}.msg")
               expect(Log3mf.entries(:error, :fatal_error).first[2]).to eq(expected_error_msg)
             end

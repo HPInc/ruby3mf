@@ -74,9 +74,9 @@ en:
   nonmanifold_cubes:
     fatal_error:
       - nonmanifold_cubes
-  global/has_xml_space_attribute:
+  has_xml_space_attribute:
     error:
       - has_xml_space_attribute
-  global/wrong_encoding:
+  wrong_encoding:
     error:
       - wrong_encoding
