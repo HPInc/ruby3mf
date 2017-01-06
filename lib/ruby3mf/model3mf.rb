@@ -46,6 +46,13 @@ class Model3mf
 
       end
 
+      l.context "verifying model structure" do |l|
+        root = model_doc.root
+        if root.name != "model"
+          l.error :root_3dmodel_element_not_model
+        end
+      end
+
       # call the analyzer
       MeshAnalyzer.validate(model_doc)
     end

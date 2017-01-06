@@ -92,4 +92,6 @@ en:
   wrong_encoding:
     msg: "found XML content that was not UTF8 encoded"
     page: 15
-
+  root_3dmodel_element_not_model:
+    msg: "Root element of 3dmodel not single model element"
+    page: 20
