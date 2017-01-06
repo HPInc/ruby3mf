@@ -49,7 +49,8 @@ class MeshAnalyzer
 
         if resources
           resources.children.each do |resource|
-            if resource.name = "object" and resource.attributes["type"].to_s() == "model"
+            solid_model = resource.attributes["type"].to_s() == "model" or resource.attributes["type"].to_s() == "solidsupport"
+            if resource.name == "object" and solid_model
               result = validate_object(resource)
 
               if result == :bad_orientation
