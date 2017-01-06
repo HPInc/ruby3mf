@@ -15,6 +15,10 @@ require 'mimemagic'
 require 'I18n'
 
 I18n.load_path = Dir[File.join('lib', 'ruby3mf','config', 'locales', '*.yml')]
+<<<<<<< HEAD
+=======
+I18n.load_path << Dir[File.join('spec','integration', '*.yml')]
+>>>>>>> fix specs to use yml content
 
 module Ruby3mf
 
