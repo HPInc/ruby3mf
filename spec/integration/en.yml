@@ -80,3 +80,23 @@ en:
   wrong_encoding:
     error:
       - wrong_encoding
+  empty_path_segment:
+    error:
+      - err_uri_empty_segment
+  empty_part:
+    error:
+      - err_uri_empty_segment
+  hidden_file:
+    error:
+      - err_uri_hidden_file
+  relative_path:
+    error:
+      - err_uri_relative_path
+  relative_path_segment:
+    error:
+      - err_uri_relative_path
+  invalid_uri:
+    error:
+      - err_uri_bad
+
+
