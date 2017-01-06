@@ -14,8 +14,7 @@ require 'json'
 require 'mimemagic'
 require 'I18n'
 
-I18n.load_path = ["lib/ruby3mf/config/locales/en.yml"]
-# require 'csv'
+I18n.load_path = Dir[File.join('lib', 'ruby3mf','config', 'locales', '*.yml')]
 
 module Ruby3mf
 
