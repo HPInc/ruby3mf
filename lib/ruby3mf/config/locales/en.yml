@@ -95,3 +95,6 @@ en:
   root_3dmodel_element_not_model:
     msg: "Root element of 3dmodel not single model element"
     page: 20
+  dtd_not_allowed:
+    msg: "found XML content that has data type definitions"
+    page: 15

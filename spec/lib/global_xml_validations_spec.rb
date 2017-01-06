@@ -11,7 +11,11 @@ describe GlobalXMLValidations do
         </Types>'
   )
   }
+  let(:zipentry) { 'foo' }
 
+  before do
+    allow(GlobalXMLValidations).to receive(:dtd_exists?).and_return(false)
+  end
 
   context 'when xml space attribute is present' do
     let(:xml) { Nokogiri::XML(
@@ -24,8 +28,9 @@ describe GlobalXMLValidations do
     }
 
     let(:message) { "found an xml:space attribute when it is not allowed" }
+
     it 'should give an error' do
-      GlobalXMLValidations.validate(xml)
+      GlobalXMLValidations.validate(zipentry, xml)
       expect(Log3mf.count_entries(:error)).to be == 1
       expect(Log3mf.entries(:error).first[2]).to include message
     end
@@ -33,7 +38,7 @@ describe GlobalXMLValidations do
 
   context 'when xml space attribute is not present' do
     it 'should be supes chill (not give an error) if the xml:space attribute is missing' do
-      GlobalXMLValidations.validate(xml)
+      GlobalXMLValidations.validate(zipentry, xml)
       expect(Log3mf.count_entries(:error)).to be == 0
       expect(Log3mf.entries(:error)).to be_empty
     end
@@ -52,7 +57,7 @@ describe GlobalXMLValidations do
     let(:message) { "found XML content that was not UTF8 encoded" }
 
     it 'should give an error' do
-      GlobalXMLValidations.validate(xml)
+      GlobalXMLValidations.validate(zipentry, xml)
       expect(Log3mf.count_entries(:error)).to be == 1
       expect(Log3mf.entries(:error).first[2]).to include message
     end
@@ -60,7 +65,7 @@ describe GlobalXMLValidations do
 
   context 'when xml encoding is UTF-8' do
     it 'should validate that the file is correctly encoded' do
-      GlobalXMLValidations.validate(xml)
+      GlobalXMLValidations.validate(zipentry, xml)
       expect(Log3mf.count_entries(:error)).to be == 0
       expect(Log3mf.entries(:error)).to be_empty
     end

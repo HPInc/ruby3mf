@@ -28,7 +28,7 @@ describe Relationships do
     before do
       allow(model_zip_entry).to receive(:get_input_stream).and_return(model_xml)
       allow(texture_zip_entry).to receive(:get_input_stream).and_return(texture_xml)
-      allow(GlobalXMLValidations).to receive(:validate).and_return(false)
+      allow(GlobalXMLValidations).to receive(:validate)
     end
 
     it "should parse relationshios prolerly" do
@@ -67,9 +67,10 @@ describe Relationships do
     before do
       allow(model_zip_entry).to receive(:get_input_stream).and_return(model_xml)
       allow(texture_zip_entry).to receive(:get_input_stream).and_return(texture_xml)
+      allow(GlobalXMLValidations).to receive(:validate)
     end
 
-    it "should parse relationshios prolerly" do
+    it "should parse relationships properly" do
       rels.map{|r| Relationships.parse(r)}
       expect(Log3mf.count_entries(:error, :fatal_error)).to be == 0
       expect(Log3mf.entries(:info)[1][2]).to include message
