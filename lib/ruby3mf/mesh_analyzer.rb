@@ -32,7 +32,7 @@ class MeshAnalyzer
           list.add_edge(v3, v1)
         end
 
-        return list.manifold_edges?()
+        return list.verify_edges()
       end
     end
 
@@ -49,11 +49,16 @@ class MeshAnalyzer
 
         if resources
           resources.children.each do |resource|
-            if resource.name = "object" and resource.attributes["type"].to_s() == "model"
-              valid = validate_object(resource)
+            solid_model = resource.attributes["type"].to_s() == "model" or resource.attributes["type"].to_s() == "solidsupport"
+            if resource.name == "object" and solid_model
+              result = validate_object(resource)
 
-              if not valid
-                l.fatal_error "Non-manifold edge in 3dmodel", page: 27
+              if result == :bad_orientation
+                l.fatal_error :resource_3dmodel_orientation
+              elsif result == :hole
+                l.fatal_error :resource_3dmodel_hole
+              elsif result == :nonmanifold
+                l.fatal_error :resource_3dmodel_nonmanifold
               end
             end
           end

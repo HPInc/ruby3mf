@@ -41,13 +41,20 @@ class EdgeList
     end
   end
 
-  def manifold_edges?()
+  def verify_edges()
     @edges.each do |key, value|
       (pos, neg) = value
-      return false if (pos != 1 or neg != 1)
+
+      if (pos > 1 and neg == 0) or (pos == 0 and neg > 1)
+        return :bad_orientation
+      elsif pos + neg == 1
+        return :hole
+      elsif pos != 1 or neg != 1
+        return :nonmanifold
+      end
     end
 
-    true
+    :ok
   end
 
 end
