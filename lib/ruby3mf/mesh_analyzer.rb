@@ -15,52 +15,61 @@ end
 class MeshAnalyzer
 
   def self.validate_object(object)
-    list = EdgeList.new
+    Log3mf.context "validating geometry" do |l|
+      list = EdgeList.new
 
-    mesh = find_child(object, "mesh")
-    if mesh
-      triangles = find_child(mesh, "triangles")
+      # if a triangle has a pid, then the object needs a pid
+      has_triangle_pid = false
 
-      if triangles
-        triangles.children.each do |triangle|
-          v1 = triangle.attributes["v1"].to_s().to_i()
-          v2 = triangle.attributes["v2"].to_s().to_i()
-          v3 = triangle.attributes["v3"].to_s().to_i()
+      mesh = find_child(object, "mesh")
+      if mesh
+        triangles = find_child(mesh, "triangles")
 
-          list.add_edge(v1, v2)
-          list.add_edge(v2, v3)
-          list.add_edge(v3, v1)
+        if triangles
+          triangles.children.each do |triangle|
+            v1 = triangle.attributes["v1"].to_s().to_i()
+            v2 = triangle.attributes["v2"].to_s().to_i()
+            v3 = triangle.attributes["v3"].to_s().to_i()
+
+            list.add_edge(v1, v2)
+            list.add_edge(v2, v3)
+            list.add_edge(v3, v1)
+
+            if not has_triangle_pid
+              has_triangle_pid = triangle.attributes["pid"] != nil
+            end
+          end
+
+          has_object_material = object.attributes["pid"] and object.attributes["pindex"]
+          if has_triangle_pid and not has_object_material
+            l.error :missing_object_pid
+          end
+
+          result = list.verify_edges()
+          if result == :bad_orientation
+            l.fatal_error :resource_3dmodel_orientation
+          elsif result == :hole
+            l.fatal_error :resource_3dmodel_hole
+          elsif result == :nonmanifold
+            l.fatal_error :resource_3dmodel_nonmanifold
+          end
         end
-
-        return list.verify_edges()
       end
     end
-
-    true
   end
 
   def self.validate(model_doc)
-    Log3mf.context "validating geometry" do |l|
-      root = model_doc.root
-      node = root
+    root = model_doc.root
+    node = root
 
-      if node.name == "model"
-        resources = find_child(node, "resources")
+    if node.name == "model"
+      resources = find_child(node, "resources")
 
-        if resources
-          resources.children.each do |resource|
-            solid_model = resource.attributes["type"].to_s() == "model" or resource.attributes["type"].to_s() == "solidsupport"
-            if resource.name == "object" and solid_model
-              result = validate_object(resource)
-
-              if result == :bad_orientation
-                l.fatal_error :resource_3dmodel_orientation
-              elsif result == :hole
-                l.fatal_error :resource_3dmodel_hole
-              elsif result == :nonmanifold
-                l.fatal_error :resource_3dmodel_nonmanifold
-              end
-            end
+      if resources
+        resources.children.each do |resource|
+          solid_model = resource.attributes["type"].to_s() == "model" or resource.attributes["type"].to_s() == "solidsupport"
+          if resource.name == "object" and solid_model
+            validate_object(resource)
           end
         end
       end

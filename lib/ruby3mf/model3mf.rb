@@ -46,7 +46,14 @@ class Model3mf
 
       end
 
-      # call the analyzer
+      l.context "verifying model structure" do |l|
+        root = model_doc.root
+        l.error :root_3dmodel_element_not_model if root.name != "model"
+
+        children = model_doc.root.children.map { |child| child.name }
+        l.error :missing_model_children unless children.include?("resources") && children.include?("build")
+      end
+
       MeshAnalyzer.validate(model_doc)
     end
     model_doc

@@ -1,4 +1,7 @@
 en:
+  has_data_type_definitions:
+    error:
+      - dtd_not_allowed
   missing_rels_entry_for_resources:
     error:
       - model_resource_not_in_rels
@@ -101,5 +104,12 @@ en:
   invalid_uri:
     error:
       - err_uri_bad
-
-
+  two_model_elements:
+    error:
+      - root_3dmodel_element_not_model
+  missing_object_pid:
+    error:
+      - missing_object_pid
+  missing_model_children:
+    error:
+      - missing_model_children

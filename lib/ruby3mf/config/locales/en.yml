@@ -95,4 +95,15 @@ en:
   wrong_encoding:
     msg: "found XML content that was not UTF8 encoded"
     page: 15
-
+  root_3dmodel_element_not_model:
+    msg: "Root element of 3dmodel not single model element"
+    page: 20
+  dtd_not_allowed:
+    msg: "found XML content that has data type definitions"
+    page: 15
+  missing_object_pid:
+    msg: "object with triangle color override missing object level pid"
+    page: 26
+  missing_model_children:
+    msg: "model element must include resources and build as child elements"
+    page: 20
