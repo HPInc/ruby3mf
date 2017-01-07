@@ -107,3 +107,6 @@ en:
   missing_object_pid:
     error:
       - missing_object_pid
+  missing_model_children:
+    error:
+      - missing_model_children
