@@ -100,7 +100,6 @@ class Document
                   l.error :err_uri_relative_path unless u.to_s.start_with? '/'
 
                   target = rel[:target].gsub(/^\//, "")
-                  puts target
                   l.error :err_uri_empty_segment if target.end_with? '/' or target.include? '//'
                   l.error :err_uri_relative_path if target.include? '/../'
                   relationship_file = zip_file.glob(target).first

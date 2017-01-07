@@ -14,6 +14,11 @@ class Relationships
           if relationship_elements.size > 0
             relationship_elements.each do |node|
               if node.is_a?(Nokogiri::XML::Element) && node.name == "Relationship"
+                relationships.each do |previous_rel|
+                  if previous_rel[:target] == node['Target'] && previous_rel[:type] == node['Type']
+                    l.error :multiple_relationships
+                  end
+                end
                 relationships << {target: node['Target'], type: node['Type'], id: node['Id']}
                 l.info "adding relationship: #{relationships.last.inspect}"
               else
@@ -28,7 +33,7 @@ class Relationships
                 start_part_type = "http://schemas.microsoft.com/3dmanufacturing/2013/01/3dmodel"
                 start_part_count = relationships.select { |r| r[:type] == start_part_type }.size
                 if start_part_count != 1
-                  l.error "rels/.rels Relationship file has an invalide attribute type for the root 3D Model (StartPart).
+                  l.error "rels/.rels Relationship file has an invalid attribute type for the root 3D Model (StartPart).
                          The correct attribute type should be \"#{start_part_type}\"", page: 10
                 end
               end

@@ -50,6 +50,9 @@ en:
   missing_rels_folder:
     fatal_error:
       - missing_rels_folder
+  multiple_relationships:
+    error:
+      - multiple_relationships
   no_3d_model:
     error:
       - no_3d_model

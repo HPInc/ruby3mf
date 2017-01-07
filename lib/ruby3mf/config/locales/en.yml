@@ -48,7 +48,7 @@ en:
     msg: "[Content_Types].xml is missing required ContentType \"application/vnd.openxmlformats-package.relationships+xml\""
     page: 10
   invalid_startpart_type:
-    msg: "rels/.rels Relationship file has an invalide attribute type for the root 3D Model (StartPart).\n                         The correct attribute type should be \"http://schemas.microsoft.com/3dmanufacturing/2013/01/3dmodel\""
+    msg: "rels/.rels Relationship file has an invalid attribute type for the root 3D Model (StartPart).\n                         The correct attribute type should be \"http://schemas.microsoft.com/3dmanufacturing/2013/01/3dmodel\""
     page: 10
   invalid_thumbnail_colorspace:
     msg: "CMYK JPEG images must not be used for the thumbnail"
@@ -71,6 +71,9 @@ en:
   missing_rels_folder:
     msg: "Missing required file _rels/.rels"
     page: 4
+  multiple_relationships:
+    msg: "There MUST NOT be more than one relationship of a given relationship type from one part to a second part"
+    page: 10
   no_3d_model:
     msg: "Relationship Target file /3D/3dmodel.model not found"
     page: 11
