@@ -94,5 +94,11 @@ relative_path_segment:
 invalid_uri:
   error:
     - err_uri_bad
+missing_object_pid:
+  error:
+    - missing_object_pid
+missing_model_children:
+  error:
+    - missing_model_children
 
 

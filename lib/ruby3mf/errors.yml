@@ -88,4 +88,9 @@ has_xml_space_attribute:
 wrong_encoding:
   msg: "found XML content that was not UTF8 encoded"
   page: 15
-
+missing_object_pid:
+  msg: "object with triangle color override missing object level pid"
+  page: 26
+missing_model_children:
+  msg: "model element must include resources and build as child elements"
+  page: 20
