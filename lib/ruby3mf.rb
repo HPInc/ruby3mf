@@ -13,11 +13,8 @@ require 'nokogiri'
 require 'json'
 require 'mimemagic'
 require 'uri'
-require 'I18n'
-
-I18n.load_path = Dir[File.join('lib', 'ruby3mf','config', 'locales', '*.yml')]
+require 'yaml'
 
 module Ruby3mf
-
   # Your code goes here...
 end

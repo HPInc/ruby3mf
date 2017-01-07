@@ -1,4 +1,5 @@
 require 'singleton'
+require 'yaml'
 
 # Example usage:
 
@@ -33,6 +34,8 @@ class Log3mf
     @log_list = []
     @context_stack = []
     @ledger = []
+    errormap_path = File.join(File.dirname(__FILE__),"errors.yml")
+    @errormap = YAML.load_file(errormap_path)
   end
 
   def reset_log
@@ -78,10 +81,8 @@ class Log3mf
   end
 
   def new_log(severity, message, options={})
-    interpolated_msg = I18n.t("#{message}.msg", options)
-    page_number = I18n.t("#{message}.page")
-
-    @log_list << ["#{@context_stack.join("/")}", severity, interpolated_msg, page: page_number] unless severity==:debug && ENV['LOGDEBUG'].nil?
+    error_info = @errormap.fetch(message.to_s)
+    @log_list << ["#{@context_stack.join("/")}", severity, error_info["msg"], page: error_info["page"]] unless severity==:debug && ENV['LOGDEBUG'].nil?
   end
 
   def count_entries(*levels)

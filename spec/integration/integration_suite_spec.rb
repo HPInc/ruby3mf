@@ -18,7 +18,8 @@ describe 'Integration Tests' do
 
   context 'failing test cases' do
 
-    failing_cases = YAML.load_file('spec/integration/en.yml')["en"]
+    failing_cases = YAML.load_file('spec/integration/integration_tests.yml')
+    let(:errormap) { YAML.load_file('lib/ruby3mf/errors.yml') }
 
     failing_cases.each do |test_file, errors|
 
@@ -35,7 +36,7 @@ describe 'Integration Tests' do
         it 'should log the correct errors' do
           errors.each do |error_type, references|
             references.each do |reference|
-              expected_error_msg = I18n.t("#{reference}.msg")
+              expected_error_msg = errormap.fetch(reference.to_s)["msg"]
               expect(Log3mf.entries(:error, :fatal_error).first[2]).to eq(expected_error_msg)
             end
           end
