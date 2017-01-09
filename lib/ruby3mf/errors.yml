@@ -91,3 +91,6 @@ missing_object_pid:
 missing_model_children:
   msg: "model element must include resources and build as child elements"
   page: 20
+object_with_components_and_pid:
+  msg: "object with components and pid or pindex"
+  page: 26

@@ -103,3 +103,6 @@ missing_object_pid:
 missing_model_children:
   error:
     missing_model_children:
+components_with_pid:
+  error:
+    object_with_components_and_pid:

@@ -15,6 +15,12 @@ end
 class MeshAnalyzer
 
   def self.validate_object(object)
+    Log3mf.context "verifying object" do |l|
+      children = object.children.map { |child| child.name }
+      have_override = object.attributes["pid"] or object.attributes["pindex"]
+      l.error :object_with_components_and_pid if have_override && children.include?("components")
+    end
+
     Log3mf.context "validating geometry" do |l|
       list = EdgeList.new
 
