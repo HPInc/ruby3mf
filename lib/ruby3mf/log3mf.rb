@@ -23,6 +23,7 @@ require 'yaml'
 
 class Log3mf
   include Singleton
+  include Interpolation
 
   LOG_LEVELS = [:fatal_error, :error, :warning, :info, :debug]
 
@@ -82,7 +83,13 @@ class Log3mf
 
   def new_log(severity, message, options={})
     error_info = @errormap.fetch(message.to_s)
-    @log_list << ["#{@context_stack.join("/")}", severity, error_info["msg"], page: error_info["page"]] unless severity==:debug && ENV['LOGDEBUG'].nil?
+    msg = if options.keys == 0
+            error_info["msg"]
+          else
+            interpolate(error_info["msg"], options)
+          end
+
+    @log_list << ["#{@context_stack.join("/")}", severity, msg, page: error_info["page"]] unless severity==:debug && ENV['LOGDEBUG'].nil?
   end
 
   def count_entries(*levels)

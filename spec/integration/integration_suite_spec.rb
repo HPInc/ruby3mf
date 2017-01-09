@@ -3,6 +3,8 @@ require_relative '../spec_helper.rb'
 
 describe 'Integration Tests' do
 
+  include Interpolation
+
   context 'with passing test case' do
     Dir.glob('spec/ruby3mf-testfiles/passing_cases/*') { |test_file|
       context test_file do
@@ -34,10 +36,11 @@ describe 'Integration Tests' do
         end
 
         it 'should log the correct errors' do
-          errors.each do |error_type, references|
-            references.each do |reference|
-              expected_error_msg = errormap.fetch(reference.to_s)["msg"]
-              expect(Log3mf.entries(:error, :fatal_error).first[2]).to eq(expected_error_msg)
+          errors.each do |_, reference|
+            reference.each do |reference_error, options|
+              options = options ? symbolize_recursive(options) : {}
+              expected_error_msg = errormap.fetch(reference_error.to_s)["msg"]
+              expect(Log3mf.entries(:error, :fatal_error).first[2]).to eq(interpolate(expected_error_msg, options))
             end
           end
 
