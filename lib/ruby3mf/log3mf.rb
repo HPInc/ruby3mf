@@ -75,6 +75,7 @@ class Log3mf
     if message.is_a?(Symbol)
       new_log(severity, message, options)
     else
+      message = interpolate(message, options)
       @log_list << ["#{@context_stack.join("/")}", severity, message, options] unless severity==:debug && ENV['LOGDEBUG'].nil?
       # puts "[#{@context_stack.join("/")}] #{severity.to_s.upcase} #{message}"
     end
@@ -83,11 +84,7 @@ class Log3mf
 
   def new_log(severity, message, options={})
     error_info = @errormap.fetch(message.to_s)
-    msg = if options.keys == 0
-            error_info["msg"]
-          else
-            interpolate(error_info["msg"], options)
-          end
+    msg = interpolate(error_info["msg"], options)
 
     @log_list << ["#{@context_stack.join("/")}", severity, msg, page: error_info["page"]] unless severity==:debug && ENV['LOGDEBUG'].nil?
   end
