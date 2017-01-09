@@ -106,3 +106,6 @@ missing_model_children:
 components_with_pid:
   error:
     object_with_components_and_pid:
+build_of_other:
+  error:
+    build_with_other_item:

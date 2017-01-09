@@ -54,6 +54,21 @@ class Model3mf
         l.error :missing_model_children unless children.include?("resources") && children.include?("build")
       end
 
+      l.context "verifying build items" do |l|
+        build = find_child(model_doc.root, "build")
+        if build
+          items = build.children.map { |child| child.attributes["objectid"].to_s() if child.name == "item"}
+
+          resources = find_child(model_doc.root, "resources")
+          resources.children.each do |resource|
+            if resource.name == "object"
+              object_id = resource.attributes["id"].to_s()
+              l.error :build_with_other_item if resource.attributes["type"].to_s() == "other" and items.include?(object_id)
+            end
+          end
+        end
+      end
+
       MeshAnalyzer.validate(model_doc)
     end
     model_doc

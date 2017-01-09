@@ -94,3 +94,6 @@ missing_model_children:
 object_with_components_and_pid:
   msg: "object with components and pid or pindex"
   page: 26
+build_with_other_item:
+  msg: "build item with object of type other"
+  page: 27
