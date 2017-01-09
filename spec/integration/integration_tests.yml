@@ -63,6 +63,7 @@ zero_size_texture:
 resource_contentype_invalid:
   error:
     resource_contentype_invalid:
+      bt: image/ping
 clockwise_normal:
   fatal_error:
     resource_3dmodel_orientation:
