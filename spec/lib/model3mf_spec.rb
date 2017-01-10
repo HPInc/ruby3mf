@@ -32,7 +32,7 @@ describe Model3mf do
         <resources>
           <texture id="0" path="/3D/Texture/texture1.texture" width="425" height="425" depth="1" contenttype="image/jpeg" />
           <texture id="1" path="/3D/Texture/texture2.texture" width="235" height="208" depth="1" contenttype="image/jpeg" />
-          <object id="1" type="model">
+          <object id="2" type="model">
             <mesh>
               <vertices>
                 <vertex x="0" y="0" z="0" />
@@ -62,7 +62,7 @@ describe Model3mf do
           </object>
         </resources>
         <build>
-          <item objectid="1" />
+          <item objectid="2" />
         </build>
       </model>'
     }
@@ -96,7 +96,7 @@ describe Model3mf do
           <resources>
             <texture id="0" path="/3D/Texture/texture1.texture" width="425" height="425" depth="1" contenttype="image/jpeg" />
             <texture id="1" path="/3D/Texture/texture2.texture" width="235" height="208" depth="1" contenttype="image/jpeg" />
-            <object id="1" type="model">
+            <object id="2" type="model">
               <mesh>
                 <vertices>
                   <vertex x="0" y="0" z="0" />
@@ -126,7 +126,7 @@ describe Model3mf do
             </object>
           </resources>
           <build>
-            <item objectid="1" />
+            <item objectid="2" />
           </build>
         </model>'
       }

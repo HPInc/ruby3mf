@@ -97,3 +97,6 @@ object_with_components_and_pid:
 build_with_other_item:
   msg: "build item with object of type other"
   page: 27
+resource_id_collision:
+  msg: "resources must be unique within the model"
+  page: 22

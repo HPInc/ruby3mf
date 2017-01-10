@@ -109,3 +109,6 @@ components_with_pid:
 build_of_other:
   error:
     build_with_other_item:
+resource_id_collision:
+  error:
+    resource_id_collision:

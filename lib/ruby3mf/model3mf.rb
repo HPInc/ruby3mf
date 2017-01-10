@@ -46,6 +46,14 @@ class Model3mf
 
       end
 
+      l.context "verifying resources" do |l|
+        resources = find_child(model_doc.root, "resources")
+        if resources
+          ids = resources.children.map { |child| child.attributes["id"].to_s() if child.attributes["id"] }
+          l.error :resource_id_collision if ids.uniq.size != ids.size
+        end
+      end
+
       l.context "verifying model structure" do |l|
         root = model_doc.root
         l.error :root_3dmodel_element_not_model if root.name != "model"
