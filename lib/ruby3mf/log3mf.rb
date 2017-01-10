@@ -71,8 +71,9 @@ class Log3mf
   end
 
   def log(severity, message, options = {})
-    error = @errormap.fetch(message.to_s) { {"msg" => message.to_s } }
+    error = @errormap.fetch(message.to_s) { {"msg" => message.to_s, "page" => nil } }
     message = interpolate(error["msg"], options)
+    options[:page] = error["page"] if error["page"]
     @log_list << ["#{@context_stack.join("/")}", severity, message, options] unless severity==:debug && ENV['LOGDEBUG'].nil?
     raise FatalError if severity == :fatal_error
   end
