@@ -2,6 +2,15 @@ require_relative 'mesh_analyzer'
 
 class Model3mf
 
+  VALID_UNITS = [
+      'micron',
+      'millimeter',
+      'centimeter',
+      'meter',
+      'inch',
+      'foot'
+  ]
+
   def self.parse(document, zip_entry)
     model_doc = nil
 
@@ -57,6 +66,8 @@ class Model3mf
       l.context "verifying model structure" do |l|
         root = model_doc.root
         l.error :root_3dmodel_element_not_model if root.name != "model"
+
+        l.error(:invalid_model_unit, unit: root.attr('unit')) unless VALID_UNITS.include?(root.attr('unit'))
 
         children = model_doc.root.children.map { |child| child.name }
         l.error :missing_model_children unless children.include?("resources") && children.include?("build")

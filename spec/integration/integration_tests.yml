@@ -122,3 +122,7 @@ metadata_with_same_names:
 multiple_print_tickets:
   error:
     multiple_print_tickets:
+invalid_model_unit:
+  error:
+    invalid_model_unit:
+      unit: invalidunit
