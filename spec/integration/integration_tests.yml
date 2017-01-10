@@ -26,6 +26,14 @@ invalid_content_type:
 invalid_startpart_type:
   error:
     invalid_startpart_type:
+invalid_relationship_type:
+  error:
+    invalid_relationship_type:
+      type: http://schemas.microsoft.com/3dmanufacturing/2013/01/InvalidRelationshipType
+unsupported_relationship_type:
+  warning:
+    unsupported_relationship_type:
+      type: http://schemas.microsoft.com/3dmanufacturing/2013/01/printticket
 invalid_thumbnail_colorspace:
   fatal_error:
     invalid_thumbnail_colorspace:

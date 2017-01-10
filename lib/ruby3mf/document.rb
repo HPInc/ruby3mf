@@ -12,7 +12,8 @@ class Document
   RELATIONSHIP_TYPES = {
     'http://schemas.microsoft.com/3dmanufacturing/2013/01/3dmodel' => {klass: 'Model3mf', collection: :models},
     'http://schemas.openxmlformats.org/package/2006/relationships/metadata/thumbnail' => {klass: 'Thumbnail3mf', collection: :thumbnails},
-    'http://schemas.microsoft.com/3dmanufacturing/2013/01/3dtexture' => {klass: 'Texture3mf', collection: :textures}
+    'http://schemas.microsoft.com/3dmanufacturing/2013/01/3dtexture' => {klass: 'Texture3mf', collection: :textures},
+    'http://schemas.microsoft.com/3dmanufacturing/2013/01/printticket' => {}
   }
 
   def initialize(zip_filename)
@@ -107,13 +108,17 @@ class Document
                   if relationship_file
                     relationship_type = RELATIONSHIP_TYPES[rel[:type]]
                     if relationship_type.nil?
-                      l.warning "Relationship file defines a type that is not used in a normal 3mf file: #{rel[:type]}. Ignoring relationship."
+                      l.error :invalid_relationship_type, type: rel[:type]
                     else
-                      m.send(relationship_type[:collection]) << {
-                        rel_id: rel[:id],
-                        target: rel[:target],
-                        object: Object.const_get(relationship_type[:klass]).parse(m, relationship_file)
-                      }
+                      if relationship_type[:klass].nil?
+                        l.warning :unsupported_relationship_type, type: rel[:type]
+                      else
+                        m.send(relationship_type[:collection]) << {
+                            rel_id: rel[:id],
+                            target: rel[:target],
+                            object: Object.const_get(relationship_type[:klass]).parse(m, relationship_file)
+                        }
+                      end
                     end
                   else
                     l.error "Relationship Target file #{rel[:target]} not found", page: 11

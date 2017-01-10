@@ -49,6 +49,12 @@ invalid_content_type:
 invalid_startpart_type:
   msg: "rels/.rels Relationship file has an invalid attribute type for the root 3D Model (StartPart). The required type is \"http://schemas.microsoft.com/3dmanufacturing/2013/01/3dmodel\""
   page: 10
+invalid_relationship_type:
+  msg: "Invalid relationship type '%{type}' specified in .rels relationship file. Parts in the 3D payload MUST use one of the appropriate relationship types to establish that relationship between two parts in the payload."
+  page: 10
+unsupported_relationship_type:
+  msg: "Relationship file defines a type that is not supported by this tool: %{type}. Ignoring relationship."
+  page: 10
 invalid_thumbnail_colorspace:
   msg: "CMYK JPEG images must not be used for the thumbnail"
   page: 36
