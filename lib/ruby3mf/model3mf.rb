@@ -2,14 +2,12 @@ require_relative 'mesh_analyzer'
 
 class Model3mf
 
-  VALID_UNITS = [
-      'micron',
-      'millimeter',
-      'centimeter',
-      'meter',
-      'inch',
-      'foot'
-  ]
+  VALID_UNITS = [ 'micron', 'millimeter', 'centimeter', 'meter', 'inch', 'foot' ].freeze
+  VALID_EXTENSIONS = {
+    'http://schemas.microsoft.com/3dmanufacturing/slice/2015/07' => {},
+    'http://schemas.microsoft.com/3dmanufacturing/material/2015/02' => {},
+    'http://schemas.microsoft.com/3dmanufacturing/production/2015/06' => {},
+  }.freeze
 
   def self.parse(document, zip_entry)
     model_doc = nil
@@ -19,6 +17,24 @@ class Model3mf
         model_doc = GlobalXMLValidations.validate_parse(zip_entry)
       rescue Nokogiri::XML::SyntaxError => e
         l.fatal_error "Model file invalid XML. Exception #{e}"
+      end
+
+      l.context "verifying requiredextensions" do |l|
+        required_extensions = model_doc.css("//model")[0]["requiredextensions"]
+        if required_extensions
+          required_extensions.split(" ").each do |ns|
+            namespace_uri = model_doc.namespaces["xmlns:#{ns}"]
+            if namespace_uri
+              if VALID_EXTENSIONS.has_key? namespace_uri
+                l.info "Found a valid required extension: #{namespace_uri}"
+              else
+                l.error :unknown_required_extension, ext: namespace_uri
+              end
+            else
+              l.error :missing_extension_namespace_uri, ns: ns
+            end
+          end
+        end
       end
 
       l.context "verifying 3D payload required resources" do |l|
@@ -76,7 +92,7 @@ class Model3mf
       l.context "verifying build items" do |l|
         build = find_child(model_doc.root, "build")
         if build
-          items = build.children.map { |child| child.attributes["objectid"].to_s() if child.name == "item"}
+          items = build.children.map { |child| child.attributes["objectid"].to_s() if child.name == "item" }
 
           resources = find_child(model_doc.root, "resources")
           resources.children.each do |resource|

@@ -1,5 +1,5 @@
 resource_contentype_invalid:
-  msg: "resource in model has invalid contenttype %{bt}"
+  msg: "Resource in model has invalid contenttype %{bt}"
   page: 10
 err_uri_empty_segment:
   msg: 'No segment of a 3MF part name path may be empty'
@@ -83,19 +83,19 @@ zero_size_texture:
   msg: "Texture file must be valid image file"
   page: 16
 has_xml_space_attribute:
-  msg: "found an xml:space attribute when it is not allowed"
+  msg: "xml:space attribute is not allowed"
   page: 16
 invalid_model_unit:
   msg: "Invalid unit value of '%{unit}' specified in model file."
   page: 17
 wrong_encoding:
-  msg: "found XML content that was not UTF8 encoded"
+  msg: "XML content must be UTF8 encoded"
   page: 15
 missing_object_pid:
-  msg: "object with triangle color override missing object level pid"
+  msg: "Object with triangle color override missing object level pid"
   page: 26
 missing_model_children:
-  msg: "model element must include resources and build as child elements"
+  msg: "Model element must include resources and build as child elements"
   page: 20
 object_with_components_and_pid:
   msg: "object with components and pid or pindex"
@@ -112,3 +112,9 @@ metadata_elements_with_same_name:
 multiple_print_tickets:
   msg: "Only one print ticket allowed for any given model"
   page: 13
+unknown_required_extension:
+  msg: "Required extension not supported: %{ext}"
+  page: 14
+missing_extension_namespace_uri:
+  msg: "Required extension '%{ns}' MUST refer to namespace with URI"
+  page: 14

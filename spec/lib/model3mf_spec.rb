@@ -226,7 +226,7 @@ describe Model3mf do
                               :id => "rel0"}] }
 
 
-      let(:message) { 'model element must include resources and build as child elements' }
+      let(:message) { 'Model element must include resources and build as child elements' }
 
       it 'should log an error' do
         Model3mf.parse(document, zip_entry)

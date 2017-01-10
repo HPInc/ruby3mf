@@ -27,7 +27,7 @@ describe GlobalXMLValidations do
     )
     }
 
-    let(:message) { "found an xml:space attribute when it is not allowed" }
+    let(:message) { "xml:space attribute is not allowed" }
 
     it 'should give an error' do
       GlobalXMLValidations.validate(zipentry, xml)
@@ -54,7 +54,7 @@ describe GlobalXMLValidations do
     )
     }
 
-    let(:message) { "found XML content that was not UTF8 encoded" }
+    let(:message) { "XML content must be UTF8 encoded" }
 
     it 'should give an error' do
       GlobalXMLValidations.validate(zipentry, xml)

@@ -126,3 +126,11 @@ invalid_model_unit:
   error:
     invalid_model_unit:
       unit: invalidunit
+unsupported_required_extension:
+  error:
+    unknown_required_extension:
+      ext: http://schemas.autodesk.com/dmg/loadcase/2016/08
+missing_extension_namespace_uri:
+  error:
+    missing_extension_namespace_uri:
+      ns: "xx"
