@@ -119,3 +119,6 @@ resource_id_collision:
 metadata_with_same_names:
   error:
     metadata_elements_with_same_name:
+multiple_print_tickets:
+  error:
+    multiple_print_tickets:

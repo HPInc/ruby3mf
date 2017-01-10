@@ -8,12 +8,18 @@ class Document
   attr_accessor :objects
   attr_accessor :zip_filename
 
+  # Relationship schemas
+  MODEL_TYPE = 'http://schemas.microsoft.com/3dmanufacturing/2013/01/3dmodel'
+  THUMBNAIL_TYPE = 'http://schemas.openxmlformats.org/package/2006/relationships/metadata/thumbnail'
+  TEXTURE_TYPE = 'http://schemas.microsoft.com/3dmanufacturing/2013/01/3dtexture'
+  PRINT_TICKET_TYPE = 'http://schemas.microsoft.com/3dmanufacturing/2013/01/printticket'
+
   # Relationship Type => Class validating relationship type
   RELATIONSHIP_TYPES = {
-    'http://schemas.microsoft.com/3dmanufacturing/2013/01/3dmodel' => {klass: 'Model3mf', collection: :models},
-    'http://schemas.openxmlformats.org/package/2006/relationships/metadata/thumbnail' => {klass: 'Thumbnail3mf', collection: :thumbnails},
-    'http://schemas.microsoft.com/3dmanufacturing/2013/01/3dtexture' => {klass: 'Texture3mf', collection: :textures},
-    'http://schemas.microsoft.com/3dmanufacturing/2013/01/printticket' => {}
+    MODEL_TYPE => {klass: 'Model3mf', collection: :models},
+    THUMBNAIL_TYPE => {klass: 'Thumbnail3mf', collection: :thumbnails},
+    TEXTURE_TYPE => {klass: 'Texture3mf', collection: :textures},
+    PRINT_TICKET_TYPE => {}
   }
 
   def initialize(zip_filename)
@@ -84,6 +90,11 @@ class Document
               zip_file.glob('**/*.rels').each do |rel|
                 m.relationships += Relationships.parse(rel)
               end
+            end
+
+            l.context "print tickets" do |l|
+              print_ticket_types = m.relationships.select { |rel| rel[:type] == PRINT_TICKET_TYPE }
+              l.error :multiple_print_tickets if print_ticket_types.size > 1
             end
 
             l.context "relationship elements" do |l|

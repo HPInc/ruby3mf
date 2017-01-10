@@ -106,3 +106,6 @@ resource_id_collision:
 metadata_elements_with_same_name:
   msg: "metadata elements must not share the same name"
   page: 22
+multiple_print_tickets:
+  msg: "Only one print ticket allowed for any given model"
+  page: 13
