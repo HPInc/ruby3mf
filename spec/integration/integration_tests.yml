@@ -116,3 +116,6 @@ build_of_other:
 resource_id_collision:
   error:
     resource_id_collision:
+metadata_with_same_names:
+  error:
+    metadata_elements_with_same_name:

@@ -77,6 +77,12 @@ class Model3mf
         end
       end
 
+      l.context "checking metadata" do |l|
+        metadata = model_doc.root.css("metadata")
+        metadata_names = metadata.map { |met| met['name'] }
+        l.error :metadata_elements_with_same_name unless metadata_names.uniq!.nil?
+      end
+
       MeshAnalyzer.validate(model_doc)
     end
     model_doc
