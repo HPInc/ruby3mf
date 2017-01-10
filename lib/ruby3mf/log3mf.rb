@@ -64,29 +64,17 @@ class Log3mf
 
   def method_missing(name, *args, &block)
     if LOG_LEVELS.include? name.to_sym
-      #puts "***** #{name} called from #{caller[0]}"
       log(name.to_sym, *args)
     else
       super
     end
   end
 
-  def log(severity, message, options={})
-    if message.is_a?(Symbol)
-      new_log(severity, message, options)
-    else
-      message = interpolate(message, options)
-      @log_list << ["#{@context_stack.join("/")}", severity, message, options] unless severity==:debug && ENV['LOGDEBUG'].nil?
-      # puts "[#{@context_stack.join("/")}] #{severity.to_s.upcase} #{message}"
-    end
+  def log(severity, message, options = {})
+    error = @errormap.fetch(message.to_s) { {"msg" => message.to_s } }
+    message = interpolate(error["msg"], options)
+    @log_list << ["#{@context_stack.join("/")}", severity, message, options] unless severity==:debug && ENV['LOGDEBUG'].nil?
     raise FatalError if severity == :fatal_error
-  end
-
-  def new_log(severity, message, options={})
-    error_info = @errormap.fetch(message.to_s)
-    msg = interpolate(error_info["msg"], options)
-
-    @log_list << ["#{@context_stack.join("/")}", severity, msg, page: error_info["page"]] unless severity==:debug && ENV['LOGDEBUG'].nil?
   end
 
   def count_entries(*levels)
