@@ -6,6 +6,7 @@ class Document
   attr_accessor :thumbnails
   attr_accessor :textures
   attr_accessor :objects
+  attr_accessor :parts
   attr_accessor :zip_filename
 
   # Relationship Type => Class validating relationship type
@@ -15,6 +16,8 @@ class Document
     'http://schemas.microsoft.com/3dmanufacturing/2013/01/3dtexture' => {klass: 'Texture3mf', collection: :textures}
   }
 
+  TEXTURE_TYPES = %w[image/jpeg image/png application/vnd.ms-package.3dmanufacturing-3dmodeltexture]
+
   def initialize(zip_filename)
     self.models=[]
     self.thumbnails=[]
@@ -22,25 +25,56 @@ class Document
     self.objects={}
     self.relationships=[]
     self.types=[]
+    self.parts=[]
     @zip_filename = zip_filename
+  end
+
+  #verify that each texture part in the 3MF is related to the model through a texture relationship in a rels file
+  def self.validate_texture_parts(document, log)
+
+    return unless document.types.size > 0
+    document.parts.each do |filename|
+      ext = File::extname(filename).delete '.'
+      content_type = document.types[ext]
+      next unless TEXTURE_TYPES.include?(content_type)
+
+      has_relationship = false
+      document.textures.each do |texture_file|
+        if texture_file[:target] == filename
+          has_relationship = true
+          break
+        end
+      end
+
+      next unless !has_relationship
+      document.thumbnails.each do |thumbnail_file|
+        if thumbnail_file[:target] == filename
+          has_relationship = true
+          break
+        end
+      end
+      log.context "part names /#{filename}" do |l|
+        l.error :texture_without_relationship unless has_relationship
+      end
+    end
   end
 
   def self.read(input_file)
 
     m = new(input_file)
     begin
-      Log3mf.context "zip" do |l|
+      Log3mf.context 'zip' do |l|
         begin
           Zip.warn_invalid_date = false
 
           # check for the general purpose flag set - if so, warn that 3mf may not work on some systems
           if File.read(input_file)[6] == "\b"
-            l.warning "File format: this file may not open on all systems"
+            l.warning 'File format: this file may not open on all systems'
           end
 
           Zip::File.open(input_file) do |zip_file|
 
-            l.info "Zip file is valid"
+            l.info 'Zip file is valid'
 
             # check for valid, absolute URI's for each path name
 
@@ -57,35 +91,36 @@ class Document
                   u.path.split('/').each do |segment|
                     l.error :err_uri_hidden_file if (segment.start_with? '.') && !(segment.end_with? '.rels')
                   end
+                  m.parts << '/' + part.name unless part.directory?
                 end
               end
             end
 
-            l.context "content types" do |l|
+            l.context 'content types' do |l|
               # 1. Get Content Types
               content_type_match = zip_file.glob('\[Content_Types\].xml').first
               if content_type_match
                 m.types = ContentTypes.parse(content_type_match)
               else
-                l.error "Missing required file: [Content_Types].xml", page: 4
+                l.error 'Missing required file: [Content_Types].xml', page: 4
               end
             end
 
-            l.context "relationships" do |l|
+            l.context 'relationships' do |l|
               # 2. Get Relationships
               # rel_folders = zip_file.glob('**/_rels')
               # l.fatal_error "Missing any _rels folder", page: 4 unless rel_folders.size>0
 
               # 2.1 Validate that the top level _rels/.rel file exists
               rel_file = zip_file.glob('_rels/.rels').first
-              l.fatal_error "Missing required file _rels/.rels", page: 4 unless rel_file
+              l.fatal_error 'Missing required file _rels/.rels', page: 4 unless rel_file
 
               zip_file.glob('**/*.rels').each do |rel|
                 m.relationships += Relationships.parse(rel)
               end
             end
 
-            l.context "relationship elements" do |l|
+            l.context 'relationship elements' do |l|
               # 3. Validate all relationships
               m.relationships.each do |rel|
                 l.context rel[:target] do |l|
@@ -121,6 +156,8 @@ class Document
                 end
               end
             end
+
+            validate_texture_parts(m, l)
           end
 
           return m
@@ -154,7 +191,7 @@ class Document
         end
       end
 
-      File.open(output_file, "wb") { |f| f.write(buffer.string) }
+      File.open(output_file, 'wb') { |f| f.write(buffer.string) }
 
     end
 

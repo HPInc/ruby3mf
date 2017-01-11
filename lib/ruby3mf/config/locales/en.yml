@@ -107,3 +107,6 @@ en:
   missing_model_children:
     msg: "model element must include resources and build as child elements"
     page: 20
+  texture_without_relationship:
+    msg: "3MF includes a file that appears to be a texture part but is not associated with the 3D model via a relationship"
+    page: 13

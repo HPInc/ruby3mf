@@ -113,3 +113,7 @@ en:
   missing_model_children:
     error:
       - missing_model_children
+  texture_without_relationship:
+    error:
+      - texture_without_relationship
+
