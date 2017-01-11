@@ -36,6 +36,7 @@ invalid_thumbnail_colorspace:
 invalid_thumbnail_file_type:
   error:
     invalid_thumbnail_file_type:
+      type: image/gif
 invalid_texture_file_type:
   error:
     invalid_texture_file_type:

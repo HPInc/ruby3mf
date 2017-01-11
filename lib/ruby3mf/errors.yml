@@ -52,11 +52,14 @@ invalid_startpart_type:
 invalid_relationship_type:
   msg: "Invalid relationship type '%{type}' specified in .rels relationship file. Parts in the 3D payload MUST use one of the appropriate relationship types to establish that relationship between two parts in the payload."
   page: 10
+invalid_thumbnail_file:
+  msg: "thumbnail file must be valid image file"
+  page: 10
 invalid_thumbnail_colorspace:
   msg: "CMYK JPEG images must not be used for the thumbnail"
   page: 36
 invalid_thumbnail_file_type:
-  msg: "Expected a png or jpeg thumbnail but the thumbnail was of type image/gif"
+  msg: "Expected a png or jpeg thumbnail but the thumbnail was of type %{type}"
   page: 36
 invalid_texture_file_type:
   msg: "Expected a png or jpeg texture but the texture was of type image/gif"
