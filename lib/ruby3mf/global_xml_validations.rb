@@ -1,3 +1,24 @@
+require 'nokogiri'
+
+class Parser < Nokogiri::XML::SAX::Document
+  def start_element(name, attrs = [])
+    attributes = Hash[*attrs.flatten]
+    p attributes
+    attributes.values.each do |value|
+      raise "Wrong floating value" if GlobalXMLValidations.bad_floating_number?(value)
+    end
+  end
+
+  def characters(string)
+  end
+
+  def end_element(name)
+  end
+end
+
+#parser = Nokogiri::XML::SAX::Parser.new(Parser.new)
+#parser.parse(File.open("ruby3mf-testfiles/realworld/Ear_Mug_Vulcan_Edition_keyboard/3D/3dmodel.model"))
+
 class GlobalXMLValidations
 
   def self.validate_parse(file)
@@ -25,6 +46,11 @@ class GlobalXMLValidations
     vertices = document.at_css('vertices').to_s
     bad_decimal = /[0-9]+\,[0-9]+/i
     vertices =~ bad_decimal
+  end
+
+  def self.bad_floating_number?(value)
+    bad_decimal = /[0-9]+\.[0-9]+/i
+    value =~ bad_decimal
   end
 
   def self.space_attribute_exists?(document)
