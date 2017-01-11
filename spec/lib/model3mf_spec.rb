@@ -28,10 +28,10 @@ describe Model3mf do
 
     let(:model_content) {
       '<?xml version="1.0" encoding="UTF-8"?>
-      <model unit="millimeter" xml:lang="en-US" xmlns="http://schemas.microsoft.com/3dmanufacturing/core/2015/02">
+      <model unit="millimeter" xml:lang="en-US" xmlns:m="http://schemas.microsoft.com/3dmanufacturing/material/2015/02" xmlns="http://schemas.microsoft.com/3dmanufacturing/core/2015/02">
         <resources>
-          <texture id="0" path="/3D/Texture/texture1.texture" width="425" height="425" depth="1" contenttype="image/jpeg" />
-          <texture id="1" path="/3D/Texture/texture2.texture" width="235" height="208" depth="1" contenttype="image/jpeg" />
+          <m:texture2d id="0" path="/3D/Texture/texture1.texture" contenttype="image/jpeg" />
+          <m:texture2d id="1" path="/3D/Texture/texture2.texture" contenttype="image/jpeg" />
           <object id="2" type="model">
             <mesh>
               <vertices>
@@ -92,10 +92,10 @@ describe Model3mf do
 
       let(:model_content) {
         '<?xml version="1.0" encoding="UTF-8"?>
-        <model unit="millimeter" xml:lang="en-US" xmlns="http://schemas.microsoft.com/3dmanufacturing/core/2015/02">
+        <model unit="millimeter" xml:lang="en-US" xmlns:m="http://schemas.microsoft.com/3dmanufacturing/material/2015/02" xmlns="http://schemas.microsoft.com/3dmanufacturing/core/2015/02">
           <resources>
-            <texture id="0" path="/3D/Texture/texture1.texture" width="425" height="425" depth="1" contenttype="image/jpeg" />
-            <texture id="1" path="/3D/Texture/texture2.texture" width="235" height="208" depth="1" contenttype="image/jpeg" />
+            <m:texture2d id="0" path="/3D/Texture/texture1.texture" contenttype="image/jpeg" />
+            <m:texture2d id="1" path="/3D/Texture/texture2.texture" contenttype="image/jpeg" />
             <object id="2" type="model">
               <mesh>
                 <vertices>
@@ -176,42 +176,8 @@ describe Model3mf do
     context "with missing required child elements of model" do
       let(:model_content) {
         '<?xml version="1.0" encoding="UTF-8"?>
-              <model unit="millimeter" xml:lang="en-US" xmlns="http://schemas.microsoft.com/3dmanufacturing/core/2015/02">
-                <resource>
-                  <texture id="0" path="/3D/Texture/texture1.texture" width="425" height="425" depth="1" contenttype="image/jpeg" />
-                  <texture id="1" path="/3D/Texture/texture2.texture" width="235" height="208" depth="1" contenttype="image/jpeg" />
-                  <object id="1" type="model">
-                    <mesh>
-                      <vertices>
-                        <vertex x="0" y="0" z="0" />
-                        <vertex x="10" y="0" z="0" />
-                        <vertex x="10" y="20" z="0" />
-                        <vertex x="0" y="20" z="0" />
-                        <vertex x="0" y="0" z="30" />
-                        <vertex x="10" y="0" z="30" />
-                        <vertex x="10" y="20" z="30" />
-                        <vertex x="0" y="20" z="30" />
-                      </vertices>
-                      <triangles>
-                        <triangle v1="3" v2="2" v3="1" />
-                        <triangle v1="1" v2="0" v3="3" />
-                        <triangle v1="4" v2="5" v3="6" />
-                        <triangle v1="6" v2="7" v3="4" />
-                        <triangle v1="0" v2="1" v3="5" />
-                        <triangle v1="5" v2="4" v3="0" />
-                        <triangle v1="1" v2="2" v3="6" />
-                        <triangle v1="6" v2="5" v3="1" />
-                        <triangle v1="2" v2="3" v3="7" />
-                        <triangle v1="7" v2="6" v3="2" />
-                        <triangle v1="3" v2="0" v3="4" />
-                        <triangle v1="4" v2="7" v3="3" />
-                      </triangles>
-                    </mesh>
-                  </object>
-                </resource>
-                <building>
-                  <item objectid="1" />
-                </building>
+              <model unit="millimeter" xml:lang="en-US" xmlns:m="http://schemas.microsoft.com/3dmanufacturing/material/2015/02" xmlns="http://schemas.microsoft.com/3dmanufacturing/core/2015/02">
+
               </model>'
       }
 
@@ -238,13 +204,13 @@ describe Model3mf do
     context "with duplicate metadata elements" do
       let(:model_content) {
         '<?xml version="1.0" encoding="UTF-8"?>
-      <model unit="millimeter" xml:lang="en-US" xmlns="http://schemas.microsoft.com/3dmanufacturing/core/2015/02">
+      <model unit="millimeter" xml:lang="en-US" xmlns:m="http://schemas.microsoft.com/3dmanufacturing/material/2015/02" xmlns="http://schemas.microsoft.com/3dmanufacturing/core/2015/02">
           <metadata name="LicenseTerms">All rights reserved</metadata>
           <metadata name="Description">Box</metadata>
           <metadata name="Description">Box - CSS</metadata>
         <resources>
-          <texture id="0" path="/3D/Texture/texture1.texture" width="425" height="425" depth="1" contenttype="image/jpeg" />
-          <texture id="1" path="/3D/Texture/texture2.texture" width="235" height="208" depth="1" contenttype="image/jpeg" />
+          <m:texture2d id="0" path="/3D/Texture/texture1.texture" contenttype="image/jpeg" />
+          <m:texture2d id="1" path="/3D/Texture/texture2.texture" contenttype="image/jpeg" />
           <object id="2" type="model">
             <mesh>
               <vertices>
