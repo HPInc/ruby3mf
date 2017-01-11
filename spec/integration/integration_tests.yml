@@ -138,3 +138,6 @@ texture_without_relationship:
   error:
     texture_without_relationship:
       name: /3D/Textures/texture.jpg
+invalid_defaultns_metadata:
+  error:
+    invalid_metadata_under_defaultns:

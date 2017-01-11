@@ -108,6 +108,13 @@ class Model3mf
         metadata = model_doc.root.css("metadata")
         metadata_names = metadata.map { |met| met['name'] }
         l.error :metadata_elements_with_same_name unless metadata_names.uniq!.nil?
+
+        # metadata values allowed under default namespace (xmlns):
+        metadata_values = ['Title', 'Designer', 'Description', 'Copyright', 'LicenseTerms', 'Rating', 'CreationDate', 'ModificationDate' ]
+
+        unless model_doc.root.namespace.href.nil? || model_doc.root.namespace_definitions.count > 1
+          l.error :invalid_metadata_under_defaultns unless (metadata_names - metadata_values).empty?
+        end
       end
 
       MeshAnalyzer.validate(model_doc)
