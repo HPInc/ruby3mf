@@ -10,16 +10,20 @@ class GlobalXMLValidations
 
   def self.validate(file, document)
     Log3mf.context "global xml validations" do |l|
-      l.error "incorrect floating numbers"    if bad_floating_numbers?(document)
+      l.error "locale should be en-US or floating point formating is invalid"        if invalid_locale?(document) || bad_floating_numbers?(document)
       l.error :has_xml_space_attribute        if space_attribute_exists?(document)
       l.error :wrong_encoding                 if xml_not_utf8_encoded?(document)
       l.error :dtd_not_allowed                if dtd_exists?(file)
     end
   end
 
+  def self.invalid_locale?(document)
+    !document.xpath('//@xml:lang').empty? && document.xpath('//@xml:lang').text != "en-US"
+  end
+
   def self.bad_floating_numbers?(document)
     vertices = document.at_css('vertices').to_s
-    bad_decimal = /\d+\.\d{3}?/i
+    bad_decimal = /[0-9]+\,[0-9]+/i
     vertices =~ bad_decimal
   end
 
