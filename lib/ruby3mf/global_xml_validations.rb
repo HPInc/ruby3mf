@@ -1,24 +1,5 @@
 require 'nokogiri'
 
-class Parser < Nokogiri::XML::SAX::Document
-  def start_element(name, attrs = [])
-    attributes = Hash[*attrs.flatten]
-    p attributes
-    attributes.values.each do |value|
-      raise "Wrong floating value" if GlobalXMLValidations.bad_floating_number?(value)
-    end
-  end
-
-  def characters(string)
-  end
-
-  def end_element(name)
-  end
-end
-
-#parser = Nokogiri::XML::SAX::Parser.new(Parser.new)
-#parser.parse(File.open("ruby3mf-testfiles/realworld/Ear_Mug_Vulcan_Edition_keyboard/3D/3dmodel.model"))
-
 class GlobalXMLValidations
 
   def self.validate_parse(file)
@@ -31,10 +12,11 @@ class GlobalXMLValidations
 
   def self.validate(file, document)
     Log3mf.context "global xml validations" do |l|
-      l.error "locale should be en-US or floating point formating is invalid"        if invalid_locale?(document) || bad_floating_numbers?(document)
+      l.error :invalid_language_locale        if invalid_locale?(document) 
       l.error :has_xml_space_attribute        if space_attribute_exists?(document)
       l.error :wrong_encoding                 if xml_not_utf8_encoded?(document)
       l.error :dtd_not_allowed                if dtd_exists?(file)
+      l.error :has_commas_for_floats          if bad_floating_numbers?(document)
     end
   end
 
@@ -43,14 +25,11 @@ class GlobalXMLValidations
   end
 
   def self.bad_floating_numbers?(document)
-    vertices = document.at_css('vertices').to_s
-    bad_decimal = /[0-9]+\,[0-9]+/i
-    vertices =~ bad_decimal
-  end
-
-  def self.bad_floating_number?(value)
-    bad_decimal = /[0-9]+\,[0-9]+/i
-    value =~ bad_decimal
+    !document.xpath('.//*[find_with_regex(., "[0-9]+\,[0-9]+")]', Class.new {
+      def find_with_regex node_set, regex
+        node_set.find_all { |node| node.values.any? {|v| v =~ /#{regex}/  } }
+      end
+    }.new).empty?
   end
 
   def self.space_attribute_exists?(document)

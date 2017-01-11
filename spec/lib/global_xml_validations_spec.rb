@@ -71,7 +71,7 @@ describe GlobalXMLValidations do
     end
   end
 
-  context "when locale is en-US and floating point falues are invalid" do
+  context "when locale is en-US and floating point values are invalid" do
 
     let(:xml) {
       Nokogiri::XML('<?xml version="1.0" encoding="UTF-8"?>
@@ -114,7 +114,7 @@ describe GlobalXMLValidations do
       </model>')
     }
 
-    it "should verify vertices values" do
+    it "should produce an error" do
       GlobalXMLValidations.validate(zipentry, xml)
       expect(Log3mf.count_entries(:error)).to be == 1
       expect(Log3mf.entries(:error)).to_not be_empty
@@ -122,7 +122,7 @@ describe GlobalXMLValidations do
 
   end
 
-  context "when locale is en-US and floating point falues are valid" do
+  context "when locale is not en-US and floating point falues are valid" do
 
     let(:xml) {
       Nokogiri::XML('<?xml version="1.0" encoding="UTF-8"?>
@@ -165,7 +165,7 @@ describe GlobalXMLValidations do
       </model>')
     }
 
-    it "should verify vertices values" do
+    it "should produce an error " do
       GlobalXMLValidations.validate(zipentry, xml)
       expect(Log3mf.count_entries(:error)).to be == 1
       expect(Log3mf.entries(:error)).to_not be_empty
@@ -173,7 +173,7 @@ describe GlobalXMLValidations do
 
   end
 
-  context "when no locale  floating point falues are valid" do
+  context "when no locale is present, but floating point falues are valid" do
 
     let(:xml) {
       Nokogiri::XML('<?xml version="1.0" encoding="UTF-8"?>
@@ -216,7 +216,7 @@ describe GlobalXMLValidations do
       </model>')
     }
 
-    it "should verify vertices values" do
+    it "should not have any errors" do
       GlobalXMLValidations.validate(zipentry, xml)
       expect(Log3mf.count_entries(:error)).to be == 0
       expect(Log3mf.entries(:error)).to be_empty
@@ -224,7 +224,7 @@ describe GlobalXMLValidations do
 
   end
 
-  context "when no locale and floating point falues are invalid" do
+  context "when no locale is present and floating point values are invalid" do
 
     let(:xml) {
       Nokogiri::XML('<?xml version="1.0" encoding="UTF-8"?>
@@ -236,13 +236,13 @@ describe GlobalXMLValidations do
             <mesh>
               <vertices>
                 <vertex x="0,000" y="00,000" z="00,000" />
-                <vertex x="10,000" y="00.000" z="00.000" />
-                <vertex x="10.000" y="200.000" z="00.000" />
-                <vertex x="00.000" y="200.000" z="00.000" />
-                <vertex x="00.000" y="00.000" z="300.000" />
-                <vertex x="10.0000" y="0" z="300.000" />
-                <vertex x="100.000" y="20" z="300.000" />
-                <vertex x="00.000" y="200.000" z="300.000" />
+                <vertex x="10,000" y="00,000" z="00,000" />
+                <vertex x="10,000" y="200,000" z="00,000" />
+                <vertex x="00,000" y="200,000" z="00,000" />
+                <vertex x="00,000" y="00,000" z="300,000" />
+                <vertex x="10,0000" y="0" z="300,000" />
+                <vertex x="100,000" y="20" z="300,000" />
+                <vertex x="00,000" y="200,000" z="300,000" />
               </vertices>
               <triangles>
                 <triangle v1="3" v2="2" v3="1" />
@@ -267,7 +267,7 @@ describe GlobalXMLValidations do
       </model>')
     }
 
-    it "should verify vertices values" do
+    it "should give an error" do
       GlobalXMLValidations.validate(zipentry, xml)
       expect(Log3mf.count_entries(:error)).to be == 1
       expect(Log3mf.entries(:error)).to_not be_empty

@@ -141,3 +141,9 @@ texture_without_relationship:
 invalid_defaultns_metadata:
   error:
     invalid_metadata_under_defaultns:
+has_commas_for_floats:
+  error:
+    has_commas_for_floats:
+invalid_language_locale:
+  error:
+    invalid_language_locale:

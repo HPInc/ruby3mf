@@ -124,3 +124,9 @@ texture_without_relationship:
 invalid_metadata_under_defaultns:
   msg: "Metadata without a namespace name must only contain allowed name values"
   page: 21
+has_commas_for_floats:
+  msg: "numbers not formatted for the en-US locale"
+  page: 15
+invalid_language_locale:
+  msg: "locale should be en-US"
+  page: 15
