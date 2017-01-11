@@ -1,4 +1,5 @@
 require 'singleton'
+require 'yaml'
 
 # Example usage:
 
@@ -22,6 +23,7 @@ require 'singleton'
 
 class Log3mf
   include Singleton
+  include Interpolation
 
   LOG_LEVELS = [:fatal_error, :error, :warning, :info, :debug]
 
@@ -33,6 +35,8 @@ class Log3mf
     @log_list = []
     @context_stack = []
     @ledger = []
+    errormap_path = File.join(File.dirname(__FILE__),"errors.yml")
+    @errormap = YAML.load_file(errormap_path)
   end
 
   def reset_log
@@ -60,28 +64,18 @@ class Log3mf
 
   def method_missing(name, *args, &block)
     if LOG_LEVELS.include? name.to_sym
-      #puts "***** #{name} called from #{caller[0]}"
       log(name.to_sym, *args)
     else
       super
     end
   end
 
-  def log(severity, message, options={})
-    if message.is_a?(Symbol)
-      new_log(severity, message, options)
-    else
-      @log_list << ["#{@context_stack.join("/")}", severity, message, options] unless severity==:debug && ENV['LOGDEBUG'].nil?
-      # puts "[#{@context_stack.join("/")}] #{severity.to_s.upcase} #{message}"
-    end
+  def log(severity, message, options = {})
+    error = @errormap.fetch(message.to_s) { {"msg" => message.to_s, "page" => nil } }
+    options[:page] = error["page"] unless options[:page]
+    message = interpolate(error["msg"], options)
+    @log_list << ["#{@context_stack.join("/")}", severity, message, options] unless severity==:debug && ENV['LOGDEBUG'].nil?
     raise FatalError if severity == :fatal_error
-  end
-
-  def new_log(severity, message, options={})
-    interpolated_msg = I18n.t("#{message}.msg", options)
-    page_number = I18n.t("#{message}.page")
-
-    @log_list << ["#{@context_stack.join("/")}", severity, interpolated_msg, page: page_number] unless severity==:debug && ENV['LOGDEBUG'].nil?
   end
 
   def count_entries(*levels)

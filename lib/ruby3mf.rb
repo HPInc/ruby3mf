@@ -1,4 +1,5 @@
 require_relative "ruby3mf/version"
+require_relative "ruby3mf/interpolation"
 require_relative "ruby3mf/log3mf"
 require_relative "ruby3mf/document"
 require_relative "ruby3mf/content_types"
@@ -13,11 +14,8 @@ require 'nokogiri'
 require 'json'
 require 'mimemagic'
 require 'uri'
-require 'I18n'
-
-I18n.load_path = Dir[File.join('lib', 'ruby3mf','config', 'locales', '*.yml')]
+require 'yaml'
 
 module Ruby3mf
-
   # Your code goes here...
 end

@@ -1,0 +1,136 @@
+missing_rels_entry_for_resources:
+  error:
+    model_resource_not_in_rels:
+      mr: /3D/Texture/texture1.texture
+3d_model_invalid_xml:
+  fatal_error:
+    3d_model_invalid_xml:
+3d_payload_files:
+  error:
+    3d_payload_files:
+content_types_invalid_xml:
+  error:
+    content_types_invalid_xml:
+dot_rels_file_has_invalid_xml:
+  error:
+    dot_rels_file_has_invalid_xml:
+dot_rels_file_missing_relationships_element:
+  error:
+    dot_rels_file_missing_relationships_element:
+dot_rels_file_no_relationship_element:
+  error:
+    dot_rels_file_no_relationship_element:
+invalid_content_type:
+  error:
+    invalid_content_type:
+invalid_startpart_type:
+  error:
+    invalid_startpart_type:
+invalid_relationship_type:
+  error:
+    invalid_relationship_type:
+      type: http://schemas.microsoft.com/3dmanufacturing/2013/01/InvalidRelationshipType
+invalid_thumbnail_colorspace:
+  fatal_error:
+    invalid_thumbnail_colorspace:
+invalid_thumbnail_file_type:
+  error:
+    invalid_thumbnail_file_type:
+invalid_texture_file_type:
+  error:
+    invalid_texture_file_type:
+missing_content_types:
+  error:
+    missing_content_types:
+missing_dot_rels_file:
+  fatal_error:
+    missing_dot_rels_file:
+missing_rels_folder:
+  fatal_error:
+    missing_rels_folder:
+multiple_relationships:
+  error:
+    multiple_relationships:
+no_3d_model:
+  error:
+    no_3d_model:
+not_a_zip:
+  fatal_error:
+    not_a_zip:
+invalid_texture_path_in_model:
+  error:
+    model_resource_not_in_rels:
+      mr: /3D/Textures/wrong-file-name.png
+zero_size_texture:
+  fatal_error:
+    zero_size_texture:
+resource_contentype_invalid:
+  error:
+    resource_contentype_invalid:
+      bt: image/ping
+clockwise_normal:
+  fatal_error:
+    resource_3dmodel_orientation:
+cube_with_hole:
+  fatal_error:
+    resource_3dmodel_hole:
+nonmanifold_cubes:
+  fatal_error:
+    resource_3dmodel_nonmanifold:
+has_xml_space_attribute:
+  error:
+    has_xml_space_attribute:
+wrong_encoding:
+  error:
+    wrong_encoding:
+empty_path_segment:
+  error:
+    err_uri_empty_segment:
+empty_part:
+  error:
+    err_uri_empty_segment:
+hidden_file:
+  error:
+    err_uri_hidden_file:
+relative_path:
+  error:
+    err_uri_relative_path:
+relative_path_segment:
+  error:
+    err_uri_relative_path:
+invalid_uri:
+  error:
+    err_uri_bad:
+missing_object_pid:
+  error:
+    missing_object_pid:
+missing_model_children:
+  error:
+    missing_model_children:
+components_with_pid:
+  error:
+    object_with_components_and_pid:
+build_of_other:
+  error:
+    build_with_other_item:
+resource_id_collision:
+  error:
+    resource_id_collision:
+metadata_with_same_names:
+  error:
+    metadata_elements_with_same_name:
+multiple_print_tickets:
+  error:
+    multiple_print_tickets:
+invalid_model_unit:
+  error:
+    invalid_model_unit:
+      unit: invalidunit
+unsupported_required_extension:
+  error:
+    unknown_required_extension:
+      ext: http://schemas.autodesk.com/dmg/loadcase/2016/08
+missing_extension_namespace_uri:
+  error:
+    missing_extension_namespace_uri:
+      ns: "xx"

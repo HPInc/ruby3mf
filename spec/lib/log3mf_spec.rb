@@ -100,4 +100,24 @@ describe Log3mf do
       end
     end
   end
+
+  describe 'Log messages' do
+    let(:logs) {
+      log.context "context for Log Messages spec" do |l|
+        l.error("This is an error whith %{interpolation} options", interpolation: "interpolated content")
+        l.warning("This is a Warning with no %{interpolation} options")
+        l.info("This is just info with %{interpolation}", interpolation: "interpolated content")
+      end
+    }
+
+    it 'should have the right log messages' do
+      logs
+      json = JSON.parse(Log3mf.to_json)
+      expect(json[0]["message"]).to eq("This is an error whith interpolated content options")
+      expect(json[1]["message"]).to eq("This is a Warning with no  options")
+      expect(json[2]["message"]).to eq("This is just info with interpolated content")
+    end
+
+  end
+
 end
