@@ -90,7 +90,7 @@ class Document
                 unless part.name.end_with? '[Content_Types].xml'
                   begin
                     u = URI part.name
-                  rescue ArgumentError
+                  rescue ArgumentError, URI::InvalidURIError
                     l.error :err_uri_bad
                     next
                   end
