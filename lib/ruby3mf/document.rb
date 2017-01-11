@@ -61,7 +61,7 @@ class Document
         end
       end
       log.context "part names /#{filename}" do |l|
-        l.error :texture_without_relationship unless has_relationship
+        l.error :texture_without_relationship, name: filename unless has_relationship
       end
     end
   end
