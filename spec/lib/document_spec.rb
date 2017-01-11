@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Document do
 
   before do
-    allow(GlobalXMLValidations).to receive(:validate).and_return(false)
+    allow(XmlVal).to receive(:validate).and_return(false)
   end
 
   it 'parses a valid file without errors' do

@@ -11,7 +11,7 @@ describe Model3mf do
     allow(zip_entry).to receive(:get_input_stream).and_return(model_content)
     allow(document).to receive(:relationships).and_return(relationships)
     allow(document).to receive(:types).and_return(ctypes)
-    allow(GlobalXMLValidations).to receive(:validate).and_return(false)
+    allow(XmlVal).to receive(:validate).and_return(false)
   end
 
   describe ".parse good file" do

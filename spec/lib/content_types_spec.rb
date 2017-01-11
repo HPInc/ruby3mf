@@ -9,7 +9,7 @@ describe ContentTypes do
 
   before do
     allow(zip_entry).to receive(:get_input_stream).and_return(content_xml)
-    allow(GlobalXMLValidations).to receive(:validate).and_return(false)
+    allow(XmlVal).to receive(:validate).and_return(false)
   end
 
   describe ".parse a good file" do

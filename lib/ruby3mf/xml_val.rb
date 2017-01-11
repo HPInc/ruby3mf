@@ -1,6 +1,6 @@
 require 'nokogiri'
 
-class GlobalXMLValidations
+class XmlVal
 
   def self.validate_parse(file)
     doc = Nokogiri::XML(file.get_input_stream) do |config|
@@ -11,8 +11,8 @@ class GlobalXMLValidations
   end
 
   def self.validate(file, document)
-    Log3mf.context "global xml validations" do |l|
-      l.error :invalid_language_locale        if invalid_locale?(document) 
+    Log3mf.context "validations" do |l|
+      l.error :invalid_language_locale        if invalid_locale?(document)
       l.error :has_xml_space_attribute        if space_attribute_exists?(document)
       l.error :wrong_encoding                 if xml_not_utf8_encoded?(document)
       l.error :dtd_not_allowed                if dtd_exists?(file)
@@ -37,7 +37,7 @@ class GlobalXMLValidations
   end
 
   def self.xml_not_utf8_encoded?(document)
-    document.encoding.to_s.downcase != 'utf-8'
+    !document.encoding.nil? && (document.encoding.to_s.downcase != 'utf-8')
   end
 
   def self.dtd_exists?(file)

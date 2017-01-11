@@ -5,7 +5,7 @@ class Relationships
     Log3mf.context "parsing relationships" do |l|
       begin
         # Parse Relationships XML
-        doc = GlobalXMLValidations.validate_parse(zip_entry)
+        doc = XmlVal.validate_parse(zip_entry)
 
         # Verify <Relationships><Relationship/></Relationships>
         root_element = doc.children[0]

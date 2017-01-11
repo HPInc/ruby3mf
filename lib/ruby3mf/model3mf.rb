@@ -14,7 +14,7 @@ class Model3mf
 
     Log3mf.context "parsing model" do |l|
       begin
-        model_doc = GlobalXMLValidations.validate_parse(zip_entry)
+        model_doc = XmlVal.validate_parse(zip_entry)
       rescue Nokogiri::XML::SyntaxError => e
         l.fatal_error "Model file invalid XML. Exception #{e}"
       end

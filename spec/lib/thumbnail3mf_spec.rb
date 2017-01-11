@@ -5,7 +5,7 @@ describe Thumbnail3mf do
   before do
     allow(MiniMagick::Image).to receive(:read).and_return(img_colorspace)
     allow(MimeMagic).to receive(:by_magic).and_return(img_type)
-    allow(GlobalXMLValidations).to receive(:validate).and_return(false)
+    allow(XmlVal).to receive(:validate).and_return(false)
   end
 
   context ".parse good ContentType" do

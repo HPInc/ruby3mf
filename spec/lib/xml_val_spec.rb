@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'nokogiri'
 
-describe GlobalXMLValidations do
+describe XmlVal do
 
   let(:xml) { Nokogiri::XML(
     '<?xml version="1.0" encoding="UTF-8"?>
@@ -14,7 +14,7 @@ describe GlobalXMLValidations do
   let(:zipentry) { 'foo' }
 
   before do
-    allow(GlobalXMLValidations).to receive(:dtd_exists?).and_return(false)
+    allow(XmlVal).to receive(:dtd_exists?).and_return(false)
   end
 
   context 'when xml space attribute is present' do
@@ -30,7 +30,7 @@ describe GlobalXMLValidations do
     let(:message) { "xml:space attribute is not allowed" }
 
     it 'should give an error' do
-      GlobalXMLValidations.validate(zipentry, xml)
+      XmlVal.validate(zipentry, xml)
       expect(Log3mf.count_entries(:error)).to be == 1
       expect(Log3mf.entries(:error).first[2]).to include message
     end
@@ -38,7 +38,7 @@ describe GlobalXMLValidations do
 
   context 'when xml space attribute is not present' do
     it 'should be supes chill (not give an error) if the xml:space attribute is missing' do
-      GlobalXMLValidations.validate(zipentry, xml)
+      XmlVal.validate(zipentry, xml)
       expect(Log3mf.count_entries(:error)).to be == 0
       expect(Log3mf.entries(:error)).to be_empty
     end
@@ -57,7 +57,7 @@ describe GlobalXMLValidations do
     let(:message) { "XML content must be UTF8 encoded" }
 
     it 'should give an error' do
-      GlobalXMLValidations.validate(zipentry, xml)
+      XmlVal.validate(zipentry, xml)
       expect(Log3mf.count_entries(:error)).to be == 1
       expect(Log3mf.entries(:error).first[2]).to include message
     end
@@ -65,7 +65,7 @@ describe GlobalXMLValidations do
 
   context 'when xml encoding is UTF-8' do
     it 'should validate that the file is correctly encoded' do
-      GlobalXMLValidations.validate(zipentry, xml)
+      XmlVal.validate(zipentry, xml)
       expect(Log3mf.count_entries(:error)).to be == 0
       expect(Log3mf.entries(:error)).to be_empty
     end
@@ -115,7 +115,7 @@ describe GlobalXMLValidations do
     }
 
     it "should produce an error" do
-      GlobalXMLValidations.validate(zipentry, xml)
+      XmlVal.validate(zipentry, xml)
       expect(Log3mf.count_entries(:error)).to be == 1
       expect(Log3mf.entries(:error)).to_not be_empty
     end
@@ -166,7 +166,7 @@ describe GlobalXMLValidations do
     }
 
     it "should produce an error " do
-      GlobalXMLValidations.validate(zipentry, xml)
+      XmlVal.validate(zipentry, xml)
       expect(Log3mf.count_entries(:error)).to be == 1
       expect(Log3mf.entries(:error)).to_not be_empty
     end
@@ -217,7 +217,7 @@ describe GlobalXMLValidations do
     }
 
     it "should not have any errors" do
-      GlobalXMLValidations.validate(zipentry, xml)
+      XmlVal.validate(zipentry, xml)
       expect(Log3mf.count_entries(:error)).to be == 0
       expect(Log3mf.entries(:error)).to be_empty
     end
@@ -268,7 +268,7 @@ describe GlobalXMLValidations do
     }
 
     it "should give an error" do
-      GlobalXMLValidations.validate(zipentry, xml)
+      XmlVal.validate(zipentry, xml)
       expect(Log3mf.count_entries(:error)).to be == 1
       expect(Log3mf.entries(:error)).to_not be_empty
     end
