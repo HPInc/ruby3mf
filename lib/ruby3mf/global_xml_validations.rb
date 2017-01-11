@@ -16,8 +16,8 @@ class Parser < Nokogiri::XML::SAX::Document
   end
 end
 
-parser = Nokogiri::XML::SAX::Parser.new(Parser.new)
-parser.parse(File.open("ruby3mf-testfiles/realworld/Ear_Mug_Vulcan_Edition_keyboard/3D/3dmodel.model"))
+#parser = Nokogiri::XML::SAX::Parser.new(Parser.new)
+#parser.parse(File.open("ruby3mf-testfiles/realworld/Ear_Mug_Vulcan_Edition_keyboard/3D/3dmodel.model"))
 
 class GlobalXMLValidations
 
