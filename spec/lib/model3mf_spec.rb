@@ -28,6 +28,7 @@ describe Model3mf do
     allow(document).to receive(:relationships).and_return(relationships)
     allow(document).to receive(:types).and_return(ctypes)
     allow(XmlVal).to receive(:validate).and_return(false)
+    allow(Model3mf).to receive(:xsd_validation).and_return([])
   end
 
   describe ".parse good file" do
@@ -164,23 +165,6 @@ describe Model3mf do
         }
         expect(Log3mf.count_entries(:fatal_error)).to be == 1
         expect(Log3mf.entries(:fatal_error).first[2]).to include message
-      end
-    end
-
-    context "with missing required child elements of model" do
-      let(:model_content) {
-        '<?xml version="1.0" encoding="UTF-8"?>
-              <model unit="millimeter" xml:lang="en-US" xmlns:m="http://schemas.microsoft.com/3dmanufacturing/material/2015/02" xmlns="http://schemas.microsoft.com/3dmanufacturing/core/2015/02">
-
-              </model>'
-      }
-
-      let(:message) { 'Model element must include resources and build as child elements' }
-
-      it 'should log an error' do
-        Model3mf.parse(document, zip_entry)
-        expect(Log3mf.count_entries(:error, :fatal_error)).to be == 1
-        expect(Log3mf.entries(:error).first[2]).to include message
       end
     end
 

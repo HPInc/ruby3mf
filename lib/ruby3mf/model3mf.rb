@@ -9,6 +9,13 @@ class Model3mf
     'http://schemas.microsoft.com/3dmanufacturing/production/2015/06' => {},
   }.freeze
 
+
+  def self.xsd_validation(zip_entry)
+    xsd = Nokogiri::XML::Schema(File.read('./lib/ruby3mf/3MFcoreSpec_1.1.xsd'))
+    doc = Nokogiri::XML(zip_entry.get_input_stream)
+    xsd.validate(doc)
+  end
+
   def self.parse(document, zip_entry)
     model_doc = nil
     relationships = nil
@@ -22,17 +29,11 @@ class Model3mf
       end
 
       Log3mf.context "validating core schema" do |l|
-        xsd = Nokogiri::XML::Schema(File.read('./lib/ruby3mf/3MFcoreSpec_1.1.xsd'))
-        doc = Nokogiri::XML(zip_entry.get_input_stream)
-        core_schema_errors = xsd.validate(doc)
 
-        if core_schema_errors.size > 0
-          # l.fatal_error :invalid_xml_core
-          puts "Found XML schema validation issues"
-          core_schema_errors.each do |error|
-            puts error.message
-          end
-        end
+        core_schema_errors = xsd_validation(zip_entry)
+
+        l.error :invalid_xml_core if core_schema_errors.size > 0
+
       end
 
       l.context "verifying requiredextensions" do |l|
@@ -101,16 +102,6 @@ class Model3mf
         end
       end
 
-      l.context "verifying model structure" do |l|
-        root = model_doc.root
-        l.error :root_3dmodel_element_not_model if root.name != "model"
-
-        l.error(:invalid_model_unit, unit: root.attr('unit')) unless VALID_UNITS.include?(root.attr('unit'))
-
-        children = model_doc.root.children.map { |child| child.name }
-        l.error :missing_model_children unless children.include?("resources") && children.include?("build")
-      end
-
       l.context "verifying build items" do |l|
         build = find_child(model_doc.root, "build")
         if build
@@ -127,14 +118,18 @@ class Model3mf
       end
 
       l.context "checking metadata" do |l|
+
         metadata = model_doc.root.css("metadata")
+
         metadata_names = metadata.map { |met| met['name'] }
         l.error :metadata_elements_with_same_name unless metadata_names.uniq!.nil?
 
         # metadata values allowed under default namespace (xmlns):
         metadata_values = ['Title', 'Designer', 'Description', 'Copyright', 'LicenseTerms', 'Rating', 'CreationDate', 'ModificationDate']
 
-        unless model_doc.root.namespace.href.nil? || model_doc.root.namespace_definitions.count > 1
+        known_namespaces = ["http://schemas.microsoft.com/3dmanufacturing/core/2015/02", "http://schemas.microsoft.com/3dmanufacturing/material/2015/02"]
+        only_known_namespaces = model_doc.root.namespace_definitions.all? { |ns| known_namespaces.include?(ns.href) }
+        unless model_doc.root.namespace.href.nil? || !only_known_namespaces
           l.error :invalid_metadata_under_defaultns unless (metadata_names - metadata_values).empty?
         end
       end
