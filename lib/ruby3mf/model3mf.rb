@@ -32,8 +32,9 @@ class Model3mf
 
         core_schema_errors = xsd_validation(zip_entry)
 
-        l.error :invalid_xml_core if core_schema_errors.size > 0
+        core_schema_errors.each {|error| puts error} if ENV["DEBUG_XSD_VALIDATION"]
 
+        l.error :invalid_xml_core if core_schema_errors.size > 0
       end
 
       l.context "verifying requiredextensions" do |l|
