@@ -2,7 +2,7 @@ require_relative 'mesh_analyzer'
 
 class Model3mf
 
-  VALID_UNITS = [ 'micron', 'millimeter', 'centimeter', 'meter', 'inch', 'foot' ].freeze
+  VALID_UNITS = ['micron', 'millimeter', 'centimeter', 'meter', 'inch', 'foot'].freeze
   VALID_EXTENSIONS = {
     'http://schemas.microsoft.com/3dmanufacturing/slice/2015/07' => {},
     'http://schemas.microsoft.com/3dmanufacturing/material/2015/02' => {},
@@ -26,11 +26,12 @@ class Model3mf
         doc = Nokogiri::XML(zip_entry.get_input_stream)
         core_schema_errors = xsd.validate(doc)
 
-#        l.fatal_error :invalid_xml_core if core_schema_errors.size > 0
-
-        puts "Found XML schema validation issues"
-        core_schema_errors.each do |error|
-          puts error.message
+        if core_schema_errors.size > 0
+          # l.fatal_error :invalid_xml_core
+          puts "Found XML schema validation issues"
+          core_schema_errors.each do |error|
+            puts error.message
+          end
         end
       end
 
@@ -131,7 +132,7 @@ class Model3mf
         l.error :metadata_elements_with_same_name unless metadata_names.uniq!.nil?
 
         # metadata values allowed under default namespace (xmlns):
-        metadata_values = ['Title', 'Designer', 'Description', 'Copyright', 'LicenseTerms', 'Rating', 'CreationDate', 'ModificationDate' ]
+        metadata_values = ['Title', 'Designer', 'Description', 'Copyright', 'LicenseTerms', 'Rating', 'CreationDate', 'ModificationDate']
 
         unless model_doc.root.namespace.href.nil? || model_doc.root.namespace_definitions.count > 1
           l.error :invalid_metadata_under_defaultns unless (metadata_names - metadata_values).empty?
