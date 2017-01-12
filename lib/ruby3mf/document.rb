@@ -30,7 +30,7 @@ class Document
     self.thumbnails=[]
     self.textures=[]
     self.objects={}
-    self.relationships=[]
+    self.relationships={}
     self.types=[]
     self.parts=[]
     @zip_filename = zip_filename
@@ -123,49 +123,51 @@ class Document
               l.fatal_error 'Missing required file _rels/.rels', page: 4 unless rel_file
 
               zip_file.glob('**/*.rels').each do |rel|
-                m.relationships += Relationships.parse(rel)
+                m.relationships[rel.name] = Relationships.parse(rel)
               end
             end
 
             l.context "print tickets" do |l|
-              print_ticket_types = m.relationships.select { |rel| rel[:type] == PRINT_TICKET_TYPE }
+              print_ticket_types = m.relationships.flat_map { |k, v| v }.select { |rel| rel[:type] == PRINT_TICKET_TYPE }
               l.error :multiple_print_tickets if print_ticket_types.size > 1
             end
 
             l.context "relationship elements" do |l|
               # 3. Validate all relationships
-              m.relationships.each do |rel|
-                l.context rel[:target] do |l|
+              m.relationships.each do |file_name, rels|
+                rels.each do |rel|
+                  l.context rel[:target] do |l|
 
-                  begin
-                    u = URI rel[:target]
-                  rescue URI::InvalidURIError
-                    l.error :err_uri_bad
-                    next
-                  end
+                    begin
+                      u = URI rel[:target]
+                    rescue URI::InvalidURIError
+                      l.error :err_uri_bad
+                      next
+                    end
 
-                  l.error :err_uri_relative_path unless u.to_s.start_with? '/'
+                    l.error :err_uri_relative_path unless u.to_s.start_with? '/'
 
-                  target = rel[:target].gsub(/^\//, "")
-                  l.error :err_uri_empty_segment if target.end_with? '/' or target.include? '//'
-                  l.error :err_uri_relative_path if target.include? '/../'
-                  relationship_file = zip_file.glob(target).first
+                    target = rel[:target].gsub(/^\//, "")
+                    l.error :err_uri_empty_segment if target.end_with? '/' or target.include? '//'
+                    l.error :err_uri_relative_path if target.include? '/../'
+                    relationship_file = zip_file.glob(target).first
 
-                  if relationship_file
-                    relationship_type = RELATIONSHIP_TYPES[rel[:type]]
-                    if relationship_type.nil?
-                      l.error :invalid_relationship_type, type: rel[:type]
-                    else
-                      unless relationship_type[:klass].nil?
-                        m.send(relationship_type[:collection]) << {
+                    if relationship_file
+                      relationship_type = RELATIONSHIP_TYPES[rel[:type]]
+                      if relationship_type.nil?
+                        l.error :invalid_relationship_type, type: rel[:type]
+                      else
+                        unless relationship_type[:klass].nil?
+                          m.send(relationship_type[:collection]) << {
                             rel_id: rel[:id],
                             target: rel[:target],
                             object: Object.const_get(relationship_type[:klass]).parse(m, relationship_file)
-                        }
+                          }
+                        end
                       end
+                    else
+                      l.error "Relationship Target file #{rel[:target]} not found", page: 11
                     end
-                  else
-                    l.error "Relationship Target file #{rel[:target]} not found", page: 11
                   end
                 end
               end

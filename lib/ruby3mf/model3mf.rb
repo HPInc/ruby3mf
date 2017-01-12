@@ -11,6 +11,8 @@ class Model3mf
 
   def self.parse(document, zip_entry)
     model_doc = nil
+    relationships = nil
+    relationship_resources = []
 
     Log3mf.context "parsing model" do |l|
       begin
@@ -53,9 +55,15 @@ class Model3mf
       l.context "verifying 3D payload required resources" do |l|
         # results = model_doc.css("model resources m:texture2d")
         required_resources = model_doc.css("//model//resources//*[path]").collect { |n| n["path"] }
+        required_resources += model_doc.css("//model//resources//object[thumbnail]").collect { |n| n["thumbnail"] }
 
         # for each, ensure that they exist in m.relationships
-        relationship_resources = document.relationships.map { |relationship| relationship[:target] }
+        relationship_resources = []
+        rel_file = "#{Pathname(zip_entry.name).dirname.to_s}/_rels/#{File.basename(zip_entry.name)}.rels"
+        relationships = document.relationships[rel_file]
+        unless (relationships.nil?)
+          relationship_resources = relationships.map { |relationship| relationship[:target] }
+        end
 
         missing_resources = (required_resources - relationship_resources)
         if missing_resources.empty?

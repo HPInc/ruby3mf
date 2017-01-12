@@ -2,6 +2,10 @@ missing_rels_entry_for_resources:
   error:
     model_resource_not_in_rels:
       mr: /3D/Texture/texture1.texture
+missing_rels_entry_for_thumbnails:
+  error:
+    model_resource_not_in_rels:
+      mr: /Thumbnails/pngfile.png
 3d_model_invalid_xml:
   fatal_error:
     3d_model_invalid_xml:
