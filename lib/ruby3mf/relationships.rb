@@ -14,11 +14,7 @@ class Relationships
           if relationship_elements.size > 0
             relationship_elements.each do |node|
               if node.is_a?(Nokogiri::XML::Element) && node.name == "Relationship"
-                relationships.each do |previous_rel|
-                  if previous_rel[:target] == node['Target'] && previous_rel[:type] == node['Type']
-                    l.error :multiple_relationships
-                  end
-                end
+                l.error :multiple_relationships if (relationships.select { |r| r[:target] == node['Target'] && r[:type] == node['Type'] }.size > 0)
                 relationships << {target: node['Target'], type: node['Type'], id: node['Id']}
                 l.info "adding relationship: #{relationships.last.inspect}"
               else
