@@ -19,6 +19,19 @@ class Model3mf
         l.fatal_error "Model file invalid XML. Exception #{e}"
       end
 
+      Log3mf.context "validating core schema" do |l|
+        xsd = Nokogiri::XML::Schema(File.read('./lib/ruby3mf/3MFcoreSpec_1.1.xsd'))
+        doc = Nokogiri::XML(zip_entry.get_input_stream)
+        core_schema_errors = xsd.validate(doc)
+
+#        l.fatal_error :invalid_xml_core if core_schema_errors.size > 0
+
+        puts "Found XML schema validation issues"
+        core_schema_errors.each do |error|
+          puts error.message
+        end
+      end
+
       l.context "verifying requiredextensions" do |l|
         required_extensions = model_doc.css("//model")[0]["requiredextensions"]
         if required_extensions
