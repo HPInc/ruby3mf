@@ -64,6 +64,7 @@ Items within this schema follow a simple naming convention of appending a prefix
     <xs:attribute name="name" type="xs:string"/>
     <xs:attribute name="pid" type="ST_ResourceID"/>
     <xs:attribute name="pindex" type="ST_ResourceIndex"/>
+    <xs:attribute name="thumbnail" type="ST_UriReference" />
     <xs:anyAttribute namespace="##other" processContents="lax"/>
   </xs:complexType>
   <xs:complexType name="CT_Mesh">
