@@ -91,6 +91,7 @@ class Document
                   begin
                     u = URI part.name
                   rescue ArgumentError, URI::InvalidURIError
+                    l.fatal_error "This NEVER Happens! mdw 12Jan2017"
                     l.error :err_uri_bad
                     next
                   end
@@ -104,7 +105,6 @@ class Document
             end
 
             l.context 'content types' do |l|
-              # 1. Get Content Types
               content_type_match = zip_file.glob('\[Content_Types\].xml').first
               if content_type_match
                 m.types = ContentTypes.parse(content_type_match)
@@ -114,11 +114,6 @@ class Document
             end
 
             l.context 'relationships' do |l|
-              # 2. Get Relationships
-              # rel_folders = zip_file.glob('**/_rels')
-              # l.fatal_error "Missing any _rels folder", page: 4 unless rel_folders.size>0
-
-              # 2.1 Validate that the top level _rels/.rel file exists
               rel_file = zip_file.glob('_rels/.rels').first
               l.fatal_error 'Missing required file _rels/.rels', page: 4 unless rel_file
 
@@ -133,7 +128,6 @@ class Document
             end
 
             l.context "relationship elements" do |l|
-              # 3. Validate all relationships
               m.relationships.each do |file_name, rels|
                 rels.each do |rel|
                   l.context rel[:target] do |l|

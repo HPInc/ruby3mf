@@ -2,23 +2,33 @@ require 'nokogiri'
 
 class XmlVal
 
-  def self.validate_parse(file)
-    doc = Nokogiri::XML(file.get_input_stream) do |config|
+  def self.validate_parse(xml_file, schema_name=nil)
+    doc = Nokogiri::XML(xml_file.get_input_stream) do |config|
       config.strict.nonet.noblanks
     end
-    validate(file, doc)
+    validate(xml_file, doc, schema_name)
     doc
   end
 
-  def self.validate(file, document)
+  def self.validate(file, document, schema_filename=nil)
     Log3mf.context "validations" do |l|
       l.error :invalid_language_locale        if invalid_locale?(document)
       l.error :has_xml_space_attribute        if space_attribute_exists?(document)
       l.error :wrong_encoding                 if xml_not_utf8_encoded?(document)
       l.error :dtd_not_allowed                if dtd_exists?(file)
       l.error :has_commas_for_floats          if bad_floating_numbers?(document)
+
+      if schema_filename
+        Log3mf.context "validating core schema" do |l|
+          xsd = Nokogiri::XML::Schema(File.read(File.join(File.dirname(__FILE__), schema_filename)))
+          core_schema_errors = xsd.validate(document)
+          core_schema_errors.each { |error| puts error } if ENV["DEBUG_XSD_VALIDATION"]
+          l.error :invalid_xml_core if core_schema_errors.size > 0
+        end
+      end
     end
   end
+
 
   def self.invalid_locale?(document)
     !document.xpath('//@xml:lang').empty? && document.xpath('//@xml:lang').text != "en-US"

@@ -9,32 +9,16 @@ class Model3mf
     'http://schemas.microsoft.com/3dmanufacturing/production/2015/06' => {},
   }.freeze
 
-
-  def self.xsd_validation(zip_entry)
-    xsd = Nokogiri::XML::Schema(File.read('./lib/ruby3mf/3MFcoreSpec_1.1.xsd'))
-    doc = Nokogiri::XML(zip_entry.get_input_stream)
-    xsd.validate(doc)
-  end
+  SCHEMA = '3MFcoreSpec_1.1.xsd'
 
   def self.parse(document, zip_entry)
     model_doc = nil
-    relationships = nil
-    relationship_resources = []
 
     Log3mf.context "parsing model" do |l|
       begin
-        model_doc = XmlVal.validate_parse(zip_entry)
+        model_doc = XmlVal.validate_parse(zip_entry, SCHEMA)
       rescue Nokogiri::XML::SyntaxError => e
         l.fatal_error "Model file invalid XML. Exception #{e}"
-      end
-
-      Log3mf.context "validating core schema" do |l|
-
-        core_schema_errors = xsd_validation(zip_entry)
-
-        core_schema_errors.each {|error| puts error} if ENV["DEBUG_XSD_VALIDATION"]
-
-        l.error :invalid_xml_core if core_schema_errors.size > 0
       end
 
       l.context "verifying requiredextensions" do |l|
