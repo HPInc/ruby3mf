@@ -15,12 +15,16 @@ false_negatives = {}
 true_negatives={}
 false_positives = []
 
+def val3mf(f)
+  Log3mf.reset_log
+  Document.read(f)
+  Log3mf.entries(:fatal_error, :error)
+end
+
 puts "\n\nPositive"
 good_files.each do |file|
   print "." # "Validating file: #{file}"
-  Log3mf.reset_log
-  doc = Document.read(file)
-  errors = Log3mf.entries(:fatal_error, :error)
+  errors=val3mf(file)
 
   if errors.size > 0
     false_negatives[file]=errors
@@ -36,9 +40,7 @@ end
 puts "\n\nNegative"
 bad_files.each do |file|
   print "." #puts "Validating file #{file}"
-  Log3mf.reset_log
-  doc = Document.read(file)
-  errors = Log3mf.entries(:fatal_error, :error)
+  errors=val3mf(file)
   if errors.size > 0
     true_negatives[file] = errors
   else
