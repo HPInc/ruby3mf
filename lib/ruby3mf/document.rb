@@ -38,30 +38,15 @@ class Document
 
   #verify that each texture part in the 3MF is related to the model through a texture relationship in a rels file
   def self.validate_texture_parts(document, log)
-
-    return unless document.types.size > 0
-    document.parts.each do |filename|
-      ext = File::extname(filename).delete '.'
-      content_type = document.types[ext]
-      next unless TEXTURE_TYPES.include?(content_type)
-
-      has_relationship = false
-      document.textures.each do |texture_file|
-        if texture_file[:target] == filename
-          has_relationship = true
-          break
+    unless document.types.empty?
+      document.parts.select { |part| TEXTURE_TYPES.include?(document.types[File.extname(part).strip.downcase[1..-1]]) }.each do |tfile|
+        if document.textures.select { |f| f[:target] == tfile }.size == 0
+          if document.thumbnails.select { |t| t[:target] == tfile }.size == 0
+            log.context "part names" do |l|
+              l.error :texture_without_relationship, name: tfile
+            end
+          end
         end
-      end
-
-      next unless !has_relationship
-      document.thumbnails.each do |thumbnail_file|
-        if thumbnail_file[:target] == filename
-          has_relationship = true
-          break
-        end
-      end
-      log.context "part names /#{filename}" do |l|
-        l.error :texture_without_relationship, name: filename unless has_relationship
       end
     end
   end
