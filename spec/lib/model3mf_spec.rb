@@ -76,7 +76,6 @@ describe Model3mf do
 
     it "should have no error on log" do
       Model3mf.parse(document, zip_entry)
-      puts "Log entries: #{Log3mf.entries(:error).to_yaml}"
       expect(Log3mf.count_entries(:error, :fatal_error)).to be == 0
       expect(Log3mf.count_entries(:fatal_error)).to be <= 1
     end
