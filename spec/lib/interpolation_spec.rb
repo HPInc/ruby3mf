@@ -8,6 +8,11 @@ describe "Interpolation" do
       it "should not change the string" do
         expect(interpolate("Hi %{name}!")).to eq("Hi !")
       end
+
+      it "should not change the string and not have variable to interpolate" do
+        expect(interpolate("Hi !")).to eq("Hi !")
+      end
+
     end
 
     describe "with interpolation parameter" do

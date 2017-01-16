@@ -154,3 +154,6 @@ invalid_language_locale:
 missing_build:
   error:
     invalid_xml_core:
+missing_object_reference:
+  warning:
+    missing_object_reference:
