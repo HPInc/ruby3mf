@@ -23,8 +23,10 @@ class XmlVal
         Log3mf.context "validating core schema" do |l|
           xsd = Nokogiri::XML::Schema(File.read(File.join(File.dirname(__FILE__), schema_filename)))
           core_schema_errors = xsd.validate(document)
-          core_schema_errors.each { |error| puts error } if ENV["DEBUG_XSD_VALIDATION"]
           l.error :invalid_xml_core if core_schema_errors.size > 0
+          core_schema_errors.each do |error|
+            l.error error
+          end
         end
       end
     end

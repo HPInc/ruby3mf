@@ -76,7 +76,7 @@ Items within this schema follow a simple naming convention of appending a prefix
   </xs:complexType>
   <xs:complexType name="CT_Vertices">
     <xs:sequence>
-      <xs:element ref="vertex" minOccurs="3" maxOccurs="30000"/>
+      <xs:element ref="vertex" minOccurs="3" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="CT_Vertex">
