@@ -157,3 +157,6 @@ missing_build:
 missing_object_reference:
   warning:
     missing_object_reference:
+degenerate_triangle:
+  error:
+    non_distinct_indices:

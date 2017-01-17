@@ -37,6 +37,10 @@ class MeshAnalyzer
             v2 = triangle.attributes["v2"].to_s().to_i()
             v3 = triangle.attributes["v3"].to_s().to_i()
 
+            if v1 == v2 || v2 == v3 || v3 == v1
+              l.error :non_distinct_indices
+            end
+
             list.add_edge(v1, v2)
             list.add_edge(v2, v3)
             list.add_edge(v3, v1)

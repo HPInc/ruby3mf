@@ -139,3 +139,6 @@ invalid_xml_core:
 missing_object_reference:
   msg: "3D objects not referenced by an item element"
   page: 23
+non_distinct_indices:
+  msg: "The indices v1, v2 and v3 MUST be distinct."
+  page: 31
