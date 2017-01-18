@@ -135,7 +135,7 @@ invalid_language_locale:
   page: 15
 invalid_xml_core:
   msg: "XML file doesn't pass validation with the XSD file"
-  page: 41
+  page: 15
 missing_object_reference:
   msg: "3D objects not referenced by an item element"
   page: 23
