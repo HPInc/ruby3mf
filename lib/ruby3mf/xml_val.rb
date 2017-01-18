@@ -12,7 +12,6 @@ class XmlVal
 
   def self.validate(file, document, schema_filename=nil)
     Log3mf.context "validations" do |l|
-      l.error   :invalid_language_locale        if invalid_locale?(document)
       l.error   :has_xml_space_attribute        if space_attribute_exists?(document)
       l.error   :wrong_encoding                 if xml_not_utf8_encoded?(document)
       l.error   :dtd_not_allowed                if dtd_exists?(file)
@@ -34,10 +33,6 @@ class XmlVal
 
   def self.objects_not_referenced?(document)
     document.css('object').map{|x| x.attributes["id"].value} != document.css('item').map {|x| x.attributes["objectid"].value}
-  end
-
-  def self.invalid_locale?(document)
-    !document.xpath('//@xml:lang').empty? && document.xpath('//@xml:lang').text != "en-US"
   end
 
   def self.bad_floating_numbers?(document)

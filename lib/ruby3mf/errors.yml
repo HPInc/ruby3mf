@@ -130,9 +130,6 @@ invalid_metadata_under_defaultns:
 has_commas_for_floats:
   msg: "numbers not formatted for the en-US locale"
   page: 15
-invalid_language_locale:
-  msg: "locale should be en-US"
-  page: 15
 invalid_xml_core:
   msg: "XML file doesn't pass validation with the XSD file"
   page: 15

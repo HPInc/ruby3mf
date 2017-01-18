@@ -33,7 +33,7 @@ describe Model3mf do
 
   describe ".parse good file" do
 
-    let(:model_content) {
+    let(:base_model_content) {
       '<?xml version="1.0" encoding="UTF-8"?>
       <model unit="millimeter" xml:lang="en-US" xmlns:m="http://schemas.microsoft.com/3dmanufacturing/material/2015/02" xmlns="http://schemas.microsoft.com/3dmanufacturing/core/2015/02">
         <resources>
@@ -74,11 +74,29 @@ describe Model3mf do
       </model>'
     }
 
-    it "should have no error on log" do
-      Model3mf.parse(document, zip_entry)
-      expect(Log3mf.count_entries(:error, :fatal_error)).to be == 0
-      expect(Log3mf.count_entries(:fatal_error)).to be <= 1
+    shared_examples_for "test model content" do
+      it "should have no error on log" do
+        Model3mf.parse(document, zip_entry)
+        expect(Log3mf.count_entries(:error, :fatal_error)).to be == 0
+        expect(Log3mf.count_entries(:fatal_error)).to be <= 1
+      end
     end
+
+    context "with english language setting" do
+      let(:model_content) { base_model_content }
+      it_should_behave_like "test model content"
+    end
+
+    context "with german language setting" do
+      let(:model_content) { base_model_content.gsub(/xml:lang="en-US"/, 'xml:lang="de"') }
+      it_should_behave_like "test model content"
+    end
+
+    context "with undetermined language setting" do
+      let(:model_content) { base_model_content.gsub(/xml:lang="en-US"/, 'xml:lang="und"') }
+      it_should_behave_like "test model content"
+    end
+
   end
 
   describe ".parse bad file" do

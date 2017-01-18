@@ -148,9 +148,6 @@ invalid_defaultns_metadata:
 has_commas_for_floats:
   error:
     has_commas_for_floats:
-invalid_language_locale:
-  error:
-    invalid_language_locale:
 missing_build:
   error:
     invalid_xml_core:
