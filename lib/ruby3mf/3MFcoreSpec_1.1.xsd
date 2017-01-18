@@ -16,10 +16,10 @@ Items within this schema follow a simple naming convention of appending a prefix
   <!-- Complex Types -->
   <xs:complexType name="CT_Model">
     <xs:sequence>
-      <xs:element ref="metadata" minOccurs="0" maxOccurs="30000"/>
+      <xs:element ref="metadata" minOccurs="0" maxOccurs="unbounded"/>
       <xs:element ref="resources"/>
       <xs:element ref="build"/>
-      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="30000"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
     <xs:attribute name="unit" type="ST_Unit" default="millimeter"/>
     <xs:attribute ref="xml:lang"/>
@@ -28,21 +28,21 @@ Items within this schema follow a simple naming convention of appending a prefix
   </xs:complexType>
   <xs:complexType name="CT_Resources">
     <xs:sequence>
-      <xs:element ref="basematerials" minOccurs="0" maxOccurs="30000"/>
-      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="30000"/>
-      <xs:element ref="object" minOccurs="0" maxOccurs="30000"/>
+      <xs:element ref="basematerials" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element ref="object" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
     <xs:anyAttribute namespace="##other" processContents="lax"/>
   </xs:complexType>
   <xs:complexType name="CT_Build">
     <xs:sequence>
-      <xs:element ref="item" minOccurs="0" maxOccurs="30000"/>
+      <xs:element ref="item" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
     <xs:anyAttribute namespace="##other" processContents="lax"/>
   </xs:complexType>
   <xs:complexType name="CT_BaseMaterials">
     <xs:sequence>
-      <xs:element ref="base" maxOccurs="30000"/>
+      <xs:element ref="base" maxOccurs="unbounded"/>
     </xs:sequence>
     <xs:attribute name="id" type="ST_ResourceID" use="required"/>
   </xs:complexType>
@@ -71,7 +71,7 @@ Items within this schema follow a simple naming convention of appending a prefix
     <xs:sequence>
       <xs:element ref="vertices"/>
       <xs:element ref="triangles"/>
-      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="30000"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="CT_Vertices">
@@ -87,7 +87,7 @@ Items within this schema follow a simple naming convention of appending a prefix
   </xs:complexType>
   <xs:complexType name="CT_Triangles">
     <xs:sequence>
-      <xs:element ref="triangle" minOccurs="1" maxOccurs="30000"/>
+      <xs:element ref="triangle" minOccurs="1" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="CT_Triangle">
@@ -102,7 +102,7 @@ Items within this schema follow a simple naming convention of appending a prefix
   </xs:complexType>
   <xs:complexType name="CT_Components">
     <xs:sequence>
-      <xs:element ref="component" maxOccurs="30000"/>
+      <xs:element ref="component" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="CT_Component">
