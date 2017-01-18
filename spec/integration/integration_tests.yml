@@ -30,6 +30,10 @@ invalid_content_type:
 invalid_startpart_type:
   error:
     invalid_startpart_type:
+invalid_startpart_target:
+  fatal_error:
+    invalid_startpart_target:
+      target: '/2D/3ccad133-f22e-4fcd-81f2-79aca9a4f37e.model'
 invalid_relationship_type:
   error:
     invalid_relationship_type:

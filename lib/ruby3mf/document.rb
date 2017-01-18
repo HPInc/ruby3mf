@@ -100,7 +100,7 @@ class Document
 
             l.context 'relationships' do |l|
               rel_file = zip_file.glob('_rels/.rels').first
-              l.fatal_error 'Missing required file _rels/.rels', page: 4 unless rel_file
+              l.fatal_error :missing_dot_rels_file unless rel_file
 
               zip_file.glob('**/*.rels').each do |rel|
                 m.relationships[rel.name] = Relationships.parse(rel)

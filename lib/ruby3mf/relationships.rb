@@ -26,7 +26,7 @@ class Relationships
 
             if zip_entry.name=="_rels/.rels"
               l.context "Verifying StartPart" do |l|
-                start_part_type = "http://schemas.microsoft.com/3dmanufacturing/2013/01/3dmodel"
+                start_part_type = Document::MODEL_TYPE
                 start_part_count = relationships.select { |r| r[:type] == start_part_type }.size
                 if start_part_count != 1
                   l.error :invalid_startpart_type

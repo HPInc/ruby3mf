@@ -49,6 +49,9 @@ invalid_content_type:
 invalid_startpart_type:
   msg: "rels/.rels Relationship file has an invalid attribute type for the root 3D Model (StartPart). The required type is \"http://schemas.microsoft.com/3dmanufacturing/2013/01/3dmodel\""
   page: 10
+invalid_startpart_target:
+  msg: "Invalid StartPart target '%{target}'. The 3MF Document StartPart relationship MUST point to the 3D Model part that identifies the root of the 3D payload."
+  page: 10
 invalid_relationship_type:
   msg: "Invalid relationship type '%{type}' specified in .rels relationship file. Parts in the 3D payload MUST use one of the appropriate relationship types to establish that relationship between two parts in the payload."
   page: 10

@@ -77,6 +77,20 @@ class Model3mf
           end
         end
 
+        l.context "verifying StartPart relationship points to the root 3D Model" do |l|
+          #Find the root 3D model which is pointed to by the start part
+          root_rels = document.relationships['_rels/.rels']
+          unless root_rels.nil?
+            start_part_rel = root_rels.select { |rel| rel[:type] == Document::MODEL_TYPE }.first
+            unless start_part_rel.nil? || start_part_rel[:target] != '/' + zip_entry.name
+              #Verify that the model is a valid root 3D model by checking if it has at least one object
+              l.fatal_error :invalid_startpart_target, :target => start_part_rel[:target] if model_doc.css("//model//resources//object").size == 0
+            end
+          else
+            l.fatal_error :missing_dot_rels_file
+          end
+        end
+
       end
 
       l.context 'verifying resources' do |l|
