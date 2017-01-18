@@ -109,6 +109,9 @@ build_with_other_item:
 resource_id_collision:
   msg: "resources must be unique within the model"
   page: 22
+resource_pid_missing:
+  msg:  "A model resource referenced a property group id (pid) that is not present. Missing pid is: %{pid}"
+  page: 20
 metadata_elements_with_same_name:
   msg: "metadata elements must not share the same name"
   page: 22
