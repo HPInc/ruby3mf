@@ -18,20 +18,21 @@ class XmlVal
       l.error   :has_commas_for_floats          if bad_floating_numbers?(document)
       l.warning :missing_object_reference       if objects_not_referenced?(document)
 
-      if schema_filename
-        Log3mf.context "validating core schema" do |l|
-          xsd = Nokogiri::XML::Schema(File.read(File.join(File.dirname(__FILE__), schema_filename)))
-          core_schema_errors = xsd.validate(document)
-          l.error :invalid_xml_core if core_schema_errors.size > 0
-          core_schema_errors.each do |error|
-            if error_involves_colorvalue?(error)
-              l.error :has_improper_base_color
-            else 
-              l.error error
-            end
-          end
-        end
-      end
+      # if schema_filename
+      #   Log3mf.context "validating core schema" do |l|
+      #     xsd = Nokogiri::XML::Schema(File.read(File.join(File.dirname(__FILE__), schema_filename)))
+      #     puts "the schema is NIL!" if xsd.nil?
+      #     core_schema_errors = xsd.validate(document)
+      #     l.error :invalid_xml_core if core_schema_errors.size > 0
+      #     core_schema_errors.each do |error|
+      #       if error_involves_colorvalue?(error)
+      #         l.error :has_improper_base_color
+      #       else
+      #         l.error error
+      #       end
+      #     end
+      #   end
+      # end
     end
   end
 

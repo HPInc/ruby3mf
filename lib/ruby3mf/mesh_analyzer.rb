@@ -1,6 +1,3 @@
-require_relative 'edge_list'
-
-
 def find_child(node, child_name)
   node.children.each do |child|
     if child.name == child_name

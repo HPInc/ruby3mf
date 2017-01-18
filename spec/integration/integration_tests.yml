@@ -109,9 +109,9 @@ invalid_uri:
 missing_object_pid:
   error:
     missing_object_pid:
-missing_model_children:
-  error:
-    invalid_xml_core:
+#missing_model_children:
+#  error:
+#    invalid_xml_core:
 components_with_pid:
   error:
     object_with_components_and_pid:
@@ -127,9 +127,9 @@ metadata_with_same_names:
 multiple_print_tickets:
   error:
     multiple_print_tickets:
-invalid_model_unit:
-  error:
-    invalid_xml_core:
+#invalid_model_unit:
+#  error:
+#    invalid_xml_core:
 unsupported_required_extension:
   error:
     unknown_required_extension:
@@ -145,18 +145,21 @@ texture_without_relationship:
 invalid_defaultns_metadata:
   error:
     invalid_metadata_under_defaultns:
+invalid_named_namespace_metadata:
+  error:
+    invalid_metadata_name:
 has_commas_for_floats:
   error:
     has_commas_for_floats:
-missing_build:
-  error:
-    invalid_xml_core:
+#missing_build:
+#  error:
+#    invalid_xml_core:
 missing_object_reference:
   warning:
     missing_object_reference:
 degenerate_triangle:
   error:
     non_distinct_indices:
-has_improper_base_color:
-  error:
-    has_improper_base_color:
+#has_improper_base_color:
+#  error:
+#    has_improper_base_color:

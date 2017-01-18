@@ -8,6 +8,8 @@ require_relative "ruby3mf/relationships"
 require_relative "ruby3mf/thumbnail3mf"
 require_relative "ruby3mf/texture3mf"
 require_relative "ruby3mf/xml_val"
+require_relative "ruby3mf/edge_list"
+require_relative "ruby3mf/mesh_analyzer"
 
 require 'zip'
 require 'nokogiri'
