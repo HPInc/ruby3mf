@@ -157,3 +157,6 @@ missing_object_reference:
 degenerate_triangle:
   error:
     non_distinct_indices:
+has_improper_base_color:
+  error:
+    has_improper_base_color:

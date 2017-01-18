@@ -39,7 +39,7 @@ describe 'Integration Tests' do
             reference.each do |reference_error, options|
               options = options ? symbolize_recursive(options) : {}
               expected_msg = errormap.fetch(reference_error.to_s)["msg"]
-              expect(Log3mf.entries(level.to_sym).first[2]).to eq(interpolate(expected_msg, options))
+              expect(Log3mf.entries(level.to_sym).any?{|error| error[2] == (interpolate(expected_msg, options))}).to be true
             end
           end
 

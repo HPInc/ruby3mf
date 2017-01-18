@@ -24,7 +24,11 @@ class XmlVal
           core_schema_errors = xsd.validate(document)
           l.error :invalid_xml_core if core_schema_errors.size > 0
           core_schema_errors.each do |error|
-            l.error error
+            if error_involves_colorvalue?(error)
+              l.error :has_improper_base_color
+            else 
+              l.error error
+            end
           end
         end
       end
@@ -54,5 +58,9 @@ class XmlVal
   def self.dtd_exists?(file)
     found = file.get_input_stream.find { |line| line =~ /(!DOCTYPE\b)|(!ELEMENT\b)|(!ENTITY\b)|(!NOTATION\b)|(!ATTLIST\b)/ }
     !found.nil?
+  end
+
+  def self.error_involves_colorvalue?(error)
+    error.to_s.include?("ST_ColorValue") || error.to_s.include?("displaycolor")
   end
 end

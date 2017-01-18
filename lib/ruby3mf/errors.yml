@@ -139,3 +139,6 @@ missing_object_reference:
 non_distinct_indices:
   msg: "The indices v1, v2 and v3 MUST be distinct."
   page: 31
+has_improper_base_color:
+  msg: "An sRGB color MUST be specified with a value of a 6 or 8 digit hexadecimal number"
+  page: 35
