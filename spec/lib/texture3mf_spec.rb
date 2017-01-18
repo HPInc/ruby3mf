@@ -8,7 +8,6 @@ describe Texture3mf do
 
   before do
     allow(MimeMagic).to receive(:by_magic).and_return(img_type)
-    allow(MimeMagic).to receive(:name=)
     allow(XmlVal).to receive(:validate).and_return(false)
   end
 

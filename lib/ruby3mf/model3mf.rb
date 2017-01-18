@@ -1,15 +1,15 @@
-require_relative 'mesh_analyzer'
-
 class Model3mf
 
   VALID_UNITS = ['micron', 'millimeter', 'centimeter', 'meter', 'inch', 'foot'].freeze
   VALID_EXTENSIONS = {
-    'http://schemas.microsoft.com/3dmanufacturing/slice/2015/07' => {},
-    'http://schemas.microsoft.com/3dmanufacturing/material/2015/02' => {},
-    'http://schemas.microsoft.com/3dmanufacturing/production/2015/06' => {},
+      'http://schemas.microsoft.com/3dmanufacturing/slice/2015/07' => {},
+      'http://schemas.microsoft.com/3dmanufacturing/material/2015/02' => {},
+      'http://schemas.microsoft.com/3dmanufacturing/production/2015/06' => {},
   }.freeze
 
   SCHEMA = '3MFcoreSpec_1.1.xsd'
+
+  VALID_CORE_METADATA_NAMES = ['Title', 'Designer', 'Description', 'Copyright', 'LicenseTerms', 'Rating', 'CreationDate', 'ModificationDate'].freeze
 
   def self.parse(document, zip_entry)
     model_doc = nil
@@ -108,19 +108,19 @@ class Model3mf
       end
 
       l.context "checking metadata" do |l|
-
-        metadata = model_doc.root.css("metadata")
-
-        metadata_names = metadata.map { |met| met['name'] }
+        metadata_names = model_doc.root.css("metadata").map { |met| met['name'] }
         l.error :metadata_elements_with_same_name unless metadata_names.uniq!.nil?
 
-        # metadata values allowed under default namespace (xmlns):
-        metadata_values = ['Title', 'Designer', 'Description', 'Copyright', 'LicenseTerms', 'Rating', 'CreationDate', 'ModificationDate']
+        unless (metadata_names - VALID_CORE_METADATA_NAMES).empty?
+          extra_names = metadata_names - VALID_CORE_METADATA_NAMES
+          ns_names = extra_names.select { |n| n.include? ':' }
 
-        known_namespaces = ["http://schemas.microsoft.com/3dmanufacturing/core/2015/02", "http://schemas.microsoft.com/3dmanufacturing/material/2015/02"]
-        only_known_namespaces = model_doc.root.namespace_definitions.all? { |ns| known_namespaces.include?(ns.href) }
-        unless model_doc.root.namespace.href.nil? || !only_known_namespaces
-          l.error :invalid_metadata_under_defaultns unless (metadata_names - metadata_values).empty?
+          l.error :invalid_metadata_under_defaultns unless (extra_names - ns_names).empty?
+
+          unless ns_names.empty?
+            prefixes = model_doc.root.namespace_definitions.map { |defs| defs.prefix }.reject { |pre| pre.nil? }
+            l.error :invalid_metadata_name unless (ns_names.collect { |i| i.split(':').first } - prefixes).empty?
+          end
         end
       end
 

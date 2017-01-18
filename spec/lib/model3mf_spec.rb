@@ -28,7 +28,6 @@ describe Model3mf do
     allow(document).to receive(:relationships).and_return(relationships)
     allow(document).to receive(:types).and_return(ctypes)
     allow(XmlVal).to receive(:validate).and_return(false)
-    allow(Model3mf).to receive(:xsd_validation).and_return([])
   end
 
   describe ".parse good file" do
