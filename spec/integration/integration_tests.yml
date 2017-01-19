@@ -113,9 +113,9 @@ invalid_uri:
 missing_object_pid:
   error:
     missing_object_pid:
-#missing_model_children:
-#  error:
-#    invalid_xml_core:
+missing_model_children:
+  error:
+    invalid_xml_core:
 components_with_pid:
   error:
     object_with_components_and_pid:
@@ -129,18 +129,18 @@ missing_pid:
   error:
     resource_pid_missing:
       pid: 1
-#id_reference_before_definition:
-#  error:
-#    invalid_xml_core:
+id_reference_before_definition:
+  error:
+    invalid_xml_core:
 metadata_with_same_names:
   error:
     metadata_elements_with_same_name:
 multiple_print_tickets:
   error:
     multiple_print_tickets:
-#invalid_model_unit:
-#  error:
-#    invalid_xml_core:
+invalid_model_unit:
+  error:
+    invalid_xml_core:
 unsupported_required_extension:
   error:
     unknown_required_extension:
@@ -158,18 +158,18 @@ invalid_named_namespace_metadata:
 has_commas_for_floats:
   error:
     has_commas_for_floats:
-#missing_build:
-#  error:
-#    invalid_xml_core:
+missing_build:
+  error:
+    invalid_xml_core:
 missing_object_reference:
   warning:
     missing_object_reference:
 degenerate_triangle:
   error:
     non_distinct_indices:
-#has_improper_base_color:
-#  error:
-#    has_improper_base_color:
+has_improper_base_color:
+  error:
+    has_improper_base_color:
 model_not_named_correctly:
   error:
     no_3d_model:

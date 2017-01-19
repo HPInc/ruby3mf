@@ -12,38 +12,40 @@ class XmlVal
 
   def self.validate(file, document, schema_filename=nil)
     Log3mf.context "validations" do |l|
-      l.error   :has_xml_space_attribute        if space_attribute_exists?(document)
-      l.error   :wrong_encoding                 if xml_not_utf8_encoded?(document)
-      l.error   :dtd_not_allowed                if dtd_exists?(file)
-      l.error   :has_commas_for_floats          if bad_floating_numbers?(document)
-      l.warning :missing_object_reference       if objects_not_referenced?(document)
+      l.error :has_xml_space_attribute if space_attribute_exists?(document)
+      l.error :wrong_encoding if xml_not_utf8_encoded?(document)
+      l.error :dtd_not_allowed if dtd_exists?(file)
+      l.error :has_commas_for_floats if bad_floating_numbers?(document)
+      l.warning :missing_object_reference if objects_not_referenced?(document)
 
-      # if schema_filename
-      #   Log3mf.context "validating core schema" do |l|
-      #     xsd = Nokogiri::XML::Schema(File.read(File.join(File.dirname(__FILE__), schema_filename)))
-      #     puts "the schema is NIL!" if xsd.nil?
-      #     core_schema_errors = xsd.validate(document)
-      #     l.error :invalid_xml_core if core_schema_errors.size > 0
-      #     core_schema_errors.each do |error|
-      #       if error_involves_colorvalue?(error)
-      #         l.error :has_improper_base_color
-      #       else
-      #         l.error error
-      #       end
-      #     end
-      #   end
-      # end
+      if schema_filename
+        Log3mf.context "validating core schema" do |l|
+          File.open(File.join(File.dirname(__FILE__), schema_filename), "r") do |file|
+            xsd = Nokogiri::XML::Schema(file.read)
+            puts "the schema is NIL!" if xsd.nil?
+            core_schema_errors = xsd.validate(document)
+            l.error :invalid_xml_core if core_schema_errors.size > 0
+            core_schema_errors.each do |error|
+              if error_involves_colorvalue?(error)
+                l.error :has_improper_base_color
+              else
+                l.error error
+              end
+            end
+          end
+        end
+      end
     end
   end
 
   def self.objects_not_referenced?(document)
-    document.css('object').map{|x| x.attributes["id"].value} != document.css('item').map {|x| x.attributes["objectid"].value}
+    document.css('object').map { |x| x.attributes["id"].value } != document.css('item').map { |x| x.attributes["objectid"].value }
   end
 
   def self.bad_floating_numbers?(document)
     !document.xpath('.//*[find_with_regex(., "[0-9]+\,[0-9]+")]', Class.new {
       def find_with_regex node_set, regex
-        node_set.find_all { |node| node.values.any? {|v| v =~ /#{regex}/  } }
+        node_set.find_all { |node| node.values.any? { |v| v =~ /#{regex}/ } }
       end
     }.new).empty?
   end
