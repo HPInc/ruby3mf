@@ -52,8 +52,8 @@ invalid_startpart_type:
 invalid_startpart_target:
   msg: "Invalid StartPart target '%{target}'. The 3MF Document StartPart relationship MUST point to the 3D Model part that identifies the root of the 3D payload."
   page: 10
-invalid_relationship_type:
-  msg: "Invalid relationship type '%{type}' specified in .rels relationship file. Parts in the 3D payload MUST use one of the appropriate relationship types to establish that relationship between two parts in the payload."
+unsupported_relationship_type:
+  msg: "Validation of relationship type '%{type}' is not supported by this tool. The targeted part '%{target}' will not be validated."
   page: 10
 invalid_thumbnail_file:
   msg: "thumbnail file must be valid image file"

@@ -34,10 +34,11 @@ invalid_startpart_target:
   fatal_error:
     invalid_startpart_target:
       target: '/2D/3ccad133-f22e-4fcd-81f2-79aca9a4f37e.model'
-invalid_relationship_type:
-  error:
-    invalid_relationship_type:
+unsupported_relationship_type:
+  warning:
+    unsupported_relationship_type:
       type: http://schemas.microsoft.com/3dmanufacturing/2013/01/InvalidRelationshipType
+      target: /3D/Texture/texture2.texture
 invalid_thumbnail_colorspace:
   fatal_error:
     invalid_thumbnail_colorspace:

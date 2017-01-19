@@ -164,7 +164,7 @@ class Document
                     if relationship_file
                       relationship_type = RELATIONSHIP_TYPES[rel[:type]]
                       if relationship_type.nil?
-                        l.error :invalid_relationship_type, type: rel[:type]
+                        l.warning :unsupported_relationship_type, type: rel[:type], target: rel[:target]
                       else
                         unless relationship_type[:klass].nil?
                           m.send(relationship_type[:collection]) << {
