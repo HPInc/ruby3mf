@@ -88,18 +88,9 @@ class Model3mf
       end
 
       l.context "verifying build items" do |l|
-        build = find_child(model_doc.root, "build")
-        if build
-          items = build.children.map { |child| child.attributes["objectid"].to_s() if child.name == "item" }
 
-          resources = find_child(model_doc.root, "resources")
-          resources.children.each do |resource|
-            if resource.name == "object"
-              object_id = resource.attributes["id"].to_s()
-              l.error :build_with_other_item if resource.attributes["type"].to_s() == "other" and items.include?(object_id)
-            end
-          end
-        end
+        l.error :build_with_other_item if model_doc.css('item').map { |x| x.attributes["objectid"].value }.map{ |id|  model_doc.search(".//xmlns:object[@id=$id][@type=$type]", nil, { :id => id, :type => 'other' } ) }.flatten.any?
+
       end
 
       l.context "checking metadata" do |l|
