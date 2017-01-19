@@ -24,6 +24,8 @@ class ContentTypes
               # l.error "[Content_Types].xml:#{node.line} contains Default node without defined Extension attribute" unless node['Extension'].is_a? String
               # l.error "[Content_Types].xml:#{node.line} contains Default node with unexpected ContentType \"#{node['ContentType']}\"", page: 10 unless all_types.include? node['ContentType']
               l.info "Setting type hash #{node['Extension']}=#{node['ContentType']}"
+
+              l.error :duplicate_content_extension_types if !found_types[node['Extension']].nil?
               found_types[node['Extension']] = node['ContentType']
             end
           end

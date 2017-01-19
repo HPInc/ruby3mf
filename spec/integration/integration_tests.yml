@@ -174,3 +174,6 @@ model_not_named_correctly:
   error:
     no_3d_model:
       extension: "item"
+duplicate_content_types:
+  error:
+    duplicate_content_extension_types:

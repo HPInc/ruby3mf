@@ -148,3 +148,5 @@ non_distinct_indices:
 has_improper_base_color:
   msg: "An sRGB color MUST be specified with a value of a 6 or 8 digit hexadecimal number"
   page: 35
+duplicate_content_extension_types:
+  msg: "Only one ContentType definition is allowed per extension"
