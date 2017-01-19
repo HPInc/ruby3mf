@@ -15,6 +15,7 @@ class Relationships
             relationship_elements.each do |node|
               if node.is_a?(Nokogiri::XML::Element) && node.name == "Relationship"
                 l.error :multiple_relationships if (relationships.select { |r| r[:target] == node['Target'] && r[:type] == node['Type'] }.size > 0)
+                l.error :non_unique_rel_id, :file => zip_entry.name, :id => node['Id'] if (relationships.select { |r| r[:id] == node['Id'] }.size > 0)
                 relationships << {target: node['Target'], type: node['Type'], id: node['Id']}
                 l.info "adding relationship: #{relationships.last.inspect}"
               else

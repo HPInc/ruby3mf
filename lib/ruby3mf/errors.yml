@@ -76,6 +76,10 @@ missing_dot_rels_file:
 missing_rels_folder:
   msg: "Missing required file _rels/.rels"
   page: 4
+non_unique_rel_id:
+  msg: "The ID value '%{id}' appears more than once in '%{file}'.  Within a rels file, all ID's must be unique"
+  page: 8 #TODO:change this to page 23 of the OPC spec once logging supports linking to that spec
+  spec: opc
 multiple_relationships:
   msg: "There MUST NOT be more than one relationship of a given relationship type from one part to a second part"
   page: 10

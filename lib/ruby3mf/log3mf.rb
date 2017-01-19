@@ -65,7 +65,7 @@ class Log3mf
   def method_missing(name, *args, &block)
     if LOG_LEVELS.include? name.to_sym
       log(name.to_sym, *args)
-    else
+    else+
       super
     end
   end
@@ -73,6 +73,7 @@ class Log3mf
   def log(severity, message, options = {})
     error = @errormap.fetch(message.to_s) { {"msg" => message.to_s, "page" => nil } }
     options[:page] = error["page"] unless options[:page]
+    options[:spec] = error["spec"] unless options[:spec]
     message = interpolate(error["msg"], options)
     @log_list << ["#{@context_stack.join("/")}", severity, message, options] unless severity==:debug && ENV['LOGDEBUG'].nil?
     raise FatalError if severity == :fatal_error
@@ -100,7 +101,9 @@ class Log3mf
       core: 'http://3mf.io/wp-content/uploads/2016/03/3MFcoreSpec_1.1.pdf',
       material: 'http://3mf.io/wp-content/uploads/2015/04/3MFmaterialsSpec_1.0.1.pdf',
       production: 'http://3mf.io/wp-content/uploads/2016/07/3MFproductionSpec.pdf',
-      slice: 'http://3mf.io/wp-content/uploads/2016/07/3MFsliceSpec.pdf'
+      slice: 'http://3mf.io/wp-content/uploads/2016/07/3MFsliceSpec.pdf',
+      #opc: 'http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-376,%20Fourth%20Edition,%20Part%202%20-%20Open%20Packaging%20Conventions.zip'
+      opc: 'http://3mf.io/wp-content/uploads/2016/03/3MFcoreSpec_1.1.pdf'
     }
     "#{doc_urls[spec]}#page=#{page}"
   end

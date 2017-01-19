@@ -125,6 +125,11 @@ build_of_other:
 resource_id_collision:
   error:
     resource_id_collision:
+duplicate_rels_ids:
+  error:
+    non_unique_rel_id:
+      file: 3D/_rels/3dmodel.model.rels
+      id: rel1
 missing_pid:
   error:
     resource_pid_missing:
