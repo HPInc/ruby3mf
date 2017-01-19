@@ -43,7 +43,7 @@ class Document
         if document.textures.select { |f| f[:target] == tfile }.size == 0
           if document.thumbnails.select { |t| t[:target] == tfile }.size == 0
             log.context "part names" do |l|
-              l.error :texture_without_relationship, name: tfile
+              l.warning "#{tfile} appears to be a texture file but no rels file declares any relationship to the model", page: 13
             end
           end
         end

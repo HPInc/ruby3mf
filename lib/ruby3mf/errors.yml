@@ -127,9 +127,6 @@ unknown_required_extension:
 missing_extension_namespace_uri:
   msg: "Required extension '%{ns}' MUST refer to namespace with URI"
   page: 14
-texture_without_relationship:
-  msg: "%{name} appears to be a texture file but no rels file declares any relationship to the model"
-  page: 13
 invalid_metadata_under_defaultns:
   msg: "Metadata without a namespace name must only contain allowed name values"
   page: 21
