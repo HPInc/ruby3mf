@@ -182,3 +182,6 @@ model_not_named_correctly:
 duplicate_content_types:
   error:
     duplicate_content_extension_types:
+duplicate_part_overrides:
+  error:
+    duplicate_content_override_types:

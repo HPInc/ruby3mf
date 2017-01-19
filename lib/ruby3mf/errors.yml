@@ -158,3 +158,6 @@ duplicate_content_extension_types:
 invalid_image_content_type:
   msg: "Invalid content type for %{extension}"
   page: 22
+duplicate_content_override_types:
+  msg: "Only one override is allowed per part"
+  page: 8

@@ -2,6 +2,7 @@ class ContentTypes
 
   def self.parse(zip_entry)
     found_types={}
+    found_overrides={}
 
     Log3mf.context "parse" do |l|
       begin
@@ -18,9 +19,7 @@ class ContentTypes
         types_node = doc.children.first
         types_node.children.each do |node|
           l.context node.name do |l|
-            unless node.name == 'Default'
-              l.warning "[Content_Types].xml:#{node.line} contains unexpected element #{node.name}", page: 10
-            else
+            if node.name == 'Default'
               # l.error "[Content_Types].xml:#{node.line} contains Default node without defined Extension attribute" unless node['Extension'].is_a? String
               # l.error "[Content_Types].xml:#{node.line} contains Default node with unexpected ContentType \"#{node['ContentType']}\"", page: 10 unless all_types.include? node['ContentType']
               l.info "Setting type hash #{node['Extension']}=#{node['ContentType']}"
@@ -30,6 +29,11 @@ class ContentTypes
               # if node['Extension'].downcase == 'png' || node['Extension'].downcase == 'jpeg'
               #   l.error :invalid_image_content_type, spec: :material, extension: node['Extension'] unless node['ContentType'] == 'application/vnd.ms-package.3dmanufacturing-3dmodeltexture'
               # end
+            elsif node.name == 'Override'
+              l.error :duplicate_content_override_types if !found_overrides[node['PartName']].nil?
+              found_overrides[node['PartName']] = node['ContentType']
+            else
+              l.warning "[Content_Types].xml:#{node.line} contains unexpected element #{node.name}", page: 10
             end
           end
         end
