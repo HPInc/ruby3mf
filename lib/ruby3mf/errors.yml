@@ -84,8 +84,8 @@ multiple_relationships:
   msg: "There MUST NOT be more than one relationship of a given relationship type from one part to a second part"
   page: 10
 no_3d_model:
-  msg: "Relationship Target file /3D/3dmodel.model not found"
-  page: 11
+  msg: "Required 3D model payload not found with provided Content Type model extension: .%{extension}"
+  page: 10
 not_a_zip:
   msg: "File provided is not a valid ZIP archive"
   page: 9
@@ -152,3 +152,9 @@ non_distinct_indices:
 has_improper_base_color:
   msg: "An sRGB color MUST be specified with a value of a 6 or 8 digit hexadecimal number"
   page: 35
+duplicate_content_extension_types:
+  msg: "Only one ContentType definition is allowed per extension"
+  page: 8
+invalid_image_content_type:
+  msg: "Invalid content type for %{extension}"
+  page: 22

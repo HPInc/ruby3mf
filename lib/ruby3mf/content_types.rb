@@ -24,7 +24,12 @@ class ContentTypes
               # l.error "[Content_Types].xml:#{node.line} contains Default node without defined Extension attribute" unless node['Extension'].is_a? String
               # l.error "[Content_Types].xml:#{node.line} contains Default node with unexpected ContentType \"#{node['ContentType']}\"", page: 10 unless all_types.include? node['ContentType']
               l.info "Setting type hash #{node['Extension']}=#{node['ContentType']}"
+
+              l.error :duplicate_content_extension_types if !found_types[node['Extension']].nil?
               found_types[node['Extension']] = node['ContentType']
+              if node['Extension'].downcase == 'png' || node['Extension'].downcase == 'jpeg'
+                l.error :invalid_image_content_type, spec: :material, extension: node['Extension'] unless node['ContentType'] == 'application/vnd.ms-package.3dmanufacturing-3dmodeltexture'
+              end
             end
           end
         end

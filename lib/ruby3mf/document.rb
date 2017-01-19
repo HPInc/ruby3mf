@@ -60,8 +60,10 @@ class Document
           Zip.warn_invalid_date = false
 
           # check for the general purpose flag set - if so, warn that 3mf may not work on some systems
-          if File.read(input_file)[6] == "\b"
-            l.warning 'File format: this file may not open on all systems'
+          File.open(input_file, "r") do |file|
+            if file.read[6] == "\b"
+              l.warning 'File format: this file may not open on all systems'
+            end
           end
 
           Zip::File.open(input_file) do |zip_file|
@@ -93,6 +95,9 @@ class Document
               content_type_match = zip_file.glob('\[Content_Types\].xml').first
               if content_type_match
                 m.types = ContentTypes.parse(content_type_match)
+                model_extension = m.types.key('application/vnd.ms-package.3dmanufacturing-3dmodel+xml')
+                model_file = zip_file.glob("**/*.#{model_extension}").first
+                l.error :no_3d_model, extension: model_extension if model_file.nil?
               else
                 l.error 'Missing required file: [Content_Types].xml', page: 4
               end
