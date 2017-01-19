@@ -89,7 +89,7 @@ class Model3mf
 
       l.context "verifying build items" do |l|
 
-        l.error :build_with_other_item if model_doc.css('item').map { |x| x.attributes["objectid"].value }.map{ |id|  model_doc.search(".//xmlns:object[@id=$id][@type=$type]", nil, { :id => id, :type => 'other' } ) }.flatten.any?
+        l.error :build_with_other_item if model_doc.css('build/item').map { |x| x.attributes["objectid"].value }.map{ |id|  model_doc.search(".//xmlns:object[@id=$id][@type=$type]", nil, { :id => id, :type => 'other' } ) }.flatten.any?
 
       end
 
