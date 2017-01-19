@@ -559,13 +559,13 @@ describe Model3mf do
           expect(Log3mf.count_entries(:error, :fatal_error)).to be == 0
         end
       end
-      context "when there is no object of type other" do
+      context "when there is object of type other but item node is not under build" do
 
         let(:model_content) {
           '<?xml version="1.0" encoding="UTF-8"?>
              <model unit="millimeter" xml:lang="en-US" xmlns="http://schemas.microsoft.com/3dmanufacturing/core/2015/02">
                <resources>
-                 <object id="1">
+                 <object id="1" type="other">
                    <mesh>
                      <vertices>
                        <vertex x="0" y="0" z="0" />
@@ -647,13 +647,13 @@ describe Model3mf do
                        <triangle v1="3" v2="0" v3="4" />
                        <triangle v1="4" v2="7" v3="3" />
                      </triangles>
+                     <item objectid="1" />
                    </mesh>
                  </object>
                </resources>
                <build>
-                 <item objectid="1" />
-                 <item objectid="2" />
-                 <item objectid="3" />
+               <item objectid="2" />
+               <item objectid="3" />
                </build>
              </model>'
         }
