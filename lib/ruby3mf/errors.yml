@@ -150,3 +150,7 @@ has_improper_base_color:
   page: 35
 duplicate_content_extension_types:
   msg: "Only one ContentType definition is allowed per extension"
+  page: 8
+invalid_image_content_type:
+  msg: "Invalid content type for %{extension}"
+  page: 22
