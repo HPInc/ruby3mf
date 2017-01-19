@@ -60,9 +60,9 @@ missing_rels_folder:
 multiple_relationships:
   error:
     multiple_relationships:
-no_3d_model:
-  error:
-    no_3d_model:
+#no_3d_model:
+#  error:
+#    no_3d_model:
 not_a_zip:
   fatal_error:
     not_a_zip:
@@ -170,3 +170,7 @@ degenerate_triangle:
 #has_improper_base_color:
 #  error:
 #    has_improper_base_color:
+model_not_named_correctly:
+  error:
+    no_3d_model:
+      extension: "item"

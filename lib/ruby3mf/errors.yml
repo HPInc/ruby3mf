@@ -80,8 +80,8 @@ multiple_relationships:
   msg: "There MUST NOT be more than one relationship of a given relationship type from one part to a second part"
   page: 10
 no_3d_model:
-  msg: "Relationship Target file /3D/3dmodel.model not found"
-  page: 11
+  msg: "Required 3D model payload not found with provided Content Type model extension: .%{extension}"
+  page: 10
 not_a_zip:
   msg: "File provided is not a valid ZIP archive"
   page: 9
