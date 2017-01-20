@@ -23,7 +23,7 @@ class Document
     PRINT_TICKET_TYPE => {}
   }
 
-  TEXTURE_TYPES = %w[image/jpeg image/png application/vnd.ms-package.3dmanufacturing-3dmodeltexture]
+  TEXTURE_TYPES = %w[image/jpeg image/png application/vnd.ms-package.3dmanufacturing-3dmodeltexture].freeze
 
   def initialize(zip_filename)
     self.models=[]

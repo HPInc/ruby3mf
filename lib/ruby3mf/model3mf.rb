@@ -1,6 +1,5 @@
 class Model3mf
 
-  VALID_UNITS = ['micron', 'millimeter', 'centimeter', 'meter', 'inch', 'foot'].freeze
   VALID_EXTENSIONS = {
       'http://schemas.microsoft.com/3dmanufacturing/slice/2015/07' => {},
       'http://schemas.microsoft.com/3dmanufacturing/material/2015/02' => {},
@@ -9,7 +8,7 @@ class Model3mf
 
   SCHEMA = '3MFcoreSpec_1.1.xsd'
 
-  VALID_CORE_METADATA_NAMES = ['Title', 'Designer', 'Description', 'Copyright', 'LicenseTerms', 'Rating', 'CreationDate', 'ModificationDate'].freeze
+  VALID_CORE_METADATA_NAMES = %w[Title Designer Description Copyright LicenseTerms Rating CreationDate ModificationDate].freeze
 
   def self.parse(document, zip_entry)
     model_doc = nil
