@@ -15,6 +15,16 @@ class Document
   TEXTURE_TYPE = 'http://schemas.microsoft.com/3dmanufacturing/2013/01/3dtexture'
   PRINT_TICKET_TYPE = 'http://schemas.microsoft.com/3dmanufacturing/2013/01/printticket'
 
+  THUMBNAIL_TYPES = %w[image/jpeg image/png]
+
+  # Relationship to valid Content types
+  REL_TO_CONTENT_TYPES = {
+      MODEL_TYPE => 'application/vnd.ms-package.3dmanufacturing-3dmodel+xml',
+      PRINT_TICKET_TYPE => 'application/vnd.ms-printing.printticket+xml',
+      TEXTURE_TYPE => 'application/vnd.ms-package.3dmanufacturing-3dmodeltexture',
+      THUMBNAIL_TYPE => THUMBNAIL_TYPES
+  }
+
   # Relationship Type => Class validating relationship type
   RELATIONSHIP_TYPES = {
     MODEL_TYPE => {klass: 'Model3mf', collection: :models},
@@ -135,6 +145,14 @@ class Document
                     l.error :err_uri_empty_segment if target.end_with? '/' or target.include? '//'
                     l.error :err_uri_relative_path if target.include? '/../'
                     relationship_file = zip_file.glob(target).first
+
+                    # check that relationships are valid; extensions and relationship types must jive
+                    extension = File.extname(target).strip.downcase[1..-1]
+
+                    content_type = m.types[extension]
+                    rel_type = rel[:type]
+
+                    l.error :resource_contentype_invalid, bt: content_type unless REL_TO_CONTENT_TYPES[rel_type].include? content_type
 
                     if relationship_file
                       relationship_type = RELATIONSHIP_TYPES[rel[:type]]
