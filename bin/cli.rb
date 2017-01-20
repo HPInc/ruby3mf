@@ -10,3 +10,6 @@ errors.each do |ent|
   h = { file: filename, context: ent[0], severity: ent[1], message: ent[2] }
   puts h
 end
+
+# set exit code for suite test usage
+exit errors.size == 0
