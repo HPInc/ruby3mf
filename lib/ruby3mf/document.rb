@@ -106,6 +106,7 @@ class Document
               if content_type_match
                 m.types = ContentTypes.parse(content_type_match)
                 model_extension = m.types.key('application/vnd.ms-package.3dmanufacturing-3dmodel+xml')
+                model_extension = model_extension.downcase unless model_extension.nil?
                 model_file = zip_file.glob("**/*.#{model_extension}").first
                 l.error :no_3d_model, extension: model_extension if model_file.nil?
               else
