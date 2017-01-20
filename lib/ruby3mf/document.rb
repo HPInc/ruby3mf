@@ -15,13 +15,15 @@ class Document
   TEXTURE_TYPE = 'http://schemas.microsoft.com/3dmanufacturing/2013/01/3dtexture'
   PRINT_TICKET_TYPE = 'http://schemas.microsoft.com/3dmanufacturing/2013/01/printticket'
 
-  THUMBNAIL_TYPES = %w[image/jpeg image/png]
+  # Image Content Types
+  THUMBNAIL_TYPES = %w[image/jpeg image/png].freeze
+  TEXTURE_TYPES = %w[image/jpeg image/png application/vnd.ms-package.3dmanufacturing-3dmodeltexture].freeze
 
   # Relationship to valid Content types
   REL_TO_CONTENT_TYPES = {
       MODEL_TYPE => 'application/vnd.ms-package.3dmanufacturing-3dmodel+xml',
       PRINT_TICKET_TYPE => 'application/vnd.ms-printing.printticket+xml',
-      TEXTURE_TYPE => 'application/vnd.ms-package.3dmanufacturing-3dmodeltexture',
+      TEXTURE_TYPE => TEXTURE_TYPES,
       THUMBNAIL_TYPE => THUMBNAIL_TYPES
   }
 
@@ -33,15 +35,13 @@ class Document
     PRINT_TICKET_TYPE => {}
   }
 
-  TEXTURE_TYPES = %w[image/jpeg image/png application/vnd.ms-package.3dmanufacturing-3dmodeltexture].freeze
-
   def initialize(zip_filename)
     self.models=[]
     self.thumbnails=[]
     self.textures=[]
     self.objects={}
     self.relationships={}
-    self.types=[]
+    self.types={}
     self.parts=[]
     @zip_filename = zip_filename
   end
@@ -109,7 +109,7 @@ class Document
                 model_file = zip_file.glob("**/*.#{model_extension}").first
                 l.error :no_3d_model, extension: model_extension if model_file.nil?
               else
-                l.error 'Missing required file: [Content_Types].xml', page: 4
+                l.fatal_error 'Missing required file: [Content_Types].xml', page: 4
               end
             end
 
@@ -151,8 +151,14 @@ class Document
 
                     content_type = m.types[extension]
                     rel_type = rel[:type]
+                    expected_content_type = REL_TO_CONTENT_TYPES[rel_type]
 
-                    l.error :resource_contentype_invalid, bt: content_type unless REL_TO_CONTENT_TYPES[rel_type].include? content_type
+                    if (expected_content_type)
+                      l.error :missing_extension_in_content_types, ext: extension unless content_type
+                      l.error :resource_contentype_invalid, bt: content_type, rt: rel[:target] unless (!content_type.nil? && expected_content_type.include?(content_type))
+                    else
+                      l.info "found unrecognized relationship type: #{rel_type}"
+                    end
 
                     if relationship_file
                       relationship_type = RELATIONSHIP_TYPES[rel[:type]]

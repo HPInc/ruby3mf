@@ -1,5 +1,5 @@
 resource_contentype_invalid:
-  msg: "Resource in model has invalid contenttype %{bt}"
+  msg: "Relationship target %{rt} resource has invalid contenttype %{bt}"
   page: 10
 err_uri_empty_segment:
   msg: 'No segment of a 3MF part name path may be empty'
@@ -70,6 +70,9 @@ invalid_texture_file_type:
 missing_content_types:
   msg: "Missing required file: [Content_Types].xml"
   page: 4
+missing_extension_in_content_types:
+  msg: "Missing extension '%{ext}' in [Content_Types].xml"
+  page: 10
 missing_dot_rels_file:
   msg: "Missing required file _rels/.rels"
   page: 4

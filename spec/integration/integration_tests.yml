@@ -49,7 +49,7 @@ invalid_texture_file_type:
   error:
     invalid_texture_file_type:
 missing_content_types:
-  error:
+  fatal_error:
     missing_content_types:
 missing_dot_rels_file:
   fatal_error:
@@ -73,7 +73,7 @@ invalid_texture_path_in_model:
 zero_size_texture:
   fatal_error:
     zero_size_texture:
-resource_contentype_invalid:
+invalid_texture_contenttype:
   error:
     resource_contentype_invalid:
       bt: image/ping
