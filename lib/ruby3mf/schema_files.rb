@@ -7,6 +7,6 @@ class SchemaFiles
 
   def self.render(template)
     ERB.new(template).result( binding )
-	end
+  end
 
 end
