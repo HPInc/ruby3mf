@@ -12,6 +12,7 @@ files.each do |file|
 
     puts "=" * 100
     puts "Validating file: #{file}"
+
     errors.each do |ent|
       h = { context: ent[0], severity: ent[1], message: ent[2] }
       puts h

@@ -6,16 +6,14 @@ class Model3mf
       'http://schemas.microsoft.com/3dmanufacturing/production/2015/06' => {},
   }.freeze
 
-  SCHEMA = '3MFcoreSpec_1.1.xsd'
-
-  VALID_CORE_METADATA_NAMES = %w[Title Designer Description Copyright LicenseTerms Rating CreationDate ModificationDate].freeze
+  VALID_CORE_METADATA_NAMES = ['Title', 'Designer', 'Description', 'Copyright', 'LicenseTerms', 'Rating', 'CreationDate', 'ModificationDate'].freeze
 
   def self.parse(document, zip_entry)
     model_doc = nil
 
     Log3mf.context "parsing model" do |l|
       begin
-        model_doc = XmlVal.validate_parse(zip_entry, SCHEMA)
+        model_doc = XmlVal.validate_parse(zip_entry, SchemaFiles::SchemaTemplate)
       rescue Nokogiri::XML::SyntaxError => e
         l.fatal_error "Model file invalid XML. Exception #{e}"
       end

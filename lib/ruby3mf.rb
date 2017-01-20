@@ -1,5 +1,6 @@
 require_relative "ruby3mf/version"
 require_relative "ruby3mf/interpolation"
+require_relative "ruby3mf/schema_files"
 require_relative "ruby3mf/log3mf"
 require_relative "ruby3mf/document"
 require_relative "ruby3mf/content_types"

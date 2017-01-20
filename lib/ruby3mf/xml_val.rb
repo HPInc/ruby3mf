@@ -2,7 +2,7 @@ require 'nokogiri'
 
 class XmlVal
 
-  def self.validate_parse(xml_file, schema_name=nil)
+  def self.validate_parse(xml_file, schema_name = nil)
     doc = Nokogiri::XML(xml_file.get_input_stream) do |config|
       config.strict.nonet.noblanks
     end
@@ -10,7 +10,14 @@ class XmlVal
     doc
   end
 
-  def self.validate(file, document, schema_filename=nil)
+  def self.open_schema_file(file)
+    File.open(file, "r") do |file|
+      template = file.read
+      yield(SchemaFiles.render(template))
+    end
+  end
+
+  def self.validate(file, document, schema_filename = nil)
     Log3mf.context "validations" do |l|
       l.error :has_xml_space_attribute if space_attribute_exists?(document)
       l.error :wrong_encoding if xml_not_utf8_encoded?(document)
@@ -20,8 +27,8 @@ class XmlVal
 
       if schema_filename
         Log3mf.context "validating core schema" do |l|
-          File.open(File.join(File.dirname(__FILE__), schema_filename), "r") do |file|
-            xsd = Nokogiri::XML::Schema(file.read)
+          open_schema_file(schema_filename) do |content|
+            xsd = Nokogiri::XML::Schema(content)
             puts "the schema is NIL!" if xsd.nil?
             core_schema_errors = xsd.validate(document)
             l.error :invalid_xml_core if core_schema_errors.size > 0
