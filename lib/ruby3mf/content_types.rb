@@ -27,9 +27,9 @@ class ContentTypes
 
               l.error :duplicate_content_extension_types if !found_types[node['Extension']].nil?
               found_types[node['Extension']] = node['ContentType']
-              if node['Extension'].downcase == 'png' || node['Extension'].downcase == 'jpeg'
-                l.error :invalid_image_content_type, spec: :material, extension: node['Extension'] unless node['ContentType'] == 'application/vnd.ms-package.3dmanufacturing-3dmodeltexture'
-              end
+              # if node['Extension'].downcase == 'png' || node['Extension'].downcase == 'jpeg'
+              #   l.error :invalid_image_content_type, spec: :material, extension: node['Extension'] unless node['ContentType'] == 'application/vnd.ms-package.3dmanufacturing-3dmodeltexture'
+              # end
             end
           end
         end
