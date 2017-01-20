@@ -30,6 +30,8 @@ class ContentTypes
               #   l.error :invalid_image_content_type, spec: :material, extension: node['Extension'] unless node['ContentType'] == 'application/vnd.ms-package.3dmanufacturing-3dmodeltexture'
               # end
             elsif node.name == 'Override'
+              l.error :empty_override_part_name if node['PartName'].empty?
+
               l.error :duplicate_content_override_types if !found_overrides[node['PartName']].nil?
               found_overrides[node['PartName']] = node['ContentType']
             else

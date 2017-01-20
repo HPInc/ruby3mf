@@ -185,3 +185,6 @@ duplicate_content_types:
 duplicate_part_overrides:
   error:
     duplicate_content_override_types:
+empty_override_part_name:
+  error:
+    empty_override_part_name:

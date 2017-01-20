@@ -161,3 +161,6 @@ invalid_image_content_type:
 duplicate_content_override_types:
   msg: "Only one override is allowed per part"
   page: 8
+empty_override_part_name:
+  msg: "Overrides can't have empty partname"
+  page: 8
