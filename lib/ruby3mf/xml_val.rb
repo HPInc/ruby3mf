@@ -39,7 +39,7 @@ class XmlVal
   end
 
   def self.objects_not_referenced?(document)
-    document.css('object').map { |x| x.attributes["id"].value } != document.css('item').map { |x| x.attributes["objectid"].value }
+    document.css('object').map { |x| x.attributes["id"].value } != document.css('build/item').map { |x| x.attributes["objectid"].value }
   end
 
   def self.bad_floating_numbers?(document)
