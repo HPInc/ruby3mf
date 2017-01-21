@@ -6,7 +6,7 @@ class Model3mf
       'http://schemas.microsoft.com/3dmanufacturing/production/2015/06' => {},
   }.freeze
 
-  VALID_CORE_METADATA_NAMES = ['title', 'designer', 'description', 'copyright', 'licenseterms', 'rating', 'creationdate', 'modificationdate'].freeze
+  VALID_CORE_METADATA_NAMES = ['Title', 'Designer', 'Description', 'Copyright', 'LicenseTerms', 'Rating', 'CreationDate', 'ModificationDate'].freeze
 
   def self.parse(document, zip_entry)
     model_doc = nil
@@ -119,7 +119,7 @@ class Model3mf
       end
 
       l.context "checking metadata" do |l|
-        metadata_names = model_doc.root.css("metadata").map { |met| met['name'].downcase }
+        metadata_names = model_doc.root.css("metadata").map { |met| met['name'] }
         l.error :metadata_elements_with_same_name unless metadata_names.uniq!.nil?
 
         unless (metadata_names - VALID_CORE_METADATA_NAMES).empty?
