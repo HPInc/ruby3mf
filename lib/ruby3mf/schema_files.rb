@@ -6,8 +6,6 @@ class SchemaFiles
   SchemaLocation  = File.join(File.dirname(__FILE__), "xml.xsd")
 
   class << self
-    attr_accessor :xsd_content
-    attr_accessor :template
 
     def open(file)
       @@template ||= File.open(file, "r") do |file|
