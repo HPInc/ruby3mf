@@ -12,12 +12,12 @@ class SchemaFiles
         file.read
       end
 
-      yield(SchemaFiles.render(@@template))
+      yield(SchemaFiles.render)
 
     end
 
-    def render(template)
-       @@xsd_content ||= ERB.new(template).result( binding )
+    def render
+       @@xsd_content ||= ERB.new(@@template).result( binding )
     end
 
   end
