@@ -7,6 +7,16 @@ class SchemaFiles
 
   class << self
     attr_accessor :xsd_content
+    attr_accessor :template
+
+    def open(file)
+      @@template ||= File.open(file, "r") do |file|
+        file.read
+      end
+
+      yield(SchemaFiles.render(@@template))
+
+    end
 
     def render(template)
        @@xsd_content ||= ERB.new(template).result( binding )

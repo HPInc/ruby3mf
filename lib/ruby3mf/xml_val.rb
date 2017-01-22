@@ -10,13 +10,6 @@ class XmlVal
     doc
   end
 
-  def self.open_schema_file(file)
-    File.open(file, "r") do |file|
-      template = file.read
-      yield(SchemaFiles.render(template))
-    end
-  end
-
   def self.validate(file, document, schema_filename = nil)
     Log3mf.context "validations" do |l|
       l.error :has_xml_space_attribute if space_attribute_exists?(document)
@@ -27,7 +20,7 @@ class XmlVal
 
       if schema_filename
         Log3mf.context "validating core schema" do |l|
-          open_schema_file(schema_filename) do |content|
+          SchemaFiles.open(schema_filename) do |content|
             xsd = Nokogiri::XML::Schema(content)
             puts "the schema is NIL!" if xsd.nil?
             core_schema_errors = xsd.validate(document)
