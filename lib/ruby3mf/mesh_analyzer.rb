@@ -54,11 +54,11 @@ class MeshAnalyzer
 
           result = list.verify_edges
           if result == :bad_orientation
-            l.fatal_error :resource_3dmodel_orientation
+            l.error :resource_3dmodel_orientation
           elsif result == :hole
-            l.fatal_error :resource_3dmodel_hole
+            l.error :resource_3dmodel_hole
           elsif result == :nonmanifold
-            l.fatal_error :resource_3dmodel_nonmanifold
+            l.error :resource_3dmodel_nonmanifold
           end
 
         end
