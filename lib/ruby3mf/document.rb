@@ -1,6 +1,7 @@
 class Document
 
   attr_accessor :types
+  attr_accessor :type_overrides
   attr_accessor :relationships
   attr_accessor :models
   attr_accessor :thumbnails
@@ -19,20 +20,12 @@ class Document
   THUMBNAIL_TYPES = %w[image/jpeg image/png].freeze
   TEXTURE_TYPES = %w[image/jpeg image/png application/vnd.ms-package.3dmanufacturing-3dmodeltexture].freeze
 
-  # Relationship to valid Content types
-  REL_TO_CONTENT_TYPES = {
-      MODEL_TYPE => 'application/vnd.ms-package.3dmanufacturing-3dmodel+xml',
-      PRINT_TICKET_TYPE => 'application/vnd.ms-printing.printticket+xml',
-      TEXTURE_TYPE => TEXTURE_TYPES,
-      THUMBNAIL_TYPE => THUMBNAIL_TYPES
-  }
-
   # Relationship Type => Class validating relationship type
   RELATIONSHIP_TYPES = {
-    MODEL_TYPE => {klass: 'Model3mf', collection: :models},
-    THUMBNAIL_TYPE => {klass: 'Thumbnail3mf', collection: :thumbnails},
-    TEXTURE_TYPE => {klass: 'Texture3mf', collection: :textures},
-    PRINT_TICKET_TYPE => {}
+    MODEL_TYPE => {klass: 'Model3mf', collection: :models, valid_types: ['application/vnd.ms-package.3dmanufacturing-3dmodel+xml']},
+    THUMBNAIL_TYPE => {klass: 'Thumbnail3mf', collection: :thumbnails, valid_types: THUMBNAIL_TYPES},
+    TEXTURE_TYPE => {klass: 'Texture3mf', collection: :textures, valid_types: TEXTURE_TYPES},
+    PRINT_TICKET_TYPE => {valid_types: ['application/vnd.ms-printing.printticket+xml']}
   }
 
   def initialize(zip_filename)
@@ -42,6 +35,7 @@ class Document
     self.objects={}
     self.relationships={}
     self.types={}
+    self.type_overrides={}
     self.parts=[]
     @zip_filename = zip_filename
   end
@@ -104,7 +98,7 @@ class Document
             l.context 'content types' do |l|
               content_type_match = zip_file.glob('\[Content_Types\].xml').first
               if content_type_match
-                m.types = ContentTypes.parse(content_type_match)
+                m.types, m.type_overrides = ContentTypes.parse(content_type_match)
                 model_extension = m.types.key('application/vnd.ms-package.3dmanufacturing-3dmodel+xml')
                 model_extension = model_extension.downcase unless model_extension.nil?
                 model_file = zip_file.glob("**/*.#{model_extension}").first
@@ -146,26 +140,29 @@ class Document
                     l.error :err_uri_empty_segment if target.end_with? '/' or target.include? '//'
                     l.error :err_uri_relative_path if target.include? '/../'
                     relationship_file = zip_file.glob(target).first
-
-                    # check that relationships are valid; extensions and relationship types must jive
-                    extension = File.extname(target).strip.downcase[1..-1]
-
-                    content_type = m.types[extension]
                     rel_type = rel[:type]
-                    expected_content_type = REL_TO_CONTENT_TYPES[rel_type]
-
-                    if (expected_content_type)
-                      l.error :missing_extension_in_content_types, ext: extension unless content_type
-                      l.error :resource_contentype_invalid, bt: content_type, rt: rel[:target] unless (!content_type.nil? && expected_content_type.include?(content_type))
-                    else
-                      l.info "found unrecognized relationship type: #{rel_type}"
-                    end
 
                     if relationship_file
-                      relationship_type = RELATIONSHIP_TYPES[rel[:type]]
+                      relationship_type = RELATIONSHIP_TYPES[rel_type]
                       if relationship_type.nil?
                         l.warning :unsupported_relationship_type, type: rel[:type], target: rel[:target]
                       else
+                        # check that relationships are valid; extensions and relationship types must jive
+                        if m.type_overrides["/#{target}"]
+                          content_type = m.type_overrides["/#{target}"]
+                        else
+                          extension = File.extname(target).strip.downcase[1..-1]
+                          content_type = m.types[extension]
+                        end
+                        expected_content_type = relationship_type[:valid_types]
+
+                        if (expected_content_type)
+                          l.error :missing_extension_in_content_types, ext: extension unless content_type
+                          l.error :resource_contentype_invalid, bt: content_type, rt: rel[:target] unless (!content_type.nil? && expected_content_type.include?(content_type))
+                        else
+                          l.info "found unrecognized relationship type: #{rel_type}"
+                        end
+
                         unless relationship_type[:klass].nil?
                           m.send(relationship_type[:collection]) << {
                             rel_id: rel[:id],

@@ -1,0 +1,237 @@
+
+
+Positive
+...............
+../3mf-test-suite/Positive/PC_304_01.3mf
+  {:context=>"zip/relationship elements//Metadata/core.prop", :severity=>:error, :message=>"Invalid relationship type 'http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties' specified in .rels relationship file. Parts in the 3D payload MUST use one of the appropriate relationship types to establish that relationship between two parts in the payload."}
+.
+../3mf-test-suite/Positive/PC_305_01.3mf
+  {:context=>"zip/relationship elements//3D/3dmodel.model/parsing model/verifying 3D payload required resources/verifying 3D resource types", :severity=>:error, :message=>"Resource in model has invalid contenttype image/png"}
+  {:context=>"zip/relationship elements//3D/Textures/texture.png/Texture3mf", :severity=>:fatal_error, :message=>"Texture file must be valid image file"}
+.............
+../3mf-test-suite/Positive/PC_312_01.3mf
+  {:context=>"zip/relationship elements//3D/3dmodel.model/parsing model/verifying resources", :severity=>:error, :message=>"resources must be unique within the model"}
+.................................................................................
+../3mf-test-suite/Positive/PM_909_02.3mf
+  {:context=>"zip/relationship elements//2D/337.model/parsing model/validations/validating core schema", :severity=>:fatal_error, :message=>"Model file invalid XML. Exception attribute use (unknown), attribute 'ref': The QName value '{http://www.w3.org/XML/1998/namespace}lang' does not resolve to a(n) attribute declaration."}
+.
+../3mf-test-suite/Positive/PM_909_03.3mf
+  {:context=>"zip/relationship elements//3D/3dmodel.model/parsing model/checking metadata", :severity=>:error, :message=>"Metadata without a namespace name must only contain allowed name values"}
+.
+../3mf-test-suite/Positive/PM_909_04.3mf
+  {:context=>"zip/relationship elements//3D/3dmodel.model/parsing model/validations/validating core schema", :severity=>:fatal_error, :message=>"Model file invalid XML. Exception attribute use (unknown), attribute 'ref': The QName value '{http://www.w3.org/XML/1998/namespace}lang' does not resolve to a(n) attribute declaration."}
+..
+../3mf-test-suite/Positive/PO_101_01.3mf
+  {:context=>"zip/content types", :severity=>:error, :message=>"Required 3D model payload not found with provided Content Type model extension: .ModeL"}
+.
+../3mf-test-suite/Positive/PO_101_02.3mf
+  {:context=>"zip/relationship elements//2D/ffffa2c3-ba74-4bea-a4d0-167a4211134d/parsing model/validations/validating core schema", :severity=>:fatal_error, :message=>"Model file invalid XML. Exception attribute use (unknown), attribute 'ref': The QName value '{http://www.w3.org/XML/1998/namespace}lang' does not resolve to a(n) attribute declaration."}
+.
+../3mf-test-suite/Positive/PO_101_03.3mf
+  {:context=>"zip/relationship elements//3D/3dmodel.model/parsing model/validations/validating core schema", :severity=>:fatal_error, :message=>"Model file invalid XML. Exception attribute use (unknown), attribute 'ref': The QName value '{http://www.w3.org/XML/1998/namespace}lang' does not resolve to a(n) attribute declaration."}
+.
+../3mf-test-suite/Positive/PO_102_01.3mf
+  {:context=>"zip/content types/parse", :severity=>:error, :message=>"[Content_Types].xml is missing required ContentType \"application/vnd.ms-package.3dmanufacturing-3dmodel+xml\""}
+  {:context=>"zip/content types", :severity=>:error, :message=>"Required 3D model payload not found with provided Content Type model extension: ."}
+  {:context=>"zip/relationship elements//2D/ffffa2c3-ba74-4bea-a4d0-167a4211134d.moodel/parsing model/validations/validating core schema", :severity=>:fatal_error, :message=>"Model file invalid XML. Exception attribute use (unknown), attribute 'ref': The QName value '{http://www.w3.org/XML/1998/namespace}lang' does not resolve to a(n) attribute declaration."}
+.
+../3mf-test-suite/Positive/PO_102_02.3mf
+  {:context=>"zip/relationship elements//3D/3dmodel.model/parsing model/validations/validating core schema", :severity=>:fatal_error, :message=>"Model file invalid XML. Exception attribute use (unknown), attribute 'ref': The QName value '{http://www.w3.org/XML/1998/namespace}lang' does not resolve to a(n) attribute declaration."}
+..
+../3mf-test-suite/Positive/PO_103_01.3mf
+  {:context=>"zip/relationship elements//2D/ffffa2c3-ba74-4bea-a4d0-167a4211134d.model/parsing model/validations/validating core schema", :severity=>:fatal_error, :message=>"Model file invalid XML. Exception attribute use (unknown), attribute 'ref': The QName value '{http://www.w3.org/XML/1998/namespace}lang' does not resolve to a(n) attribute declaration."}
+.
+../3mf-test-suite/Positive/PO_104_01.3mf
+  {:context=>"zip/relationship elements//2D/1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM.model/parsing model/validations/validating core schema", :severity=>:fatal_error, :message=>"Model file invalid XML. Exception attribute use (unknown), attribute 'ref': The QName value '{http://www.w3.org/XML/1998/namespace}lang' does not resolve to a(n) attribute declaration."}
+.
+../3mf-test-suite/Positive/PO_104_02.3mf
+  {:context=>"zip/relationship elements//3D/3dmodel.model/parsing model/validations/validating core schema", :severity=>:fatal_error, :message=>"Model file invalid XML. Exception attribute use (unknown), attribute 'ref': The QName value '{http://www.w3.org/XML/1998/namespace}lang' does not resolve to a(n) attribute declaration."}
+.
+../3mf-test-suite/Positive/PO_104_03.3mf
+  {:context=>"zip/part names /2D/fdfd166f-4f4c-4259-bb96-01e4fb03\xC3\x86381.model", :severity=>:fatal_error, :message=>"This NEVER Happens! mdw 12Jan2017"}
+.
+../3mf-test-suite/Positive/PO_105_02.3mf
+  {:context=>"zip/relationship elements//3D/3dmodel.model/parsing model/validations/validating core schema", :severity=>:fatal_error, :message=>"Model file invalid XML. Exception attribute use (unknown), attribute 'ref': The QName value '{http://www.w3.org/XML/1998/namespace}lang' does not resolve to a(n) attribute declaration."}
+.
+../3mf-test-suite/Positive/PO_105_03.3mf
+  {:context=>"zip/relationship elements//3D/3dmodel.model/parsing model/validations/validating core schema", :severity=>:fatal_error, :message=>"Model file invalid XML. Exception attribute use (unknown), attribute 'ref': The QName value '{http://www.w3.org/XML/1998/namespace}lang' does not resolve to a(n) attribute declaration."}
+..
+../3mf-test-suite/Positive/PO_105_05.3mf
+  {:context=>"zip/relationship elements//2D/9e1cbf53-9bb1-48fb-aced-acbb9cbbe79f.model/parsing model/validations/validating core schema", :severity=>:fatal_error, :message=>"Model file invalid XML. Exception attribute use (unknown), attribute 'ref': The QName value '{http://www.w3.org/XML/1998/namespace}lang' does not resolve to a(n) attribute declaration."}
+..
+../3mf-test-suite/Positive/PO_105_07.3mf
+  {:context=>"zip/relationship elements//2D/9e1cbf53-9bb1-48fb-aced-acbb9cbbe79f.model/parsing model/validations/validating core schema", :severity=>:fatal_error, :message=>"Model file invalid XML. Exception attribute use (unknown), attribute 'ref': The QName value '{http://www.w3.org/XML/1998/namespace}lang' does not resolve to a(n) attribute declaration."}
+.
+../3mf-test-suite/Positive/PO_105_09.3mf
+  {:context=>"zip/relationship elements//2D/9e1cbf53-9bb1-48fb-aced-acbb9cbbe79f.model/parsing model/validations/validating core schema", :severity=>:fatal_error, :message=>"Model file invalid XML. Exception attribute use (unknown), attribute 'ref': The QName value '{http://www.w3.org/XML/1998/namespace}lang' does not resolve to a(n) attribute declaration."}
+...
+../3mf-test-suite/Positive/PO_106_01.3mf
+  {:context=>"zip/relationship elements//3D/3dmodel.model/parsing model/validations/validating core schema", :severity=>:fatal_error, :message=>"Model file invalid XML. Exception attribute use (unknown), attribute 'ref': The QName value '{http://www.w3.org/XML/1998/namespace}lang' does not resolve to a(n) attribute declaration."}
+..
+../3mf-test-suite/Positive/PO_107_01.3mf
+  {:context=>"zip/relationship elements//2D/ffffa2c3-ba74-4bea-a4d0-167a4211134d.model/parsing model/validations/validating core schema", :severity=>:fatal_error, :message=>"Model file invalid XML. Exception attribute use (unknown), attribute 'ref': The QName value '{http://www.w3.org/XML/1998/namespace}lang' does not resolve to a(n) attribute declaration."}
+.
+../3mf-test-suite/Positive/PO_107_02.3mf
+  {:context=>"zip/relationship elements//2D/ffffa2c3-ba74-4bea-a4d0-167a4211134d.model/parsing model/validations/validating core schema", :severity=>:fatal_error, :message=>"Model file invalid XML. Exception attribute use (unknown), attribute 'ref': The QName value '{http://www.w3.org/XML/1998/namespace}lang' does not resolve to a(n) attribute declaration."}
+.
+../3mf-test-suite/Positive/PO_108_01.3mf
+  {:context=>"zip/relationship elements//2D/ffffa2c3-ba74-4bea-a4d0-167a4211134d.model/parsing model/validations/validating core schema", :severity=>:fatal_error, :message=>"Model file invalid XML. Exception attribute use (unknown), attribute 'ref': The QName value '{http://www.w3.org/XML/1998/namespace}lang' does not resolve to a(n) attribute declaration."}
+.
+../3mf-test-suite/Positive/PP_701_01.3mf
+  {:context=>"zip/relationship elements//2D/7b7c4f2f-3b64-49b9-a098-a978332e8d1a.model/parsing model/validations/validating core schema", :severity=>:fatal_error, :message=>"Model file invalid XML. Exception attribute use (unknown), attribute 'ref': The QName value '{http://www.w3.org/XML/1998/namespace}lang' does not resolve to a(n) attribute declaration."}
+.
+../3mf-test-suite/Positive/PP_701_02.3mf
+  {:context=>"zip/relationship elements//3D/3dmodel.model/parsing model/validations/validating core schema", :severity=>:fatal_error, :message=>"Model file invalid XML. Exception attribute use (unknown), attribute 'ref': The QName value '{http://www.w3.org/XML/1998/namespace}lang' does not resolve to a(n) attribute declaration."}
+.
+../3mf-test-suite/Positive/PP_701_04.3mf
+  {:context=>"zip/relationship elements//3D/3dmodel.model/parsing model/validations/validating core schema", :severity=>:fatal_error, :message=>"Model file invalid XML. Exception attribute use (unknown), attribute 'ref': The QName value '{http://www.w3.org/XML/1998/namespace}lang' does not resolve to a(n) attribute declaration."}
+.
+../3mf-test-suite/Positive/PP_701_05.3mf
+  {:context=>"zip/relationship elements//3D/3dmodel.model/parsing model/validations/validating core schema", :severity=>:fatal_error, :message=>"Model file invalid XML. Exception attribute use (unknown), attribute 'ref': The QName value '{http://www.w3.org/XML/1998/namespace}lang' does not resolve to a(n) attribute declaration."}
+..
+../3mf-test-suite/Positive/PP_701_07.3mf
+  {:context=>"zip/relationship elements//2D/d9d8d141-23ff-4cdc-8da1-66b33dd69757.model/parsing model/validations/validating core schema", :severity=>:fatal_error, :message=>"Model file invalid XML. Exception attribute use (unknown), attribute 'ref': The QName value '{http://www.w3.org/XML/1998/namespace}lang' does not resolve to a(n) attribute declaration."}
+.
+../3mf-test-suite/Positive/PP_701_08.3mf
+  {:context=>"zip/relationship elements//3D/3dmodel.model/parsing model/validations/validating core schema", :severity=>:fatal_error, :message=>"Model file invalid XML. Exception attribute use (unknown), attribute 'ref': The QName value '{http://www.w3.org/XML/1998/namespace}lang' does not resolve to a(n) attribute declaration."}
+.
+../3mf-test-suite/Positive/PP_701_09.3mf
+  {:context=>"zip/relationship elements//3D/3dmodel.model/parsing model/validations/validating core schema", :severity=>:fatal_error, :message=>"Model file invalid XML. Exception attribute use (unknown), attribute 'ref': The QName value '{http://www.w3.org/XML/1998/namespace}lang' does not resolve to a(n) attribute declaration."}
+.
+../3mf-test-suite/Positive/PP_701_11.3mf
+  {:context=>"zip/relationship elements//3D/3dmodel.model/parsing model/validations/validating core schema", :severity=>:fatal_error, :message=>"Model file invalid XML. Exception attribute use (unknown), attribute 'ref': The QName value '{http://www.w3.org/XML/1998/namespace}lang' does not resolve to a(n) attribute declaration."}
+.
+../3mf-test-suite/Positive/PP_701_12.3mf
+  {:context=>"zip/relationship elements//3D/3dmodel.model/parsing model/verifying 3D payload required resources/verifying StartPart relationship points to the root 3D Model", :severity=>:fatal_error, :message=>"Invalid StartPart target '/3D/3dmodel.model'. The 3MF Document StartPart relationship MUST point to the 3D Model part that identifies the root of the 3D payload."}
+.
+../3mf-test-suite/Positive/PP_701_13.3mf
+  {:context=>"zip/relationship elements//3D/3dmodel.model/parsing model/validations/validating core schema", :severity=>:fatal_error, :message=>"Model file invalid XML. Exception attribute use (unknown), attribute 'ref': The QName value '{http://www.w3.org/XML/1998/namespace}lang' does not resolve to a(n) attribute declaration."}
+.
+../3mf-test-suite/Positive/PP_701_14.3mf
+  {:context=>"zip/relationship elements//3D/3dmodel.model/parsing model/validations/validating core schema", :severity=>:fatal_error, :message=>"Model file invalid XML. Exception attribute use (unknown), attribute 'ref': The QName value '{http://www.w3.org/XML/1998/namespace}lang' does not resolve to a(n) attribute declaration."}
+...
+../3mf-test-suite/Positive/PP_701_17.3mf
+  {:context=>"zip/relationship elements//3D/3dmodel.model/parsing model/validations/validating core schema", :severity=>:fatal_error, :message=>"Model file invalid XML. Exception attribute use (unknown), attribute 'ref': The QName value '{http://www.w3.org/XML/1998/namespace}lang' does not resolve to a(n) attribute declaration."}
+.
+../3mf-test-suite/Positive/PP_701_18.3mf
+  {:context=>"zip/relationship elements//2D/0082f270-d84a-4646-8510-05bc3490bd6f.model/parsing model/validations/validating core schema", :severity=>:fatal_error, :message=>"Model file invalid XML. Exception attribute use (unknown), attribute 'ref': The QName value '{http://www.w3.org/XML/1998/namespace}lang' does not resolve to a(n) attribute declaration."}
+.
+../3mf-test-suite/Positive/PP_701_19.3mf
+  {:context=>"zip/relationship elements//3D/3dmodel.model/parsing model/validations/validating core schema", :severity=>:fatal_error, :message=>"Model file invalid XML. Exception attribute use (unknown), attribute 'ref': The QName value '{http://www.w3.org/XML/1998/namespace}lang' does not resolve to a(n) attribute declaration."}
+.
+../3mf-test-suite/Positive/PP_701_20.3mf
+  {:context=>"zip/relationship elements//3D/3dmodel.model/parsing model/validations/validating core schema", :severity=>:fatal_error, :message=>"Model file invalid XML. Exception attribute use (unknown), attribute 'ref': The QName value '{http://www.w3.org/XML/1998/namespace}lang' does not resolve to a(n) attribute declaration."}
+.
+../3mf-test-suite/Positive/PP_701_21.3mf
+  {:context=>"zip/relationship elements//3D/3dmodel.model/parsing model/validations/validating core schema", :severity=>:fatal_error, :message=>"Model file invalid XML. Exception attribute use (unknown), attribute 'ref': The QName value '{http://www.w3.org/XML/1998/namespace}lang' does not resolve to a(n) attribute declaration."}
+..
+../3mf-test-suite/Positive/PP_701_23.3mf
+  {:context=>"zip/relationship elements//2D/dbc5f09a-6bf4-4e9b-9b70-0e418111e81f.model/parsing model/validations/validating core schema", :severity=>:fatal_error, :message=>"Model file invalid XML. Exception attribute use (unknown), attribute 'ref': The QName value '{http://www.w3.org/XML/1998/namespace}lang' does not resolve to a(n) attribute declaration."}
+...
+../3mf-test-suite/Positive/PP_701_26.3mf
+  {:context=>"zip/relationship elements//3D/3dmodel.model/parsing model/validations/validating core schema", :severity=>:fatal_error, :message=>"Model file invalid XML. Exception attribute use (unknown), attribute 'ref': The QName value '{http://www.w3.org/XML/1998/namespace}lang' does not resolve to a(n) attribute declaration."}
+.
+../3mf-test-suite/Positive/PP_701_27.3mf
+  {:context=>"zip/relationship elements//2D/topref.model/parsing model/validations/validating core schema", :severity=>:fatal_error, :message=>"Model file invalid XML. Exception attribute use (unknown), attribute 'ref': The QName value '{http://www.w3.org/XML/1998/namespace}lang' does not resolve to a(n) attribute declaration."}
+.
+../3mf-test-suite/Positive/PP_701_30.3mf
+  {:context=>"zip/relationship elements//2D/0c853b1f-388f-4bd0-a23e-45426e2aa769.model/parsing model/validations/validating core schema", :severity=>:fatal_error, :message=>"Model file invalid XML. Exception attribute use (unknown), attribute 'ref': The QName value '{http://www.w3.org/XML/1998/namespace}lang' does not resolve to a(n) attribute declaration."}
+..
+../3mf-test-suite/Positive/PP_701_32.3mf
+  {:context=>"zip/relationship elements//3D/3dmodel.model/parsing model/verifying 3D payload required resources/verifying StartPart relationship points to the root 3D Model", :severity=>:fatal_error, :message=>"Invalid StartPart target '/3D/3dmodel.model'. The 3MF Document StartPart relationship MUST point to the 3D Model part that identifies the root of the 3D payload."}
+.
+../3mf-test-suite/Positive/PP_703_01.3mf
+  {:context=>"zip/relationship elements//3D/3dmodel.model/parsing model/validations/validating core schema", :severity=>:fatal_error, :message=>"Model file invalid XML. Exception attribute use (unknown), attribute 'ref': The QName value '{http://www.w3.org/XML/1998/namespace}lang' does not resolve to a(n) attribute declaration."}
+.
+../3mf-test-suite/Positive/PP_704_01.3mf
+  {:context=>"zip/relationship elements//3D/3dmodel.model/parsing model/validations/validating core schema", :severity=>:fatal_error, :message=>"Model file invalid XML. Exception attribute use (unknown), attribute 'ref': The QName value '{http://www.w3.org/XML/1998/namespace}lang' does not resolve to a(n) attribute declaration."}
+......
+../3mf-test-suite/Positive/PS_502_03.3mf
+  {:context=>"zip/relationship elements//3D/3dmodel.model/parsing model/validations/validating core schema", :severity=>:fatal_error, :message=>"Model file invalid XML. Exception attribute use (unknown), attribute 'ref': The QName value '{http://www.w3.org/XML/1998/namespace}lang' does not resolve to a(n) attribute declaration."}
+.
+../3mf-test-suite/Positive/PS_502_04.3mf
+  {:context=>"zip/relationship elements//2D/ffffa2c3-ba74-4bea-a4d0-167a4211134d.model/parsing model/validations/validating core schema", :severity=>:fatal_error, :message=>"Model file invalid XML. Exception attribute use (unknown), attribute 'ref': The QName value '{http://www.w3.org/XML/1998/namespace}lang' does not resolve to a(n) attribute declaration."}
+.
+../3mf-test-suite/Positive/PS_502_05.3mf
+  {:context=>"zip/relationship elements//3D/3dmodel.model/parsing model/validations/validating core schema", :severity=>:fatal_error, :message=>"Model file invalid XML. Exception attribute use (unknown), attribute 'ref': The QName value '{http://www.w3.org/XML/1998/namespace}lang' does not resolve to a(n) attribute declaration."}
+.
+../3mf-test-suite/Positive/PS_503_01.3mf
+  {:context=>"zip/relationship elements//3D/3dmodel.model/parsing model/validations/validating core schema", :severity=>:fatal_error, :message=>"Model file invalid XML. Exception attribute use (unknown), attribute 'ref': The QName value '{http://www.w3.org/XML/1998/namespace}lang' does not resolve to a(n) attribute declaration."}
+.
+../3mf-test-suite/Positive/PS_503_02.3mf
+  {:context=>"zip/relationship elements//3D/3dmodel.model/parsing model/validations/validating core schema", :severity=>:fatal_error, :message=>"Model file invalid XML. Exception attribute use (unknown), attribute 'ref': The QName value '{http://www.w3.org/XML/1998/namespace}lang' does not resolve to a(n) attribute declaration."}
+...
+../3mf-test-suite/Positive/PS_505_01.3mf
+  {:context=>"zip/relationship elements//2D/917d27a5-e210-4bd8-a430-0dacc3be6d95.model/parsing model/validations/validating core schema", :severity=>:fatal_error, :message=>"Model file invalid XML. Exception attribute use (unknown), attribute 'ref': The QName value '{http://www.w3.org/XML/1998/namespace}lang' does not resolve to a(n) attribute declaration."}
+.
+../3mf-test-suite/Positive/PS_505_02.3mf
+  {:context=>"zip/relationship elements//3D/3dmodel.model/parsing model/validations/validating core schema", :severity=>:fatal_error, :message=>"Model file invalid XML. Exception attribute use (unknown), attribute 'ref': The QName value '{http://www.w3.org/XML/1998/namespace}lang' does not resolve to a(n) attribute declaration."}
+..
+../3mf-test-suite/Positive/PS_506_01.3mf
+  {:context=>"zip/relationship elements//3D/3dmodel.model/parsing model/verifying resources", :severity=>:error, :message=>"resources must be unique within the model"}
+  {:context=>"zip/relationship elements//2D/ad8bd6de-d9b5-446a-8fcd-e75a3bc63c8b.model/parsing model/validations/validating core schema", :severity=>:fatal_error, :message=>"Model file invalid XML. Exception attribute use (unknown), attribute 'ref': The QName value '{http://www.w3.org/XML/1998/namespace}lang' does not resolve to a(n) attribute declaration."}
+.....
+../3mf-test-suite/Positive/PS_509_02.3mf
+  {:context=>"zip/relationship elements//3D/3dmodel.model/parsing model/validations/validating core schema", :severity=>:fatal_error, :message=>"Model file invalid XML. Exception attribute use (unknown), attribute 'ref': The QName value '{http://www.w3.org/XML/1998/namespace}lang' does not resolve to a(n) attribute declaration."}
+..
+../3mf-test-suite/Positive/PS_509_04.3mf
+  {:context=>"zip/relationship elements//3D/3dmodel.model/parsing model/validations/validating core schema", :severity=>:fatal_error, :message=>"Model file invalid XML. Exception attribute use (unknown), attribute 'ref': The QName value '{http://www.w3.org/XML/1998/namespace}lang' does not resolve to a(n) attribute declaration."}
+..
+../3mf-test-suite/Positive/PS_511_01.3mf
+  {:context=>"zip/relationship elements//3D/3dmodel.model/parsing model/validations/validating core schema", :severity=>:fatal_error, :message=>"Model file invalid XML. Exception attribute use (unknown), attribute 'ref': The QName value '{http://www.w3.org/XML/1998/namespace}lang' does not resolve to a(n) attribute declaration."}
+.
+../3mf-test-suite/Positive/PS_511_02.3mf
+  {:context=>"zip/relationship elements//3D/3dmodel.model/parsing model/validations/validating core schema", :severity=>:fatal_error, :message=>"Model file invalid XML. Exception attribute use (unknown), attribute 'ref': The QName value '{http://www.w3.org/XML/1998/namespace}lang' does not resolve to a(n) attribute declaration."}
+.
+../3mf-test-suite/Positive/PS_511_03.3mf
+  {:context=>"zip/relationship elements//3D/3dmodel.model/parsing model/validations/validating core schema", :severity=>:fatal_error, :message=>"Model file invalid XML. Exception attribute use (unknown), attribute 'ref': The QName value '{http://www.w3.org/XML/1998/namespace}lang' does not resolve to a(n) attribute declaration."}
+.
+../3mf-test-suite/Positive/PS_511_04.3mf
+  {:context=>"zip/relationship elements//2D/ffffa2c3-ba74-4bea-a4d0-167a4211134d.model/parsing model/validations/validating core schema", :severity=>:fatal_error, :message=>"Model file invalid XML. Exception attribute use (unknown), attribute 'ref': The QName value '{http://www.w3.org/XML/1998/namespace}lang' does not resolve to a(n) attribute declaration."}
+...
+../3mf-test-suite/Positive/PS_512_01.3mf
+  {:context=>"zip/relationship elements//3D/3dmodel.model/parsing model/validations/validating core schema", :severity=>:fatal_error, :message=>"Model file invalid XML. Exception attribute use (unknown), attribute 'ref': The QName value '{http://www.w3.org/XML/1998/namespace}lang' does not resolve to a(n) attribute declaration."}
+..
+../3mf-test-suite/Positive/PS_513_02.3mf
+  {:context=>"zip/relationship elements//3D/3dmodel.model/parsing model/validations/validating core schema", :severity=>:fatal_error, :message=>"Model file invalid XML. Exception attribute use (unknown), attribute 'ref': The QName value '{http://www.w3.org/XML/1998/namespace}lang' does not resolve to a(n) attribute declaration."}
+.
+../3mf-test-suite/Positive/PS_513_03.3mf
+  {:context=>"zip/relationship elements//3D/3dmodel.model/parsing model/validations/validating core schema", :severity=>:fatal_error, :message=>"Model file invalid XML. Exception attribute use (unknown), attribute 'ref': The QName value '{http://www.w3.org/XML/1998/namespace}lang' does not resolve to a(n) attribute declaration."}
+.
+../3mf-test-suite/Positive/PS_514_01.3mf
+  {:context=>"zip/relationship elements//3D/3dmodel.model/parsing model/validations/validating core schema", :severity=>:fatal_error, :message=>"Model file invalid XML. Exception attribute use (unknown), attribute 'ref': The QName value '{http://www.w3.org/XML/1998/namespace}lang' does not resolve to a(n) attribute declaration."}
+..
+../3mf-test-suite/Positive/PS_515_01.3mf
+  {:context=>"zip/relationship elements//2D/9e1cbf53-9bb1-48fb-aced-acbb9cbbe79f.model/parsing model/validations/validating core schema", :severity=>:fatal_error, :message=>"Model file invalid XML. Exception attribute use (unknown), attribute 'ref': The QName value '{http://www.w3.org/XML/1998/namespace}lang' does not resolve to a(n) attribute declaration."}
+.
+../3mf-test-suite/Positive/PS_516_01.3mf
+  {:context=>"zip/relationship elements//3D/3dmodel.model/parsing model/verifying 3D payload required resources/verifying StartPart relationship points to the root 3D Model", :severity=>:fatal_error, :message=>"Invalid StartPart target '/3D/3dmodel.model'. The 3MF Document StartPart relationship MUST point to the 3D Model part that identifies the root of the 3D payload."}
+.
+../3mf-test-suite/Positive/PS_516_02.3mf
+  {:context=>"zip/relationship elements//3D/3dmodel.model/parsing model/validations/validating core schema", :severity=>:fatal_error, :message=>"Model file invalid XML. Exception attribute use (unknown), attribute 'ref': The QName value '{http://www.w3.org/XML/1998/namespace}lang' does not resolve to a(n) attribute declaration."}
+
+
+Negative
+...............
+../3mf-test-suite/Negative/NC_405_04.3mf - No Errors Found!
+.....
+../3mf-test-suite/Negative/NC_407_02.3mf - No Errors Found!
+.......
+../3mf-test-suite/Negative/NC_411_01.3mf - No Errors Found!
+.....
+../3mf-test-suite/Negative/NC_413_01.3mf - No Errors Found!
+.................
+../3mf-test-suite/Negative/NO_202_01.3mf - No Errors Found!
+...
+../3mf-test-suite/Negative/NO_205_01.3mf - No Errors Found!
+.
+../3mf-test-suite/Negative/NO_205_02.3mf - No Errors Found!
+....
+../3mf-test-suite/Negative/NP_801_01.3mf - No Errors Found!
+...
+../3mf-test-suite/Negative/NP_801_04.3mf - No Errors Found!
+...
+../3mf-test-suite/Negative/NP_801_07.3mf - No Errors Found!
+.
+../3mf-test-suite/Negative/NP_801_08.3mf - No Errors Found!
+....................................

@@ -43,7 +43,6 @@ class ContentTypes
         l.error "[Content_Types].xml file is not valid XML. #{e}", page: 15
       end
     end
-
-    found_types
+    return found_types, found_overrides
   end
 end

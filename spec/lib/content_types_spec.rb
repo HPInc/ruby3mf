@@ -22,7 +22,7 @@ describe ContentTypes do
     }
 
     it "should have valid content types" do
-      types = ContentTypes.parse(zip_entry)
+      types, overrides = ContentTypes.parse(zip_entry)
       required_content_types.all? { |e| expect(types.values).to include(e) }
       expect(Log3mf.count_entries(:error, :fatal_error)).to be == 0
     end
@@ -62,4 +62,20 @@ describe ContentTypes do
     end
   end
 
+  describe "valid file with override" do
+    let(:content_xml) {
+      '<?xml version="1.0" encoding="UTF-8"?>
+      <Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">
+        <Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml" />
+        <Default Extension="model" ContentType="application/vnd.ms-package.3dmanufacturing-3dmodel+xml" />
+        <Override PartName="/Folder/File.extension" ContentType="image/png" />
+      </Types>'
+    }
+
+    it "should return valid overrides" do
+      types, overrides = ContentTypes.parse(zip_entry)
+      expect(overrides.values).to eq ['image/png']
+      expect(Log3mf.count_entries(:error, :fatal_error)).to be == 0
+    end
+  end
 end

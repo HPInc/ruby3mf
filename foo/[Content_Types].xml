@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">
+  <Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml" />
+  <Default Extension="model" ContentType="application/vnd.ms-package.3dmanufacturing-3dmodel+xml" />
+  <Default Extension="png" ContentType="image/png" />
+  <Override PartName="/Thumbnails/ffffa6c3-ba74-4bea-a4d0-167a4211134d.model" ContentType="image/png" />
+</Types>
