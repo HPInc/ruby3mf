@@ -1,6 +1,6 @@
 class EdgeList
 
-  def initialize()
+  def initialize
     @edges = { }
   end
 
@@ -34,14 +34,14 @@ class EdgeList
     @edges[edge]
   end
 
-  def print_list()
+  def print_list
     @edges.each do |key, value|
       (pos, neg) = value
       puts "#{pos} : #{neg}"
     end
   end
 
-  def verify_edges()
+  def verify_edges
     @edges.each do |key, value|
       (pos, neg) = value
 
@@ -58,4 +58,3 @@ class EdgeList
   end
 
 end
-

@@ -75,13 +75,13 @@ zero_size_texture:
   fatal_error:
     zero_size_texture:
 clockwise_normal:
-  fatal_error:
+  error:
     resource_3dmodel_orientation:
 cube_with_hole:
-  fatal_error:
+  error:
     resource_3dmodel_hole:
 nonmanifold_cubes:
-  fatal_error:
+  error:
     resource_3dmodel_nonmanifold:
 has_xml_space_attribute:
   error:
