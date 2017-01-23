@@ -74,10 +74,6 @@ invalid_texture_path_in_model:
 zero_size_texture:
   fatal_error:
     zero_size_texture:
-invalid_texture_contenttype:
-  error:
-    resource_contentype_invalid:
-      bt: image/ping
 clockwise_normal:
   fatal_error:
     resource_3dmodel_orientation:

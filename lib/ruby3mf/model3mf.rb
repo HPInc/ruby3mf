@@ -58,22 +58,6 @@ class Model3mf
           }
         end
 
-        l.context "verifying 3D resource types" do |l|
-          model_types = model_doc.css("//model//resources//*[path]").collect { |t| t["contenttype"] }
-
-          #for each, ensure they exist in ContentTypes
-          all_types = document.types.map { |t, v| v }
-
-          bad_types = (model_types - all_types)
-          if bad_types.empty?
-            l.info "All model resource contenttypes are valid"
-          else
-            bad_types.each { |bt|
-              l.error :resource_contentype_invalid, bt: bt
-            }
-          end
-        end
-
         l.context "verifying StartPart relationship points to the root 3D Model" do |l|
           #Find the root 3D model which is pointed to by the start part
           root_rels = document.relationships['_rels/.rels']
