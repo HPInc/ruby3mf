@@ -67,7 +67,7 @@ class MeshAnalyzer
   end
 
   def self.validate(model_doc)
-    model_doc.css('model/resources/object').select{ |object| ['model', 'solidsupport', 'support', 'other', ''].include?(object.attributes['type'].to_s) }.each do |object|
+    model_doc.css('model/resources/object').select{ |object| ['model', 'solidsupport', ''].include?(object.attributes['type'].to_s) }.each do |object|
       validate_object(object)
     end
   end
