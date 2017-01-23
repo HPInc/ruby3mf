@@ -167,3 +167,6 @@ duplicate_content_override_types:
 empty_override_part_name:
   msg: "Overrides can't have empty partname"
   page: 8
+not_enough_triangles:
+  msg: "Mesh has fewer than four triangles"
+  page: 30

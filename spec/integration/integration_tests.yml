@@ -185,3 +185,6 @@ duplicate_part_overrides:
 empty_override_part_name:
   error:
     empty_override_part_name:
+two_triangle_mesh:
+  error:
+    not_enough_triangles:

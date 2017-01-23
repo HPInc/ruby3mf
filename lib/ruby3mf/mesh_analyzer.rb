@@ -28,6 +28,7 @@ class MeshAnalyzer
       meshs.each do |mesh|
 
         triangles = mesh.css("triangle")
+        l.error :not_enough_triangles if triangles.count < 4
 
         if triangles
           triangles.each do |triangle|
