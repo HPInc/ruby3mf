@@ -71,7 +71,7 @@ Items within this schema follow a simple naming convention of appending a prefix
     <xs:sequence>
       <xs:element ref="vertices"/>
       <xs:element ref="triangles"/>
-      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="30000"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="CT_Vertices">
@@ -87,7 +87,7 @@ Items within this schema follow a simple naming convention of appending a prefix
   </xs:complexType>
   <xs:complexType name="CT_Triangles">
     <xs:sequence>
-      <xs:element ref="triangle" minOccurs="1" maxOccurs="unbounded"/>
+      <xs:element ref="triangle" minOccurs="1" maxOccurs="30000"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="CT_Triangle">
