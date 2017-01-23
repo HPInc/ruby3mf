@@ -1,9 +1,13 @@
 class Model3mf
 
+  MATERIAL_EXTENSION = 'http://schemas.microsoft.com/3dmanufacturing/material/2015/02'
+  SLICE_EXTENSION = 'http://schemas.microsoft.com/3dmanufacturing/slice/2015/07'
+  PRODUCTION_EXTENSION = 'http://schemas.microsoft.com/3dmanufacturing/production/2015/06'
+
   VALID_EXTENSIONS = {
-      'http://schemas.microsoft.com/3dmanufacturing/slice/2015/07' => {},
-      'http://schemas.microsoft.com/3dmanufacturing/material/2015/02' => {},
-      'http://schemas.microsoft.com/3dmanufacturing/production/2015/06' => {},
+      MATERIAL_EXTENSION => {},
+      SLICE_EXTENSION => {},
+      PRODUCTION_EXTENSION => {}
   }.freeze
 
   VALID_CORE_METADATA_NAMES = ['Title', 'Designer', 'Description', 'Copyright', 'LicenseTerms', 'Rating', 'CreationDate', 'ModificationDate'].freeze
@@ -109,8 +113,8 @@ class Model3mf
           end
         end
       end
-
-      MeshAnalyzer.validate(model_doc)
+      includes_material = model_doc.namespaces.values.include?(MATERIAL_EXTENSION)
+      MeshAnalyzer.validate(model_doc, includes_material)
     end
     model_doc
   end

@@ -170,3 +170,6 @@ empty_override_part_name:
 not_enough_triangles:
   msg: "Mesh has fewer than four triangles"
   page: 30
+has_base_materials_gradient:
+  msg: "Base materials form a gradient on one or more triangles. Interpolation of materials is not supported in the core spec."
+  page: 31

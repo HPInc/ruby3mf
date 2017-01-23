@@ -11,7 +11,7 @@ end
 
 class MeshAnalyzer
 
-  def self.validate_object(object)
+  def self.validate_object(object, includes_material)
     Log3mf.context "verifying object" do |l|
       children = object.children.map { |child| child.name }
       have_override = object.attributes["pid"] or object.attributes["pindex"]
@@ -37,6 +37,18 @@ class MeshAnalyzer
             v2 = triangle.attributes["v2"].to_s.to_i
             v3 = triangle.attributes["v3"].to_s.to_i
 
+            unless includes_material
+              l.context "validating property overrides" do |l|
+                property_overrides = []
+                property_overrides << triangle.attributes['p1'].to_s.to_i if triangle.attributes['p1']
+                property_overrides << triangle.attributes['p2'].to_s.to_i if triangle.attributes['p2']
+                property_overrides << triangle.attributes['p3'].to_s.to_i if triangle.attributes['p3']
+
+                property_overrides.reject! { |prop| prop.nil? }
+                l.error :has_base_materials_gradient unless property_overrides.uniq.size <= 1
+              end
+            end
+
             if v1 == v2 || v2 == v3 || v3 == v1
               l.error :non_distinct_indices
             end
@@ -44,7 +56,7 @@ class MeshAnalyzer
             list.add_edge(v1, v2)
             list.add_edge(v2, v3)
             list.add_edge(v3, v1)
-            if !has_triangle_pid
+            unless has_triangle_pid
               has_triangle_pid = triangle.attributes["pid"] != nil
             end
           end
@@ -67,9 +79,9 @@ class MeshAnalyzer
     end
   end
 
-  def self.validate(model_doc)
-    model_doc.css('model/resources/object').select{ |object| ['model', 'solidsupport', ''].include?(object.attributes['type'].to_s) }.each do |object|
-      validate_object(object)
+  def self.validate(model_doc, includes_material)
+    model_doc.css('model/resources/object').select { |object| ['model', 'solidsupport', ''].include?(object.attributes['type'].to_s) }.each do |object|
+      validate_object(object, includes_material)
     end
   end
 
