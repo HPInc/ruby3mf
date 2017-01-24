@@ -188,3 +188,6 @@ empty_override_part_name:
 two_triangle_mesh:
   error:
     not_enough_triangles:
+has_base_materials_gradient:
+  error:
+    has_base_materials_gradient:
