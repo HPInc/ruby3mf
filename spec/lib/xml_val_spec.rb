@@ -32,7 +32,7 @@ describe XmlVal do
     it 'should give an error' do
       XmlVal.validate(zipentry, xml)
       expect(Log3mf.count_entries(:error)).to be == 1
-      expect(Log3mf.entries(:error).first[2]).to include message
+      expect(Log3mf.entries(:error).first[:message]).to include message
     end
   end
 
@@ -59,7 +59,7 @@ describe XmlVal do
     it 'should give an error' do
       XmlVal.validate(zipentry, xml)
       expect(Log3mf.count_entries(:error)).to be == 1
-      expect(Log3mf.entries(:error).first[2]).to include message
+      expect(Log3mf.entries(:error).first[:message]).to include message
     end
   end
 

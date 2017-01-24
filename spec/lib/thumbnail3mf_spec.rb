@@ -17,7 +17,7 @@ describe Thumbnail3mf do
 
     it "Should log error when no png or jpeg" do
       Thumbnail3mf.parse(:doc, images.first)
-      expect(Log3mf.entries(:error).first[2]).to include message
+      expect(Log3mf.entries(:error).first[:message]).to include message
     end
   end
 
@@ -39,7 +39,7 @@ describe Thumbnail3mf do
         expect { Thumbnail3mf.parse(:doc, zip_entry) }.to raise_error { |e|
           expect(e).to be_a(Log3mf::FatalError)
         }
-        expect(Log3mf.entries(:fatal_error).first[2]).to include message
+        expect(Log3mf.entries(:fatal_error).first[:message]).to include message
       end
     end
   end

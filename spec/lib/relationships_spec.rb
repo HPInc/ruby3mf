@@ -73,7 +73,7 @@ describe Relationships do
     it "should parse relationships properly" do
       rels.map{|r| Relationships.parse(r)}
       expect(Log3mf.count_entries(:error, :fatal_error)).to be == 0
-      expect(Log3mf.entries(:info)[1][2]).to include message
+      expect(Log3mf.entries(:info)[1][:message]).to include message
     end
 
   end

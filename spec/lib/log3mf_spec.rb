@@ -2,9 +2,35 @@ require 'spec_helper'
 
 describe Log3mf do
 
-  let(:log_levels) { [:fatal_error, :error, :warning, :info, :debug] }
+  let(:log_levels) { Log3mf::LOG_LEVELS }
 
   let(:log) { Log3mf.instance }
+
+  let(:logstuff) {
+    log.context "context for specs" do |l|
+      l.error("This is an error", page: 14)
+      l.warning("This is a Warning", page: 15)
+      l.info("This is just Info", page: 16)
+    end
+  }
+
+  let(:result) {
+    [{id: "This is an error",
+      context: "context for specs",
+      severity: :error,
+      message: "This is an error",
+      spec_ref: "http://3mf.io/wp-content/uploads/2016/03/3MFcoreSpec_1.1.pdf#page=14"},
+     {id: "This is a Warning",
+      context: "context for specs",
+      severity: :warning,
+      message: "This is a Warning",
+      spec_ref: "http://3mf.io/wp-content/uploads/2016/03/3MFcoreSpec_1.1.pdf#page=15"},
+     {id: "This is just Info",
+      context: "context for specs",
+      severity: :info,
+      message: "This is just Info",
+      spec_ref: "http://3mf.io/wp-content/uploads/2016/03/3MFcoreSpec_1.1.pdf#page=16"}]
+  }
 
   describe 'when fatal_error is logged' do
     it 'should raise a Log3mf::FatalError' do
@@ -29,17 +55,16 @@ describe Log3mf do
         end
       end
     end
+
+    it 'should have all when level NOT provided' do
+      logstuff
+      expect(Log3mf.entries.count).to eq result.count
+      expect(Log3mf.entries).to eq result
+    end
   end
 
   describe 'spec links' do
-    let(:specs) {
-      {
-        core: 'http://3mf.io/wp-content/uploads/2016/03/3MFcoreSpec_1.1.pdf',
-        material: 'http://3mf.io/wp-content/uploads/2015/04/3MFmaterialsSpec_1.0.1.pdf',
-        production: 'http://3mf.io/wp-content/uploads/2016/07/3MFproductionSpec.pdf',
-        slice: 'http://3mf.io/wp-content/uploads/2016/07/3MFsliceSpec.pdf'
-      }
-    }
+    let(:specs) { Log3mf::SPEC_LINKS }
 
     it 'should default to core spec' do
       log.context "context for test spec links" do |l|
@@ -61,44 +86,11 @@ describe Log3mf do
     end
   end
 
-  describe 'external access' do
-    let(:result) {
-      [{context: "context for to_hash spec",
-        severity: :error,
-        message: "This is an error",
-        spec_ref: "http://3mf.io/wp-content/uploads/2016/03/3MFcoreSpec_1.1.pdf#page=14"},
-       {context: "context for to_hash spec",
-        severity: :warning,
-        message: "This is a Warning",
-        spec_ref: "http://3mf.io/wp-content/uploads/2016/03/3MFcoreSpec_1.1.pdf#page=15"},
-       {context: "context for to_hash spec",
-        severity: :info,
-        message: "This is just Info",
-        spec_ref: "http://3mf.io/wp-content/uploads/2016/03/3MFcoreSpec_1.1.pdf#page=16"}]
-    }
-    let(:logstuff) {
-      log.context "context for to_hash spec" do |l|
-        l.error("This is an error", page: 14)
-        l.warning("This is a Warning", page: 15)
-        l.info("This is just Info", page: 16)
-      end
-    }
-
-    describe 'to_hash' do
-      it 'should respond with logged items in Hash' do
-        logstuff
-        log_hash = Log3mf.to_hash
-        expect(log_hash).to be_a(Array)
-        expect(log_hash).to eq result
-      end
-    end
-
-    describe 'to_json' do
+  describe 'external access to_json' do
       it 'should respond with logged items in JSON' do
         logstuff
         expect(Log3mf.to_json).to eq result.to_json
       end
-    end
   end
 
   describe 'Log messages' do

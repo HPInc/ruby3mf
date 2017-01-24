@@ -27,15 +27,24 @@ class Log3mf
 
   LOG_LEVELS = [:fatal_error, :error, :warning, :info, :debug]
 
+  SPEC_LINKS = {
+    core: 'http://3mf.io/wp-content/uploads/2016/03/3MFcoreSpec_1.1.pdf',
+    material: 'http://3mf.io/wp-content/uploads/2015/04/3MFmaterialsSpec_1.0.1.pdf',
+    production: 'http://3mf.io/wp-content/uploads/2016/07/3MFproductionSpec.pdf',
+    slice: 'http://3mf.io/wp-content/uploads/2016/07/3MFsliceSpec.pdf',
+    #opc: 'http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-376,%20Fourth%20Edition,%20Part%202%20-%20Open%20Packaging%20Conventions.zip'
+    opc: 'http://3mf.io/wp-content/uploads/2016/03/3MFcoreSpec_1.1.pdf'
+  }.freeze
+
   # Allows us to throw FatalErrors if we ever get errors of severity :fatal_error
   class FatalError < RuntimeError
   end
 
-  def initialize()
+  def initialize
     @log_list = []
     @context_stack = []
     @ledger = []
-    errormap_path = File.join(File.dirname(__FILE__),"errors.yml")
+    errormap_path = File.join(File.dirname(__FILE__), "errors.yml")
     @errormap = YAML.load_file(errormap_path)
   end
 
@@ -50,10 +59,7 @@ class Log3mf
 
   def context (context_description, &block)
     @context_stack.push(context_description)
-    #puts "started context #{@context_stack.join("/")}"
-
     retval = block.call(Log3mf.instance)
-
     @context_stack.pop
     retval
   end
@@ -71,11 +77,15 @@ class Log3mf
   end
 
   def log(severity, message, options = {})
-    error = @errormap.fetch(message.to_s) { {"msg" => message.to_s, "page" => nil } }
+    error = @errormap.fetch(message.to_s) { {"msg" => message.to_s, "page" => nil} }
     options[:page] = error["page"] unless options[:page]
     options[:spec] = error["spec"] unless options[:spec]
-    message = interpolate(error["msg"], options)
-    @log_list << ["#{@context_stack.join("/")}", severity, message, options] unless severity==:debug && ENV['LOGDEBUG'].nil?
+    entry = { id: message,
+              context: "#{@context_stack.join("/")}",
+              severity: severity,
+              message: interpolate(error["msg"], options) }
+    entry[:spec_ref] = spec_link(options[:spec], options[:page]) if (options && options[:page])
+    @log_list << entry
     raise FatalError if severity == :fatal_error
   end
 
@@ -88,7 +98,8 @@ class Log3mf
   end
 
   def entries(*levels)
-    @log_list.select { |i| levels.include? i[1] }
+    return @log_list if levels.size == 0
+    @log_list.select { |i| levels.include? i[:severity] }
   end
 
   def self.entries(*l)
@@ -97,31 +108,11 @@ class Log3mf
 
   def spec_link(spec, page)
     spec = :core unless spec
-    doc_urls={
-      core: 'http://3mf.io/wp-content/uploads/2016/03/3MFcoreSpec_1.1.pdf',
-      material: 'http://3mf.io/wp-content/uploads/2015/04/3MFmaterialsSpec_1.0.1.pdf',
-      production: 'http://3mf.io/wp-content/uploads/2016/07/3MFproductionSpec.pdf',
-      slice: 'http://3mf.io/wp-content/uploads/2016/07/3MFsliceSpec.pdf',
-      #opc: 'http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-376,%20Fourth%20Edition,%20Part%202%20-%20Open%20Packaging%20Conventions.zip'
-      opc: 'http://3mf.io/wp-content/uploads/2016/03/3MFcoreSpec_1.1.pdf'
-    }
-    "#{doc_urls[spec]}#page=#{page}"
-  end
-
-  def to_hash
-    @log_list.collect { |ent|
-      h = { context: ent[0], severity: ent[1], message: ent[2] }
-      h[:spec_ref] = spec_link(ent[3][:spec], ent[3][:page]) if (ent[3] && ent[3][:page])
-      h
-    }
-  end
-
-  def self.to_hash
-    Log3mf.instance.to_hash
+    "#{SPEC_LINKS[spec]}#page=#{page}"
   end
 
   def to_json
-    to_hash.to_json
+    @log_list.to_json
   end
 
   def self.to_json

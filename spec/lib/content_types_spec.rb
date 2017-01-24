@@ -41,7 +41,7 @@ describe ContentTypes do
       ContentTypes.parse(zip_entry)
       expect(Log3mf.count_entries(:error, :fatal_error)).to be == 1
       expect(Log3mf.count_entries(:fatal_error)).to be <= 1
-      expect(Log3mf.entries(:error).first[2]).to include message
+      expect(Log3mf.entries(:error).first[:message]).to include message
     end
   end
 
@@ -58,7 +58,7 @@ describe ContentTypes do
     it 'should report unexpected element warning' do
       ContentTypes.parse(zip_entry)
       expect(Log3mf.count_entries(:warning)).to be == 1
-      expect(Log3mf.entries(:warning).first[2]).to include message
+      expect(Log3mf.entries(:warning).first[:message]).to include message
     end
   end
 

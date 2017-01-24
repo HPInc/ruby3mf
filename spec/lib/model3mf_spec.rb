@@ -167,7 +167,7 @@ describe Model3mf do
       it "should have an error on log" do
         Model3mf.parse(document, zip_entry)
         expect(Log3mf.count_entries(:error, :fatal_error)).to be == 1
-        expect(Log3mf.entries(:error).first[2]).to include message
+        expect(Log3mf.entries(:error).first[:message]).to include message
       end
 
     end
@@ -185,7 +185,7 @@ describe Model3mf do
           expect(e).to be_a(Log3mf::FatalError)
         }
         expect(Log3mf.count_entries(:fatal_error)).to be == 1
-        expect(Log3mf.entries(:fatal_error).first[2]).to include message
+        expect(Log3mf.entries(:fatal_error).first[:message]).to include message
       end
     end
 
@@ -238,7 +238,7 @@ describe Model3mf do
       it 'should log an error' do
         Model3mf.parse(document, zip_entry)
         expect(Log3mf.count_entries(:error, :fatal_error)).to be == 1
-        expect(Log3mf.entries(:error).first[2]).to include message
+        expect(Log3mf.entries(:error).first[:message]).to include message
       end
     end
 
@@ -292,7 +292,7 @@ describe Model3mf do
       it 'should log an error' do
         Model3mf.parse(document, zip_entry)
         expect(Log3mf.count_entries(:error, :fatal_error)).to be == 1
-        expect(Log3mf.entries(:error).first[2]).to include message
+        expect(Log3mf.entries(:error).first[:message]).to include message
       end
     end
 
@@ -343,7 +343,7 @@ describe Model3mf do
       it 'should log an error' do
         Model3mf.parse(document, zip_entry)
         expect(Log3mf.count_entries(:error, :fatal_error)).to be == 1
-        expect(Log3mf.entries(:error).first[2]).to include message
+        expect(Log3mf.entries(:error).first[:message]).to include message
       end
     end
 
@@ -453,7 +453,7 @@ describe Model3mf do
         it "should log error" do
           Model3mf.parse(document, zip_entry)
           expect(Log3mf.count_entries(:error, :fatal_error)).to be == 1
-          expect(Log3mf.entries(:error).first[2]).to include message
+          expect(Log3mf.entries(:error).first[:message]).to include message
         end
       end
       context "when there is object of type other not being referenced by item" do
@@ -714,7 +714,7 @@ describe Model3mf do
         it 'should log an error' do
           Model3mf.parse(document, zip_entry)
           expect(Log3mf.count_entries(:error, :fatal_error)).to be == 1
-          expect(Log3mf.entries(:error).first[2]).to include message
+          expect(Log3mf.entries(:error).first[:message]).to include message
         end
       end
     end
