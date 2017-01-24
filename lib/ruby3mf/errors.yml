@@ -173,3 +173,6 @@ not_enough_triangles:
 has_base_materials_gradient:
   msg: "Base materials form a gradient on one or more triangles. Interpolation of materials is not supported in the core spec."
   page: 31
+thumbnail_image_type_mismatch:
+  msg: "Image not of declared type"
+  page: 36
