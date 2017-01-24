@@ -13,7 +13,7 @@ class Thumbnail3mf
       l.fatal_error :invalid_thumbnail_colorspace if img_colorspace.include? "CMYK"
 
       if relationship_file.respond_to?(:name)
-        decl_type = doc.respond_to?('type_for') ? doc.type_for('/' + relationship_file.name) : ''
+        decl_type = doc.types.get_type(relationship_file.name)
         l.error :thumbnail_image_type_mismatch if decl_type != img_type.to_s
       end
     end

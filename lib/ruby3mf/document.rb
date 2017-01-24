@@ -214,17 +214,4 @@ class Document
     end
   end
 
-  def type_for(path)
-    extn = File.extname(path)
-    base = path[0..-(extn.length+1)]
-    extn = extn.tr('.', '')
-
-    override = type_overrides[path]
-    if override
-      override
-    else
-      types[extn]
-    end
-  end
-
 end
