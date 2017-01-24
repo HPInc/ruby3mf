@@ -27,6 +27,7 @@ class MeshAnalyzer
       meshs = object.css('mesh')
       meshs.each do |mesh|
 
+        num_vertices = mesh.css("vertex").count
         triangles = mesh.css("triangle")
         l.error :not_enough_triangles if triangles.count < 4
 
@@ -36,6 +37,8 @@ class MeshAnalyzer
             v1 = triangle.attributes["v1"].to_s.to_i
             v2 = triangle.attributes["v2"].to_s.to_i
             v3 = triangle.attributes["v3"].to_s.to_i
+
+            l.error :invalid_vertex_index if [v1, v2, v3].select{|vertex| vertex >= num_vertices}.count > 0
 
             unless includes_material
               l.context "validating property overrides" do |l|

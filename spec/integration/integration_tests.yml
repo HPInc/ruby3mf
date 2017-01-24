@@ -191,3 +191,6 @@ has_base_materials_gradient:
 wrong_thumbnail_type:
   error:
     thumbnail_image_type_mismatch:
+missing_vertex:
+  error:
+    invalid_vertex_index:

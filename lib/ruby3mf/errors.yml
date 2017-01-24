@@ -173,3 +173,6 @@ has_base_materials_gradient:
 thumbnail_image_type_mismatch:
   msg: "Image not of declared type"
   page: 36
+invalid_vertex_index:
+  msg: "Triangle with a invalid vertex index"
+  page: 26
