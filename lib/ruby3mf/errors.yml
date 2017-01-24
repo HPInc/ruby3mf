@@ -47,7 +47,7 @@ invalid_content_type:
   msg: "[Content_Types].xml is missing required ContentType \"application/vnd.openxmlformats-package.relationships+xml\""
   page: 10
 invalid_startpart_type:
-  msg: "rels/.rels Relationship file has an invalid attribute type for the root 3D Model (StartPart). The required type is \"http://schemas.microsoft.com/3dmanufacturing/2013/01/3dmodel\""
+  msg: "rels/.rels Relationship file is missing a required StartPart relationship to the primary 3D payload"
   page: 10
 invalid_startpart_target:
   msg: "Invalid StartPart target '%{target}'. The 3MF Document StartPart relationship MUST point to the 3D Model part that identifies the root of the 3D payload."
@@ -70,8 +70,8 @@ invalid_texture_file_type:
 missing_content_types:
   msg: "Missing required file: [Content_Types].xml"
   page: 4
-missing_extension_in_content_types:
-  msg: "Missing extension '%{ext}' in [Content_Types].xml"
+missing_content_type:
+  msg: "Unable to find an associated content type for part '%{part}' in [Content_Types].xml"
   page: 10
 missing_dot_rels_file:
   msg: "Missing required file _rels/.rels"
@@ -85,9 +85,6 @@ non_unique_rel_id:
   spec: opc
 multiple_relationships:
   msg: "There MUST NOT be more than one relationship of a given relationship type from one part to a second part"
-  page: 10
-no_3d_model:
-  msg: "Required 3D model payload not found with provided Content Type model extension: .%{extension}"
   page: 10
 not_a_zip:
   msg: "File provided is not a valid ZIP archive"

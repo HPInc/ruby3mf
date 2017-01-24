@@ -22,8 +22,8 @@ describe ContentTypes do
     }
 
     it "should have valid content types" do
-      types, overrides = ContentTypes.parse(zip_entry)
-      required_content_types.all? { |e| expect(types.values).to include(e) }
+      types = ContentTypes.parse(zip_entry)
+      required_content_types.all? { |e| expect(types.get_types).to include(e) }
       expect(Log3mf.count_entries(:error, :fatal_error)).to be == 0
     end
   end
@@ -68,13 +68,14 @@ describe ContentTypes do
       <Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">
         <Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml" />
         <Default Extension="model" ContentType="application/vnd.ms-package.3dmanufacturing-3dmodel+xml" />
+        <Default Extension="extension" ContentType="application/vnd.ms-package.3dmanufacturing-3dmodel+xml" />
         <Override PartName="/Folder/File.extension" ContentType="image/png" />
       </Types>'
     }
 
     it "should return valid overrides" do
-      types, overrides = ContentTypes.parse(zip_entry)
-      expect(overrides.values).to eq ['image/png']
+      types = ContentTypes.parse(zip_entry)
+      expect(types.get_type('/Folder/File.extension')).to eq 'image/png'
       expect(Log3mf.count_entries(:error, :fatal_error)).to be == 0
     end
   end

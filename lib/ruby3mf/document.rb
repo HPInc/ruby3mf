@@ -1,7 +1,6 @@
 class Document
 
   attr_accessor :types
-  attr_accessor :type_overrides
   attr_accessor :relationships
   attr_accessor :models
   attr_accessor :thumbnails
@@ -34,8 +33,7 @@ class Document
     self.textures=[]
     self.objects={}
     self.relationships={}
-    self.types={}
-    self.type_overrides={}
+    self.types=nil
     self.parts=[]
     @zip_filename = zip_filename
   end
@@ -43,7 +41,7 @@ class Document
   #verify that each texture part in the 3MF is related to the model through a texture relationship in a rels file
   def self.validate_texture_parts(document, log)
     unless document.types.empty?
-      document.parts.select { |part| TEXTURE_TYPES.include?(document.types[File.extname(part).strip.downcase[1..-1]]) }.each do |tfile|
+      document.parts.select { |part| TEXTURE_TYPES.include?(document.types.get_type(part)) }.each do |tfile|
         if document.textures.select { |f| f[:target] == tfile }.size == 0
           if document.thumbnails.select { |t| t[:target] == tfile }.size == 0
             log.context "part names" do |l|
@@ -98,11 +96,7 @@ class Document
             l.context 'content types' do |l|
               content_type_match = zip_file.glob('\[Content_Types\].xml').first
               if content_type_match
-                m.types, m.type_overrides = ContentTypes.parse(content_type_match)
-                model_extension = m.types.key('application/vnd.ms-package.3dmanufacturing-3dmodel+xml')
-                model_extension = model_extension.downcase unless model_extension.nil?
-                model_file = zip_file.glob("**/*.#{model_extension}").first
-                l.error :no_3d_model, extension: model_extension if model_file.nil?
+                m.types = ContentTypes.parse(content_type_match)
               else
                 l.fatal_error 'Missing required file: [Content_Types].xml', page: 4
               end
@@ -148,17 +142,12 @@ class Document
                         l.warning :unsupported_relationship_type, type: rel[:type], target: rel[:target]
                       else
                         # check that relationships are valid; extensions and relationship types must jive
-                        if m.type_overrides["/#{target}"]
-                          content_type = m.type_overrides["/#{target}"]
-                        else
-                          extension = File.extname(target).strip.downcase[1..-1]
-                          content_type = m.types[extension]
-                        end
+                        content_type = m.types.get_type(target)
                         expected_content_type = relationship_type[:valid_types]
 
                         if (expected_content_type)
-                          l.error :missing_extension_in_content_types, ext: extension unless content_type
-                          l.error :resource_contentype_invalid, bt: content_type, rt: rel[:target] unless (!content_type.nil? && expected_content_type.include?(content_type))
+                          l.error :missing_content_type, part: target unless content_type
+                          l.error :resource_contentype_invalid, bt: content_type, rt: rel[:target] unless (content_type.nil? || expected_content_type.include?(content_type))
                         else
                           l.info "found unrecognized relationship type: #{rel_type}"
                         end

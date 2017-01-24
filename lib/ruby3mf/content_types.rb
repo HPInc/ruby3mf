@@ -1,36 +1,61 @@
 class ContentTypes
 
-  def self.parse(zip_entry)
-    found_types={}
-    found_overrides={}
+  def initialize(found={}, over={})
+    @found_types=found
+    @found_overrides=over
+  end
 
+  def size
+    @found_types.size + @found_overrides.size
+  end
+
+  def empty?
+    size == 0
+  end
+
+  def get_type(target)
+    target = (target.start_with?('/') ? target : '/' + target).downcase
+    if @found_overrides[target]
+      content_type = @found_overrides[target]
+    else
+      extension = File.extname(target).strip.downcase[1..-1]
+      content_type = @found_types[extension]
+    end
+    content_type
+  end
+
+  def get_types()
+    return @found_types.values + @found_overrides.values
+  end
+
+  private
+
+  def self.parse(zip_entry)
+    found_types = {}
+    found_overrides = {}
     Log3mf.context "parse" do |l|
       begin
-
         doc = XmlVal.validate_parse(zip_entry)
 
         l.warning '[Content_Types].xml must contain exactly one root node' unless doc.children.size == 1
         l.warning '[Content_Types].xml must contain root name Types' unless doc.children.first.name == "Types"
 
-        required_content_types = ['application/vnd.openxmlformats-package.relationships+xml', 'application/vnd.ms-package.3dmanufacturing-3dmodel+xml']
-        #optional_content_types = ['application/vnd.ms-printing.printticket+xml']
-        #all_types = required_content_types + optional_content_types
+        required_content_types = ['application/vnd.openxmlformats-package.relationships+xml']
 
         types_node = doc.children.first
         types_node.children.each do |node|
           l.context node.name do |l|
             if node.name == 'Default'
-              # l.error "[Content_Types].xml:#{node.line} contains Default node without defined Extension attribute" unless node['Extension'].is_a? String
-              # l.error "[Content_Types].xml:#{node.line} contains Default node with unexpected ContentType \"#{node['ContentType']}\"", page: 10 unless all_types.include? node['ContentType']
-              l.info "Setting type hash #{node['Extension']}=#{node['ContentType']}"
-
-              l.error :duplicate_content_extension_types if !found_types[node['Extension']].nil?
-              found_types[node['Extension']] = node['ContentType']
+              extension = node['Extension'].downcase
+              l.info "Setting type hash #{extension}=#{node['ContentType']}"
+              l.error :duplicate_content_extension_types if !found_types[extension].nil?
+              found_types[extension] = node['ContentType']
             elsif node.name == 'Override'
-              l.error :empty_override_part_name if node['PartName'].empty?
+              part_name = node['PartName'].downcase
+              l.error :empty_override_part_name if part_name.empty?
 
-              l.error :duplicate_content_override_types if !found_overrides[node['PartName']].nil?
-              found_overrides[node['PartName']] = node['ContentType']
+              l.error :duplicate_content_override_types if !found_overrides[part_name].nil?
+              found_overrides[part_name] = node['ContentType']
             else
               l.warning "[Content_Types].xml:#{node.line} contains unexpected element #{node.name}", page: 10
             end
@@ -43,6 +68,6 @@ class ContentTypes
         l.error "[Content_Types].xml file is not valid XML. #{e}", page: 15
       end
     end
-    return found_types, found_overrides
+    return new(found_types, found_overrides)
   end
 end

@@ -61,9 +61,6 @@ missing_rels_folder:
 multiple_relationships:
   error:
     multiple_relationships:
-#no_3d_model:
-#  error:
-#    no_3d_model:
 not_a_zip:
   fatal_error:
     not_a_zip:
@@ -174,8 +171,8 @@ has_improper_base_color:
     has_improper_base_color:
 model_not_named_correctly:
   error:
-    no_3d_model:
-      extension: "item"
+    missing_content_type:
+      part: "2D/079cf1a6-b0c8-48f6-93e8-8ac2bdd6e8e6.model"
 duplicate_content_types:
   error:
     duplicate_content_extension_types:
