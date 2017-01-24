@@ -161,7 +161,7 @@ class Document
                         end
                       end
                     else
-                      l.error "Relationship Target file #{rel[:target]} not found", page: 11
+                      l.error :rel_file_not_found, mf: "#{rel[:target]}"
                     end
                   end
                 end
@@ -173,7 +173,7 @@ class Document
 
           return m
         rescue Zip::Error
-          l.fatal_error 'File provided is not a valid ZIP archive', page: 9
+          l.fatal_error :not_a_zip
         end
       end
     rescue Log3mf::FatalError

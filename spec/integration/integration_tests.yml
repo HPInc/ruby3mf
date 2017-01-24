@@ -11,7 +11,8 @@ missing_rels_entry_for_thumbnails:
     3d_model_invalid_xml:
 3d_payload_files:
   error:
-    3d_payload_files:
+    rel_file_not_found:
+      mf: /3D/Texture/texture2.texture
 content_types_invalid_xml:
   error:
     content_types_invalid_xml:

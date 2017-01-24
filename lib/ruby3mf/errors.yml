@@ -28,8 +28,8 @@ resource_3dmodel_nonmanifold:
 3d_model_invalid_xml:
   msg: "Model file invalid XML. Exception Start tag expected, '<' not found"
   page:
-3d_payload_files:
-  msg: "Relationship Target file /3D/Texture/texture2.texture not found"
+rel_file_not_found:
+  msg: "Relationship Target file %{mf} not found"
   page: 11
 content_types_invalid_xml:
   msg: "[Content_Types].xml file is not valid XML. Start tag expected, '<' not found"
