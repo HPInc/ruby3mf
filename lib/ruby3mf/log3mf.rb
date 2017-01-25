@@ -73,10 +73,12 @@ class Log3mf
       if name.to_sym == :error || name.to_sym == :fatal_error || name.to_sym == :debug
         linenumber = caller_locations[0].to_s.split('/')[-1].split(':')[-2].to_s
         filename = caller_locations[0].to_s.split('/')[-1].split(':')[0].to_s
-        if $DEBUG
-          puts "***** #{filename} called from line #{linenumber} *****"
-        end
-        log(name.to_sym, *args, {linenumber: linenumber, filename: filename})
+        options = {linenumber: linenumber, filename: filename}
+
+        puts "***** Log3mf.#{name} called from #{filename}:#{linenumber} *****" if $DEBUG
+
+        options = options.merge(args[1]) if args[1]
+        log(name.to_sym, args[0], options)
       else
         log(name.to_sym, *args)
       end
@@ -94,7 +96,7 @@ class Log3mf
              severity: severity,
              message: interpolate(error["msg"], options)}
     entry[:spec_ref] = spec_link(options[:spec], options[:page]) if (options && options[:page])
-    entry[:debugging] = "#{options[:filename]} called on line #{options[:linenumber]}" if (options && options[:filename] && options[:linenumber])
+    entry[:caller] = "#{options[:filename]}:#{options[:linenumber]}" if (options && options[:filename] && options[:linenumber])
     @log_list << entry
     raise FatalError if severity == :fatal_error
   end
