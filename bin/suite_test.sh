@@ -6,7 +6,9 @@ GOOD_FILES=../3mf-test-suite/Positive/${MATCH}*.3mf
 BAD_FILES=../3mf-test-suite/Negative/${MATCH}*.3mf
 
 echo "Test Suite: filter: ${MATCH}"
-printf "\n\nTest Suite: filter: ${MATCH} - $(date)\n" >> ${OUTFILE}
+printf "\n\n==============================================================================="
+printf "\n\n  Test Suite: filter: ${MATCH} - $(date)\n" >> ${OUTFILE}
+printf "\n\n==============================================================================="
 
 echo "Positive Files -------------"
 printf "\nPositive Files -------------\n" >> ${OUTFILE}
@@ -35,5 +37,5 @@ for filename in ${BAD_FILES}; do
 done
 
 echo "All Done."
-printf "Completed -- $(date)\n\n" >> ${OUTFILE}
+printf "\nCompleted -- $(date)\n\n" >> ${OUTFILE}
 
