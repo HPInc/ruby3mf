@@ -178,3 +178,6 @@ zero_size_texture:
   msg: "Texture file must be valid image file"
   spec: :material
   page: 16
+contains_xsi_namespace:
+  msg: "XML content must not use the xsi namespace as it is not defined in the XSD schema"
+  page: 15

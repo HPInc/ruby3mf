@@ -17,6 +17,7 @@ class XmlVal
       l.error :dtd_not_allowed if dtd_exists?(file)
       l.error :has_commas_for_floats if bad_floating_numbers?(document)
       l.warning :missing_object_reference if objects_not_referenced?(document)
+      l.error :contains_xsi_namespace if contains_xsi_namespace?(document)
 
       if schema_filename
         Log3mf.context "validating core schema" do |l|
@@ -65,5 +66,9 @@ class XmlVal
 
   def self.error_involves_colorvalue?(error)
     error.to_s.include?("ST_ColorValue") || error.to_s.include?("displaycolor")
+  end
+
+  def self.contains_xsi_namespace?(document)
+    document.namespaces.has_value?('http://www.w3.org/2001/XMLSchema-instance')
   end
 end

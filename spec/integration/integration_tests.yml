@@ -199,3 +199,6 @@ wrong_thumbnail_type:
 missing_vertex:
   error:
     invalid_vertex_index:
+has_xsi_namespace:
+  error:
+    contains_xsi_namespace:
