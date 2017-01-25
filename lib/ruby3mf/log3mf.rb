@@ -70,8 +70,19 @@ class Log3mf
 
   def method_missing(name, *args, &block)
     if LOG_LEVELS.include? name.to_sym
-      log(name.to_sym, *args)
-    else+
+      if name.to_sym == :error || name.to_sym == :fatal_error || name.to_sym == :debug
+        linenumber = caller_locations[0].to_s.split('/')[-1].split(':')[-2].to_s
+        filename = caller_locations[0].to_s.split('/')[-1].split(':')[0].to_s
+        options = {linenumber: linenumber, filename: filename}
+
+        puts "***** Log3mf.#{name} called from #{filename}:#{linenumber} *****" if $DEBUG
+
+        options = options.merge(args[1]) if args[1]
+        log(name.to_sym, args[0], options)
+      else
+        log(name.to_sym, *args)
+      end
+    else
       super
     end
   end
@@ -80,11 +91,12 @@ class Log3mf
     error = @errormap.fetch(message.to_s) { {"msg" => message.to_s, "page" => nil} }
     options[:page] = error["page"] unless options[:page]
     options[:spec] = error["spec"] unless options[:spec]
-    entry = { id: message,
-              context: "#{@context_stack.join("/")}",
-              severity: severity,
-              message: interpolate(error["msg"], options) }
+    entry = {id: message,
+             context: "#{@context_stack.join("/")}",
+             severity: severity,
+             message: interpolate(error["msg"], options)}
     entry[:spec_ref] = spec_link(options[:spec], options[:page]) if (options && options[:page])
+    entry[:caller] = "#{options[:filename]}:#{options[:linenumber]}" if (options && options[:filename] && options[:linenumber])
     @log_list << entry
     raise FatalError if severity == :fatal_error
   end
