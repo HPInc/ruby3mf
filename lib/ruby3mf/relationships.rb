@@ -35,14 +35,14 @@ class Relationships
               end
             end
           else
-            l.error "No relationship elements found", page: 4
+            l.error :dot_rels_file_no_relationship_element
           end
         else
-          l.error ".rels XML must have &lt;Relationships&gt; root element", page: 4
+          l.error :dot_rels_file_missing_relationships_element
         end
 
       rescue Nokogiri::XML::SyntaxError => e
-        l.error "Relationships (.rel) file is not a valid XML file: #{e.message}", page: 4
+        l.error :dot_rels_file_has_invalid_xml, e: "#{e.message}"
       end
     end
     relationships

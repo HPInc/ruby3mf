@@ -20,6 +20,7 @@ content_types_invalid_xml:
 dot_rels_file_has_invalid_xml:
   error:
     dot_rels_file_has_invalid_xml:
+      e: "Start tag expected, '<' not found"
 dot_rels_file_missing_relationships_element:
   error:
     dot_rels_file_missing_relationships_element:

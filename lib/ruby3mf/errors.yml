@@ -35,7 +35,7 @@ content_types_invalid_xml:
   msg: "[Content_Types].xml file is not valid XML. %{e}"
   page: 15
 dot_rels_file_has_invalid_xml:
-  msg: "Relationships (.rel) file is not a valid XML file: Start tag expected, '<' not found"
+  msg: "Relationships (.rel) file is not a valid XML file: %{e}"
   page: 4
 dot_rels_file_missing_relationships_element:
   msg: ".rels XML must have &lt;Relationships&gt; root element"
