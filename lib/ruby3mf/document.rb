@@ -104,6 +104,17 @@ class Document
               zip_file.glob('**/*.rels').each do |rel|
                 m.relationships[rel.name] = Relationships.parse(rel)
               end
+
+              root_rels = m.relationships['_rels/.rels']
+              unless root_rels.nil?
+                start_part_rel = root_rels.select { |rel| rel[:type] == Document::MODEL_TYPE }.first
+                if start_part_rel
+                  start_part_target = start_part_rel[:target]
+                  start_part_types = m.relationships.flat_map { |k, v| v }.select { |rel| rel[:type] == Document::MODEL_TYPE && rel[:target] == start_part_target }
+                  l.error :invalid_startpart_target, :target => start_part_target if start_part_types.size > 1
+                end
+              end
+
             end
 
             l.context "print tickets" do |l|
