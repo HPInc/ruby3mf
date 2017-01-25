@@ -53,6 +53,7 @@ invalid_thumbnail_file_type:
 invalid_texture_file_type:
   error:
     invalid_texture_file_type:
+      type: image/gif
 missing_content_types:
   fatal_error:
     missing_content_types:

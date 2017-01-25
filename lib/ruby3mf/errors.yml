@@ -65,7 +65,8 @@ invalid_thumbnail_file_type:
   msg: "Expected a png or jpeg thumbnail but the thumbnail was of type %{type}"
   page: 36
 invalid_texture_file_type:
-  msg: "Expected a png or jpeg texture but the texture was of type image/gif"
+  msg: "Expected a png or jpeg texture but the texture was of type %{type}"
+  spec: :material
   page: 16
 missing_content_types:
   msg: "Missing required file: [Content_Types].xml"
@@ -91,6 +92,7 @@ not_a_zip:
   page: 9
 zero_size_texture:
   msg: "Texture file must be valid image file"
+  spec: :material
   page: 16
 has_xml_space_attribute:
   msg: "xml:space attribute is not allowed"

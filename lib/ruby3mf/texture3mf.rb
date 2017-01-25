@@ -11,9 +11,9 @@ class Texture3mf
     stream = relationship_file.get_input_stream
     img_type = MimeMagic.by_magic(stream)
     Log3mf.context "Texture3mf" do |l|
-      l.fatal_error "Texture file must be valid image file", spec: :material, page: 16 unless img_type
+      l.fatal_error :zero_size_texture unless img_type
       l.debug "texture is of type: #{img_type}"
-      l.error "Expected a png or jpeg texture but the texture was of type #{img_type}", spec: :material, page: 16 unless ['image/png', 'image/jpeg'].include? img_type.type
+      l.error(:invalid_texture_file_type, type: img_type) unless ['image/png', 'image/jpeg'].include? img_type.type
     end
     t
   end
