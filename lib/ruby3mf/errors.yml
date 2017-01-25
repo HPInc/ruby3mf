@@ -1,36 +1,9 @@
-resource_contentype_invalid:
-  msg: "Relationship target %{rt} resource has invalid contenttype %{bt}"
-  page: 10
-err_uri_empty_segment:
-  msg: 'No segment of a 3MF part name path may be empty'
-  page: 13
-err_uri_hidden_file:
-  msg: "Other than /_rels/.rels, no segment of a 3MF part name may start with the '.' character"
-  page: 13
-err_uri_bad:
-  msg: 'Path names must be valid Open Package Convention URIs or IRIs'
-  page: 13
-err_uri_relative_path:
-  msg: 'Part names must not include relative paths'
-  page: 13
-model_resource_not_in_rels:
-  msg: "Missing required resource: %{mr}. Resource referenced in model, but not in .rels relationship file"
-  page: 10
-resource_3dmodel_orientation:
-  msg: "Bad triangle orientation"
-  page: 27
-resource_3dmodel_hole:
-  msg: "Hole in model"
-  page: 27
-resource_3dmodel_nonmanifold:
-  msg: "Non-manifold edge in 3dmodel"
-  page: 27
 3d_model_invalid_xml:
   msg: "Model file invalid XML. Exception Start tag expected, '<' not found"
   page:
-rel_file_not_found:
-  msg: "Relationship Target file %{mf} not found"
-  page: 11
+build_with_other_item:
+  msg: "build item with object of type other"
+  page: 27
 content_types_invalid_xml:
   msg: "[Content_Types].xml file is not valid XML. %{e}"
   page: 15
@@ -43,138 +16,165 @@ dot_rels_file_missing_relationships_element:
 dot_rels_file_no_relationship_element:
   msg: "No relationship elements found"
   page: 4
-invalid_content_type:
-  msg: "[Content_Types].xml is missing required ContentType \"%{mt}\""
-  page: 10
-invalid_startpart_type:
-  msg: "rels/.rels Relationship file is missing a required StartPart relationship to the primary 3D payload"
-  page: 10
-invalid_startpart_target:
-  msg: "Invalid StartPart target '%{target}'. The 3MF Document StartPart relationship MUST point to the 3D Model part that identifies the root of the 3D payload."
-  page: 10
-unsupported_relationship_type:
-  msg: "Validation of relationship type '%{type}' is not supported by this tool. The targeted part '%{target}' will not be validated."
-  page: 10
-invalid_thumbnail_file:
-  msg: "thumbnail file must be valid image file"
-  page: 10
-invalid_thumbnail_colorspace:
-  msg: "CMYK JPEG images must not be used for the thumbnail"
-  page: 36
-invalid_thumbnail_file_type:
-  msg: "Expected a png or jpeg thumbnail but the thumbnail was of type %{type}"
-  page: 36
-invalid_texture_file_type:
-  msg: "Expected a png or jpeg texture but the texture was of type %{type}"
-  spec: :material
-  page: 16
-missing_content_types:
-  msg: "Missing required file: [Content_Types].xml"
-  page: 4
-missing_content_type:
-  msg: "Unable to find an associated content type for part '%{part}' in [Content_Types].xml"
-  page: 10
-missing_dot_rels_file:
-  msg: "Missing required file _rels/.rels"
-  page: 4
-missing_rels_folder:
-  msg: "Missing required file _rels/.rels"
-  page: 4
-non_unique_rel_id:
-  msg: "The ID value '%{id}' appears more than once in '%{file}'.  Within a rels file, all ID's must be unique"
-  page: 8 #TODO:change this to page 23 of the OPC spec once logging supports linking to that spec
-  spec: opc
-multiple_relationships:
-  msg: "There MUST NOT be more than one relationship of a given relationship type from one part to a second part"
-  page: 10
-not_a_zip:
-  msg: "File provided is not a valid ZIP archive"
-  page: 9
-zero_size_texture:
-  msg: "Texture file must be valid image file"
-  spec: :material
-  page: 16
-has_xml_space_attribute:
-  msg: "xml:space attribute is not allowed"
-  page: 16
-invalid_model_unit:
-  msg: "Invalid unit value of '%{unit}' specified in model file."
-  page: 17
-wrong_encoding:
-  msg: "XML content must be UTF8 encoded"
-  page: 15
-missing_object_pid:
-  msg: "Object with triangle color override missing object level pid"
-  page: 26
-missing_model_children:
-  msg: "Model element must include resources and build as child elements"
-  page: 20
-object_with_components_and_pid:
-  msg: "object with components and pid or pindex"
-  page: 26
-build_with_other_item:
-  msg: "build item with object of type other"
-  page: 27
-resource_id_collision:
-  msg: "resources must be unique within the model"
-  page: 22
-resource_pid_missing:
-  msg:  "A model resource referenced a property group id (pid) that is not present. Missing pid is: %{pid}"
-  page: 20
-metadata_elements_with_same_name:
-  msg: "metadata elements must not share the same name"
-  page: 22
-multiple_print_tickets:
-  msg: "Only one print ticket allowed for any given model"
-  page: 13
-unknown_required_extension:
-  msg: "Required extension not supported: %{ext}"
-  page: 14
-missing_extension_namespace_uri:
-  msg: "Required extension '%{ns}' MUST refer to namespace with URI"
-  page: 14
-invalid_metadata_under_defaultns:
-  msg: "Metadata without a namespace name must only contain allowed name values"
-  page: 21
-invalid_metadata_name:
-  msg: "Metadata names must be prefixed with a valid namespace"
-  page: 21
-has_commas_for_floats:
-  msg: "numbers not formatted for the en-US locale"
-  page: 15
-invalid_xml_core:
-  msg: "XML file doesn't pass validation with the XSD file"
-  page: 15
-missing_object_reference:
-  msg: "3D objects not referenced by an item element"
-  page: 23
-non_distinct_indices:
-  msg: "The indices v1, v2 and v3 MUST be distinct."
-  page: 31
-has_improper_base_color:
-  msg: "An sRGB color MUST be specified with a value of a 6 or 8 digit hexadecimal number"
-  page: 35
 duplicate_content_extension_types:
   msg: "Only one ContentType definition is allowed per extension"
   page: 8
-invalid_image_content_type:
-  msg: "Invalid content type for %{extension}"
-  page: 22
 duplicate_content_override_types:
   msg: "Only one override is allowed per part"
   page: 8
 empty_override_part_name:
   msg: "Overrides can't have empty partname"
   page: 8
-not_enough_triangles:
-  msg: "Mesh has fewer than four triangles"
-  page: 30
+err_uri_bad:
+  msg: 'Path names must be valid Open Package Convention URIs or IRIs'
+  page: 13
+err_uri_empty_segment:
+  msg: 'No segment of a 3MF part name path may be empty'
+  page: 13
+err_uri_hidden_file:
+  msg: "Other than /_rels/.rels, no segment of a 3MF part name may start with the '.' character"
+  page: 13
+err_uri_relative_path:
+  msg: 'Part names must not include relative paths'
+  page: 13
 has_base_materials_gradient:
   msg: "Base materials form a gradient on one or more triangles. Interpolation of materials is not supported in the core spec."
   page: 31
-thumbnail_image_type_mismatch:
-  msg: "Image not of declared type"
+has_commas_for_floats:
+  msg: "numbers not formatted for the en-US locale"
+  page: 15
+has_improper_base_color:
+  msg: "An sRGB color MUST be specified with a value of a 6 or 8 digit hexadecimal number"
+  page: 35
+has_xml_space_attribute:
+  msg: "xml:space attribute is not allowed"
+  page: 16
+invalid_content_type:
+  msg: "[Content_Types].xml is missing required ContentType \"%{mt}\""
+  page: 10
+invalid_image_content_type:
+  msg: "Invalid content type for %{extension}"
+  page: 22
+invalid_metadata_name:
+  msg: "Metadata names must be prefixed with a valid namespace"
+  page: 21
+invalid_metadata_under_defaultns:
+  msg: "Metadata without a namespace name must only contain allowed name values"
+  page: 21
+invalid_model_unit:
+  msg: "Invalid unit value of '%{unit}' specified in model file."
+  page: 17
+invalid_startpart_target:
+  msg: "Invalid StartPart target '%{target}'. The 3MF Document StartPart relationship MUST point to the 3D Model part that identifies the root of the 3D payload."
+  page: 10
+invalid_startpart_type:
+  msg: "rels/.rels Relationship file is missing a required StartPart relationship to the primary 3D payload"
+  page: 10
+invalid_texture_file_type:
+  msg: "Expected a png or jpeg texture but the texture was of type %{type}"
+  spec: :material
+  page: 16
+invalid_thumbnail_colorspace:
+  msg: "CMYK JPEG images must not be used for the thumbnail"
+  page: 36
+invalid_thumbnail_file:
+  msg: "thumbnail file must be valid image file"
+  page: 10
+invalid_thumbnail_file_type:
+  msg: "Expected a png or jpeg thumbnail but the thumbnail was of type %{type}"
   page: 36
 invalid_vertex_index:
   msg: "Triangle with a invalid vertex index"
   page: 26
+invalid_xml_core:
+  msg: "XML file doesn't pass validation with the XSD file"
+  page: 15
+metadata_elements_with_same_name:
+  msg: "metadata elements must not share the same name"
+  page: 22
+missing_content_type:
+  msg: "Unable to find an associated content type for part '%{part}' in [Content_Types].xml"
+  page: 10
+missing_content_types:
+  msg: "Missing required file: [Content_Types].xml"
+  page: 4
+missing_dot_rels_file:
+  msg: "Missing required file _rels/.rels"
+  page: 4
+missing_extension_namespace_uri:
+  msg: "Required extension '%{ns}' MUST refer to namespace with URI"
+  page: 14
+missing_model_children:
+  msg: "Model element must include resources and build as child elements"
+  page: 20
+missing_object_pid:
+  msg: "Object with triangle color override missing object level pid"
+  page: 26
+missing_object_reference:
+  msg: "3D objects not referenced by an item element"
+  page: 23
+missing_rels_folder:
+  msg: "Missing required file _rels/.rels"
+  page: 4
+model_resource_not_in_rels:
+  msg: "Missing required resource: %{mr}. Resource referenced in model, but not in .rels relationship file"
+  page: 10
+multiple_print_tickets:
+  msg: "Only one print ticket allowed for any given model"
+  page: 13
+multiple_relationships:
+  msg: "There MUST NOT be more than one relationship of a given relationship type from one part to a second part"
+  page: 10
+non_distinct_indices:
+  msg: "The indices v1, v2 and v3 MUST be distinct."
+  page: 31
+non_unique_rel_id:
+  msg: "The ID value '%{id}' appears more than once in '%{file}'.  Within a rels file, all ID's must be unique"
+  page: 8 #TODO:change this to page 23 of the OPC spec once logging supports linking to that spec
+  spec: opc
+not_a_zip:
+  msg: "File provided is not a valid ZIP archive"
+  page: 9
+not_enough_triangles:
+  msg: "Mesh has fewer than four triangles"
+  page: 30
+object_with_components_and_pid:
+  msg: "object with components and pid or pindex"
+  page: 26
+rel_file_not_found:
+  msg: "Relationship Target file %{mf} not found"
+  page: 11
+resource_3dmodel_hole:
+  msg: "Hole in model"
+  page: 27
+resource_3dmodel_nonmanifold:
+  msg: "Non-manifold edge in 3dmodel"
+  page: 27
+resource_3dmodel_orientation:
+  msg: "Bad triangle orientation"
+  page: 27
+resource_contentype_invalid:
+  msg: "Relationship target %{rt} resource has invalid contenttype %{bt}"
+  page: 10
+resource_id_collision:
+  msg: "resources must be unique within the model"
+  page: 22
+resource_pid_missing:
+  msg:  "A model resource referenced a property group id (pid) that is not present. Missing pid is: %{pid}"
+  page: 20
+thumbnail_image_type_mismatch:
+  msg: "Image not of declared type"
+  page: 36
+unknown_required_extension:
+  msg: "Required extension not supported: %{ext}"
+  page: 14
+unsupported_relationship_type:
+  msg: "Validation of relationship type '%{type}' is not supported by this tool. The targeted part '%{target}' will not be validated."
+  page: 10
+wrong_encoding:
+  msg: "XML content must be UTF8 encoded"
+  page: 15
+zero_size_texture:
+  msg: "Texture file must be valid image file"
+  spec: :material
+  page: 16
