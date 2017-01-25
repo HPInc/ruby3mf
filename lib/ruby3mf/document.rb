@@ -78,12 +78,7 @@ class Document
             zip_file.each do |part|
               l.context "part names /#{part.name}" do |l|
                 unless part.name.end_with? '[Content_Types].xml'
-                  begin
-                    u = Addressable::URI.parse part.name
-                  rescue ArgumentError, Addressable::URI::InvalidURIError
-                    l.error :err_uri_bad
-                    next
-                  end
+                  next unless u = parse_uri(l, part.name)
 
                   u.path.split('/').each do |segment|
                     l.error :err_uri_hidden_file if (segment.start_with? '.') && !(segment.end_with? '.rels')
@@ -120,12 +115,7 @@ class Document
               m.relationships.each do |file_name, rels|
                 rels.each do |rel|
                   l.context rel[:target] do |l|
-                    begin
-                      u = Addressable::URI.parse rel[:target]
-                    rescue ArgumentError, Addressable::URI::InvalidURIError
-                      l.error :err_uri_bad
-                      next
-                    end
+                    next unless u = parse_uri(l, rel[:target])
 
                     l.error :err_uri_relative_path unless u.to_s.start_with? '/'
 
@@ -218,6 +208,24 @@ class Document
     Zip::File.open(zip_filename) do |zip_file|
       zip_file.glob(path).first.get_input_stream.read
     end
+  end
+
+  private
+
+  def self.parse_uri(logger, uri)
+    begin
+      reserved_chars = /[\[\]]/
+
+      if uri =~ reserved_chars
+        logger.error :err_uri_bad
+        return nil
+      end
+
+      u = Addressable::URI.parse uri
+    rescue ArgumentError, Addressable::URI::InvalidURIError
+      logger.error :err_uri_bad
+    end
+    u
   end
 
 end
