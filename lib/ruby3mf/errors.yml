@@ -32,7 +32,7 @@ rel_file_not_found:
   msg: "Relationship Target file %{mf} not found"
   page: 11
 content_types_invalid_xml:
-  msg: "[Content_Types].xml file is not valid XML. Start tag expected, '<' not found"
+  msg: "[Content_Types].xml file is not valid XML. %{e}"
   page: 15
 dot_rels_file_has_invalid_xml:
   msg: "Relationships (.rel) file is not a valid XML file: Start tag expected, '<' not found"
@@ -44,7 +44,7 @@ dot_rels_file_no_relationship_element:
   msg: "No relationship elements found"
   page: 4
 invalid_content_type:
-  msg: "[Content_Types].xml is missing required ContentType \"application/vnd.openxmlformats-package.relationships+xml\""
+  msg: "[Content_Types].xml is missing required ContentType \"%{mt}\""
   page: 10
 invalid_startpart_type:
   msg: "rels/.rels Relationship file is missing a required StartPart relationship to the primary 3D payload"

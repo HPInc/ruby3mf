@@ -62,10 +62,10 @@ class ContentTypes
           end
         end
         required_content_types.each do |req_type|
-          l.error "[Content_Types].xml is missing required ContentType \"#{req_type}\"", page: 10 unless found_types.values.include? req_type
+          l.error :invalid_content_type, mt: req_type unless found_types.values.include? req_type
         end
       rescue Nokogiri::XML::SyntaxError => e
-        l.error "[Content_Types].xml file is not valid XML. #{e}", page: 15
+        l.error :content_types_invalid_xml, e: "#{e}"
       end
     end
     return new(found_types, found_overrides)

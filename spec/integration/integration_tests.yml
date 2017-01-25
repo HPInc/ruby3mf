@@ -16,6 +16,7 @@ missing_rels_entry_for_thumbnails:
 content_types_invalid_xml:
   error:
     content_types_invalid_xml:
+      e: "Start tag expected, '<' not found"
 dot_rels_file_has_invalid_xml:
   error:
     dot_rels_file_has_invalid_xml:
@@ -28,6 +29,7 @@ dot_rels_file_no_relationship_element:
 invalid_content_type:
   error:
     invalid_content_type:
+      mt: application/vnd.openxmlformats-package.relationships+xml
 invalid_startpart_type:
   error:
     invalid_startpart_type:
