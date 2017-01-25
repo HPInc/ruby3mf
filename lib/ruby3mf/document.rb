@@ -60,6 +60,7 @@ class Document
       Log3mf.context 'zip' do |l|
         begin
           Zip.warn_invalid_date = false
+          Zip.unicode_names = true
 
           # check for the general purpose flag set - if so, warn that 3mf may not work on some systems
           File.open(input_file, "r") do |file|
@@ -78,9 +79,8 @@ class Document
               l.context "part names /#{part.name}" do |l|
                 unless part.name.end_with? '[Content_Types].xml'
                   begin
-                    u = URI part.name
-                  rescue ArgumentError, URI::InvalidURIError
-                    l.fatal_error "This NEVER Happens! mdw 12Jan2017"
+                    u = Addressable::URI.parse part.name
+                  rescue ArgumentError, Addressable::URI::InvalidURIError
                     l.error :err_uri_bad
                     next
                   end
@@ -120,10 +120,9 @@ class Document
               m.relationships.each do |file_name, rels|
                 rels.each do |rel|
                   l.context rel[:target] do |l|
-
                     begin
-                      u = URI rel[:target]
-                    rescue URI::InvalidURIError
+                      u = Addressable::URI.parse rel[:target]
+                    rescue ArgumentError, Addressable::URI::InvalidURIError
                       l.error :err_uri_bad
                       next
                     end
@@ -133,9 +132,16 @@ class Document
                     target = rel[:target].gsub(/^\//, "")
                     l.error :err_uri_empty_segment if target.end_with? '/' or target.include? '//'
                     l.error :err_uri_relative_path if target.include? '/../'
-                    relationship_file = zip_file.glob(target).first
-                    rel_type = rel[:type]
 
+                    # necessary since it has been observed that rubyzip treats all zip entry names
+                    # as ASCII-8BIT regardless if they really contain unicode chars. Without forcing
+                    # the encoding we are unable to find the target within the zip if the target contains
+                    # unicode chars.
+                    zip_target = target
+                    zip_target.force_encoding('ASCII-8BIT')
+                    relationship_file = zip_file.glob(zip_target).first
+
+                    rel_type = rel[:type]
                     if relationship_file
                       relationship_type = RELATIONSHIP_TYPES[rel_type]
                       if relationship_type.nil?

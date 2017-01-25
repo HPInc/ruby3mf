@@ -18,6 +18,7 @@ require 'json'
 require 'mimemagic'
 require 'uri'
 require 'yaml'
+require "addressable/uri"
 
 module Ruby3mf
   # Your code goes here...
