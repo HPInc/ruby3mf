@@ -90,8 +90,9 @@ class MeshNormalAnalyzer
       end
     end until found_good_hit || attempts >= 10
 
-    # return true if we have a hit and the normals are going in the same direction
-    found_good_hit && compare_normals(outside_triangle, @direction)
+    # return true if we hit a triangle with an inward pointing normal
+    # (according to counter-clockwise normal orientation)
+    found_good_hit && !compare_normals(outside_triangle, @direction)
   end
 
   def compare_normals(triangle, hit_direction)

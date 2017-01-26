@@ -108,7 +108,7 @@ class Model3mf
           meshes = object.css('mesh')
           meshes.each do |mesh|
             processor = MeshNormalAnalyzer.new(mesh)
-            l.error :inward_facing_normal if !processor.found_inward_triangle
+            l.error :inward_facing_normal if processor.found_inward_triangle
           end
         end
       end
