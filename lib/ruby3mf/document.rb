@@ -93,7 +93,7 @@ class Document
               if content_type_match
                 m.types = ContentTypes.parse(content_type_match)
               else
-                l.fatal_error 'Missing required file: [Content_Types].xml', page: 4
+                l.fatal_error :missing_content_types
               end
             end
 

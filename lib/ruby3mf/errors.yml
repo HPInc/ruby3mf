@@ -1,6 +1,3 @@
-3d_model_invalid_xml:
-  msg: "Model file invalid XML. Exception Start tag expected, '<' not found"
-  page:
 build_with_other_item:
   msg: "build item with object of type other"
   page: 27
@@ -116,6 +113,9 @@ missing_object_reference:
 missing_rels_folder:
   msg: "Missing required file _rels/.rels"
   page: 4
+model_invalid_xml:
+  msg: "Model file invalid XML. Exception %{e}"
+  page:
 model_resource_not_in_rels:
   msg: "Missing required resource: %{mr}. Resource referenced in model, but not in .rels relationship file"
   page: 10
@@ -160,8 +160,10 @@ resource_id_collision:
   msg: "resources must be unique within the model"
   page: 22
 resource_pid_missing:
-  msg:  "A model resource referenced a property group id (pid) that is not present. Missing pid is: %{pid}"
+  msg: "A model resource referenced a property group id (pid) that is not present. Missing pid is: %{pid}"
   page: 20
+schema_error:
+  msg: "Schema error found: %{e}"
 thumbnail_image_type_mismatch:
   msg: "Image not of declared type"
   page: 36

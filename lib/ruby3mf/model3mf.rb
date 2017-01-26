@@ -19,7 +19,7 @@ class Model3mf
       begin
         model_doc = XmlVal.validate_parse(zip_entry, SchemaFiles::SchemaTemplate)
       rescue Nokogiri::XML::SyntaxError => e
-        l.fatal_error "Model file invalid XML. Exception #{e}"
+        l.fatal_error :model_invalid_xml, e: e
       end
 
       l.context "verifying requiredextensions" do |l|

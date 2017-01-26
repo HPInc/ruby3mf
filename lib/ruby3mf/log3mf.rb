@@ -70,10 +70,12 @@ class Log3mf
 
   def method_missing(name, *args, &block)
     if LOG_LEVELS.include? name.to_sym
-      if name.to_sym == :error || name.to_sym == :fatal_error || name.to_sym == :debug
+      if [:fatal_error, :error, :debug].include? name.to_sym
         linenumber = caller_locations[0].to_s.split('/')[-1].split(':')[-2].to_s
         filename = caller_locations[0].to_s.split('/')[-1].split(':')[0].to_s
         options = {linenumber: linenumber, filename: filename}
+        # Mike: do not call error or fatal_error without an entry in errors.yml
+        raise "{fatal_}error called WITHOUT using error symbol from: #{filename}:#{linenumber}" if ( !(args[0].is_a? Symbol) && (name.to_sym != :debug) )
 
         puts "***** Log3mf.#{name} called from #{filename}:#{linenumber} *****" if $DEBUG
 

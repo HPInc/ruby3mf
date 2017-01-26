@@ -8,7 +8,8 @@ missing_rels_entry_for_thumbnails:
       mr: /Thumbnails/pngfile.png
 3d_model_invalid_xml:
   fatal_error:
-    3d_model_invalid_xml:
+    model_invalid_xml:
+      e: "Start tag expected, '<' not found"
 3d_payload_files:
   error:
     rel_file_not_found:

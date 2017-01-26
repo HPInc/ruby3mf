@@ -30,7 +30,7 @@ class XmlVal
               if error_involves_colorvalue?(error)
                 l.error :has_improper_base_color
               else
-                l.error error
+                l.error :schema_error, e: error
               end
             end
           end
