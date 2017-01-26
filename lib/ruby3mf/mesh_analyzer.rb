@@ -1,14 +1,3 @@
-def find_child(node, child_name)
-  node.children.each do |child|
-    if child.name == child_name
-      return child
-    end
-  end
-
-  nil
-end
-
-
 class MeshAnalyzer
 
   def self.validate_object(object, includes_material)

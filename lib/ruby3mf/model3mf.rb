@@ -65,7 +65,7 @@ class Model3mf
       end
 
       l.context 'verifying resources' do |l|
-        resources = find_child(model_doc.root, 'resources')
+        resources = model_doc.root.css("resources")
         if resources
           ids = resources.children.map { |child| child.attributes['id'].to_s if child.attributes['id'] }
           l.error :resource_id_collision if ids.uniq.size != ids.size
