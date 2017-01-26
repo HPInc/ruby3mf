@@ -203,3 +203,6 @@ missing_vertex:
 has_xsi_namespace:
   error:
     contains_xsi_namespace:
+inside_out_cube:
+  error:
+    inward_facing_normal:

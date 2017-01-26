@@ -99,8 +99,19 @@ class Model3mf
           end
         end
       end
+
       includes_material = model_doc.namespaces.values.include?(MATERIAL_EXTENSION)
       MeshAnalyzer.validate(model_doc, includes_material)
+
+      l.context "verifying triangle normal" do |l|
+        model_doc.css('model/resources/object').select { |object| ['model', 'solidsupport', ''].include?(object.attributes['type'].to_s) }.each do |object|
+          meshes = object.css('mesh')
+          meshes.each do |mesh|
+            processor = MeshNormalAnalyzer.new(mesh)
+            l.error :inward_facing_normal if !processor.found_inward_triangle
+          end
+        end
+      end
     end
     model_doc
   end

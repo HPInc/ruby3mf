@@ -86,6 +86,9 @@ invalid_vertex_index:
 invalid_xml_core:
   msg: "XML file doesn't pass validation with the XSD file"
   page: 15
+inward_facing_normal:
+  msg: "All trianges must be oriented with normals pointing away from interior"
+  page: 31
 metadata_elements_with_same_name:
   msg: "metadata elements must not share the same name"
   page: 22

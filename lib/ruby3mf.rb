@@ -11,6 +11,7 @@ require_relative "ruby3mf/texture3mf"
 require_relative "ruby3mf/xml_val"
 require_relative "ruby3mf/edge_list"
 require_relative "ruby3mf/mesh_analyzer"
+require_relative "ruby3mf/mesh_normal_analyzer"
 
 require 'zip'
 require 'nokogiri'
