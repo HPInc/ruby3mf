@@ -1,5 +1,3 @@
-
-
 Positive
 ...............
 ../3mf-test-suite/Positive/PC_304_01.3mf
