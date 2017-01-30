@@ -60,7 +60,7 @@ class XmlVal
   end
 
   def self.dtd_exists?(file)
-    !file.get_input_stream.read.match(/(!DOCTYPE\b)|(!ELEMENT\b)|(!ENTITY\b)|(!NOTATION\b)|(!ATTLIST\b)/).nil?
+    file.get_input_stream.read.match(/(!DOCTYPE\b)|(!ELEMENT\b)|(!ENTITY\b)|(!NOTATION\b)|(!ATTLIST\b)/)
   end
 
   def self.error_involves_colorvalue?(error)
