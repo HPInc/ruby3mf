@@ -60,8 +60,7 @@ class XmlVal
   end
 
   def self.dtd_exists?(file)
-    found = file.get_input_stream.find { |line| line =~ /(!DOCTYPE\b)|(!ELEMENT\b)|(!ENTITY\b)|(!NOTATION\b)|(!ATTLIST\b)/ }
-    !found.nil?
+    !file.get_input_stream.read.match(/(!DOCTYPE\b)|(!ELEMENT\b)|(!ENTITY\b)|(!NOTATION\b)|(!ATTLIST\b)/).nil?
   end
 
   def self.error_involves_colorvalue?(error)
