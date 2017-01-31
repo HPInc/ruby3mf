@@ -38,7 +38,7 @@ has_base_materials_gradient:
   msg: "Base materials form a gradient on one or more triangles. Interpolation of materials is not supported in the core spec."
   page: 31
 has_commas_for_floats:
-  msg: "numbers not formatted for the en-US locale"
+  msg: "numbers not formatted for the en-US locale %{e}"
   page: 15
 has_improper_base_color:
   msg: "An sRGB color MUST be specified with a value of a 6 or 8 digit hexadecimal number"

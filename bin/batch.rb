@@ -2,7 +2,9 @@
 
 require_relative '../lib/ruby3mf'
 
-files = Dir["spec/ruby3mf-testfiles/#{ARGV[0] || "failing_cases"}/*.#{ARGV[1] || '3mf'}"]
+files = Dir["spec/ruby3mf-testfiles/#{ARGV[0] || "failing_cases"}/#{ARGV[1] || '*.3mf'}"]
+
+p files
 
 files.each do |file|
   begin
