@@ -23,9 +23,8 @@ class Model3mf
       end
 
       l.context "verifying requiredextensions" do |l|
-        required_extensions = model_doc.css("//model")[0]["requiredextensions"]
-        if required_extensions
-          required_extensions.split(" ").each do |ns|
+        model_doc.css("//model").map{|node| node.attributes["requiredextensions"]}.compact.each do |required_extension|
+          required_extension.value.split(" ").each do |ns|
             namespace_uri = model_doc.namespaces["xmlns:#{ns}"]
             if namespace_uri
               if VALID_EXTENSIONS.has_key? namespace_uri
