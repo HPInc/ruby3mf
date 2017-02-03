@@ -42,28 +42,32 @@ class ContentTypes
 
         required_content_types = ['application/vnd.openxmlformats-package.relationships+xml']
 
-        types_node = doc.children.first
-        types_node.children.each do |node|
-          l.context node.name do |l|
-            if node.name == 'Default'
-              extension = node['Extension'].downcase
-              l.info "Setting type hash #{extension}=#{node['ContentType']}"
-              l.error :duplicate_content_extension_types if !found_types[extension].nil?
-              found_types[extension] = node['ContentType']
-            elsif node.name == 'Override'
-              part_name = node['PartName'].downcase
-              l.error :empty_override_part_name if part_name.empty?
+        extensions = doc.css(*['Default']).map{|node| node.attributes['Extension']&.value}.flatten
+        l.error :duplicate_content_extension_types unless extensions.uniq.length == extensions.length
 
-              l.error :duplicate_content_override_types if !found_overrides[part_name].nil?
-              found_overrides[part_name] = node['ContentType']
-            else
-              l.warning "[Content_Types].xml:#{node.line} contains unexpected element #{node.name}", page: 10
-            end
-          end
-        end
+        override_extensions = doc.css(*['Override']).map{|node| node.attributes['PartName']&.value}.flatten
+        l.error :duplicate_content_override_types unless override_extensions.uniq.length == override_extensions.length
+
+        found_types     = Hash[*doc.css(*['Default']).map{|node| [node.attributes['Extension']&.value&.downcase,node.attributes['ContentType']&.value]}.flatten]
+        found_overrides = Hash[*doc.css(*['Override']).map{|node| [node.attributes['PartName']&.value&.downcase,node.attributes['ContentType']&.value]}.flatten]
+
         required_content_types.each do |req_type|
-          l.error :invalid_content_type, mt: req_type unless found_types.values.include? req_type
+          l.error :invalid_content_type, mt: req_type unless found_types.values.include?(req_type)
         end
+
+        doc.css(*['Default']).each do |node|
+          extension = node['Extension']&.downcase
+          l.info "Setting type hash #{extension}=#{node['ContentType']}"
+        end
+
+        doc.css(*['Override']).each do |node|
+          l.error :empty_override_part_name if node['PartName']&.downcase&.empty?
+        end
+
+        doc.css('Types').xpath('.//*').select do |node|
+          l.warning "[Content_Types].xml:#{node.line} contains unexpected element #{node.name}", page: 10 unless ['Default', 'Override'].include?(node.name)
+        end
+
       rescue Nokogiri::XML::SyntaxError => e
         l.error :content_types_invalid_xml, e: "#{e}"
       end
