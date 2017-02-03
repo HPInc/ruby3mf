@@ -1,0 +1,43 @@
+
+
+  Test Suite: filter:  - Fri Feb  3 11:47:37 PST 2017
+
+Positive Files -------------
+  ../3mf-test-suite/Positive/PC_305_01.3mf
+    {:id=>:zero_size_texture, :context=>"zip/relationship elements//3D/Textures/texture.png/Texture3mf", :severity=>:fatal_error, :message=>"Texture file must be valid image file", :spec_ref=>"http://3mf.io/wp-content/uploads/2015/04/3MFmaterialsSpec_1.0.1.pdf#page=16", :caller=>"texture3mf.rb:14"}
+  ../3mf-test-suite/Positive/PC_312_01.3mf
+    {:id=>:resource_id_collision, :context=>"zip/relationship elements//3D/3dmodel.model/parsing model/verifying resources", :severity=>:error, :message=>"resources must be unique within the model", :spec_ref=>"http://3mf.io/wp-content/uploads/2016/03/3MFcoreSpec_1.1.pdf#page=22", :caller=>"model3mf.rb:70"}
+  ../3mf-test-suite/Positive/PC_322_01.3mf
+    {:id=>:resource_contentype_invalid, :context=>"zip/relationship elements//Thumbnails/Jacobs_ladder.jpg", :severity=>:error, :message=>"Relationship target /Thumbnails/Jacobs_ladder.jpg resource has invalid contenttype image/jpg", :spec_ref=>"http://3mf.io/wp-content/uploads/2016/03/3MFcoreSpec_1.1.pdf#page=10", :caller=>"document.rb:157"}
+{:id=>:thumbnail_image_type_mismatch, :context=>"zip/relationship elements//Thumbnails/Jacobs_ladder.jpg/Thumbnail3mf", :severity=>:error, :message=>"Image not of declared type", :spec_ref=>"http://3mf.io/wp-content/uploads/2016/03/3MFcoreSpec_1.1.pdf#page=36", :caller=>"thumbnail3mf.rb:17"}
+  ../3mf-test-suite/Positive/PC_331_01.3mf
+    {:id=>:non_distinct_indices, :context=>"zip/relationship elements//3D/3dmodel.model/parsing model/validating geometry", :severity=>:error, :message=>"The indices v1, v2 and v3 MUST be distinct.", :spec_ref=>"http://3mf.io/wp-content/uploads/2016/03/3MFcoreSpec_1.1.pdf#page=31", :caller=>"mesh_analyzer.rb:45"}
+{:id=>:resource_3dmodel_nonmanifold, :context=>"zip/relationship elements//3D/3dmodel.model/parsing model/validating geometry", :severity=>:error, :message=>"Non-manifold edge in 3dmodel", :spec_ref=>"http://3mf.io/wp-content/uploads/2016/03/3MFcoreSpec_1.1.pdf#page=27", :caller=>"mesh_analyzer.rb:66"}
+  ../3mf-test-suite/Positive/PC_332_01.3mf
+    {:id=>:resource_3dmodel_hole, :context=>"zip/relationship elements//3D/3dmodel.model/parsing model/validating geometry", :severity=>:error, :message=>"Hole in model", :spec_ref=>"http://3mf.io/wp-content/uploads/2016/03/3MFcoreSpec_1.1.pdf#page=27", :caller=>"mesh_analyzer.rb:64"}
+  ../3mf-test-suite/Positive/PM_909_03.3mf
+    {:id=>:invalid_metadata_under_defaultns, :context=>"zip/relationship elements//3D/3dmodel.model/parsing model/checking metadata", :severity=>:error, :message=>"Metadata without a namespace name must only contain allowed name values", :spec_ref=>"http://3mf.io/wp-content/uploads/2016/03/3MFcoreSpec_1.1.pdf#page=21", :caller=>"model3mf.rb:93"}
+  ../3mf-test-suite/Positive/PO_108_01.3mf
+    {:id=>:err_uri_relative_path, :context=>"zip/relationship elements/sig1.xml", :severity=>:error, :message=>"Part names must not include relative paths", :spec_ref=>"http://3mf.io/wp-content/uploads/2016/03/3MFcoreSpec_1.1.pdf#page=13", :caller=>"document.rb:131"}
+{:id=>:rel_file_not_found, :context=>"zip/relationship elements/sig1.xml", :severity=>:error, :message=>"Relationship Target file sig1.xml not found", :spec_ref=>"http://3mf.io/wp-content/uploads/2016/03/3MFcoreSpec_1.1.pdf#page=11", :caller=>"document.rb:171"}
+
+Negative Files -------------
+  ../3mf-test-suite/Negative/NC_404_04.3mf - No Errors found!
+  ../3mf-test-suite/Negative/NC_405_03.3mf - No Errors found!
+  ../3mf-test-suite/Negative/NC_405_04.3mf - No Errors found!
+  ../3mf-test-suite/Negative/NC_405_05.3mf - No Errors found!
+  ../3mf-test-suite/Negative/NC_407_02.3mf - No Errors found!
+  ../3mf-test-suite/Negative/NC_412_02.3mf - No Errors found!
+  ../3mf-test-suite/Negative/NC_412_03.3mf - No Errors found!
+  ../3mf-test-suite/Negative/NC_412_04.3mf - No Errors found!
+  ../3mf-test-suite/Negative/NC_415_02.3mf - No Errors found!
+  ../3mf-test-suite/Negative/NC_415_03.3mf - No Errors found!
+  ../3mf-test-suite/Negative/NC_421_01.3mf - No Errors found!
+  ../3mf-test-suite/Negative/NC_421_02.3mf - No Errors found!
+  ../3mf-test-suite/Negative/NO_201_01.3mf - No Errors found!
+  ../3mf-test-suite/Negative/NO_202_01.3mf - No Errors found!
+  ../3mf-test-suite/Negative/NO_204_01.3mf - No Errors found!
+  ../3mf-test-suite/Negative/NO_206_01.3mf - No Errors found!
+
+Completed -- Fri Feb  3 11:56:18 PST 2017
+
