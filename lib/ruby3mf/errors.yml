@@ -19,6 +19,9 @@ duplicate_content_extension_types:
 duplicate_content_override_types:
   msg: "Only one override is allowed per part"
   page: 8
+empty_default_extension:
+  msg: "Default extensions can't be empty"
+  page: 8
 empty_override_part_name:
   msg: "Overrides can't have empty partname"
   page: 8

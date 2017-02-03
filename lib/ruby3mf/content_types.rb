@@ -45,6 +45,8 @@ class ContentTypes
         extensions = doc.css(*['Default']).map{|node| node.attributes['Extension']&.value}.flatten
         l.error :duplicate_content_extension_types unless extensions.uniq.length == extensions.length
 
+        l.error :empty_default_extension if extensions.include?("")
+
         override_extensions = doc.css(*['Override']).map{|node| node.attributes['PartName']&.value}.flatten
         l.error :duplicate_content_override_types unless override_extensions.uniq.length == override_extensions.length
 
