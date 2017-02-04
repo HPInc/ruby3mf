@@ -4,10 +4,10 @@ class Model3mf
   SLICE_EXTENSION = 'http://schemas.microsoft.com/3dmanufacturing/slice/2015/07'
   PRODUCTION_EXTENSION = 'http://schemas.microsoft.com/3dmanufacturing/production/2015/06'
 
-  VALID_EXTENSIONS = {
-      MATERIAL_EXTENSION => {},
-      SLICE_EXTENSION => {},
-      PRODUCTION_EXTENSION => {}
+  KNOWN_EXTENSIONS = {
+      MATERIAL_EXTENSION => {name: '3MF Materials and Properties Extension', supported: false},
+      SLICE_EXTENSION => {name: '3MF Slice Extension', supported: false},
+      PRODUCTION_EXTENSION => {name: '3MF Production Extension', supported: false}
   }.freeze
 
   VALID_CORE_METADATA_NAMES = ['Title', 'Designer', 'Description', 'Copyright', 'LicenseTerms', 'Rating', 'CreationDate', 'ModificationDate'].freeze
@@ -22,19 +22,22 @@ class Model3mf
         l.fatal_error :model_invalid_xml, e: e
       end
 
+      l.context "verifying supported extensions" do |l|
+        model_doc.css("//model").first.namespaces.each do |prefix, uri|
+          unless prefix == "xmlns"
+            ext = KNOWN_EXTENSIONS[uri]
+            if ext.nil? || !ext[:supported]
+              l.warning :unsupported_extension, ext: (ext.nil? ? uri : ext[:name])
+            end
+          end
+        end
+      end
+
       l.context "verifying requiredextensions" do |l|
         model_doc.css("//model").map{|node| node.attributes["requiredextensions"]}.compact.each do |required_extension|
           required_extension.value.split(" ").each do |ns|
             namespace_uri = model_doc.namespaces["xmlns:#{ns}"]
-            if namespace_uri
-              if VALID_EXTENSIONS.has_key? namespace_uri
-                l.info "Found a valid required extension: #{namespace_uri}"
-              else
-                l.error :unknown_required_extension, ext: namespace_uri
-              end
-            else
-              l.error :missing_extension_namespace_uri, ns: ns
-            end
+            l.error :missing_extension_namespace_uri, ns: ns unless namespace_uri
           end
         end
       end

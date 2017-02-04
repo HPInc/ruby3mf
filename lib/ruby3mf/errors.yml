@@ -173,12 +173,12 @@ schema_error:
 thumbnail_image_type_mismatch:
   msg: "Image not of declared type"
   page: 36
-unknown_required_extension:
-  msg: "Required extension not supported: %{ext}"
-  page: 14
 unsupported_relationship_type:
   msg: "Validation of relationship type '%{type}' is not supported by this tool. The targeted part '%{target}' will not be validated."
   page: 10
+unsupported_extension:
+  msg: "Validation of extension type '%{ext}' is not fully supported"
+  page: 17
 wrong_encoding:
   msg: "XML content must be UTF8 encoded"
   page: 15

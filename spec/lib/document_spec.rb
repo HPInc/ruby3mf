@@ -19,7 +19,7 @@ describe Document do
       Document.read('spec/examples/Win10.3mf')
     end
 
-    expect(Log3mf.count_entries(:warning)).to eq(1)
+    expect(Log3mf.entries(:warning).any?{|warning| warning[:message].include? ('File format: this file may not open on all systems')}).to be true
   end
 
   it 'parses a invalid file reporting 1 error' do

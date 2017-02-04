@@ -123,7 +123,7 @@ describe Model3mf do
 
       let(:model_content) {
         '<?xml version="1.0" encoding="UTF-8"?>
-        <model unit="millimeter" xml:lang="en-US" xmlns:m="http://schemas.microsoft.com/3dmanufacturing/material/2015/02" xmlns="http://schemas.microsoft.com/3dmanufacturing/core/2015/02">
+        <model unit="millimeter" xml:lang="en-US" xmlns:m="http://schemas.microsoft.com/3dmanufacturing/material/2015/02" xmlns="http://schemas.microsoft.com/3dmanufacturing/core/2015/02" xmlns:z="http://unsupported.extension">
           <resources>
             <m:texture2d id="0" path="/3D/Texture/texture1.texture" contenttype="image/jpeg" />
             <m:texture2d id="1" path="/3D/Texture/texture2.texture" contenttype="image/jpeg" />
@@ -163,11 +163,13 @@ describe Model3mf do
       }
 
       let(:message) { 'Missing required resource' }
+      let(:unsupported_extension_message) { "Validation of extension type 'http://unsupported.extension' is not fully supported"}
 
       it "should have an error on log" do
         Model3mf.parse(document, zip_entry)
         expect(Log3mf.count_entries(:error, :fatal_error)).to be == 1
         expect(Log3mf.entries(:error).first[:message]).to include message
+        expect(Log3mf.entries(:warning).any?{|warning| warning[:message].include?(unsupported_extension_message)}).to be true
       end
 
     end

@@ -146,9 +146,9 @@ multiple_print_tickets:
 invalid_model_unit:
   error:
     invalid_xml_core:
-unsupported_required_extension:
-  error:
-    unknown_required_extension:
+unsupported_extension:
+  warning:
+    unsupported_extension:
       ext: http://schemas.autodesk.com/dmg/loadcase/2016/08
 missing_extension_namespace_uri:
   error:
