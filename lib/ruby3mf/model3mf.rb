@@ -34,7 +34,7 @@ class Model3mf
       end
 
       l.context "verifying requiredextensions" do |l|
-        model_doc.css("//model").map{|node| node.attributes["requiredextensions"]}.compact.each do |required_extension|
+        model_doc.css("//model").map { |node| node.attributes["requiredextensions"] }.compact.each do |required_extension|
           required_extension.value.split(" ").each do |ns|
             namespace_uri = model_doc.namespaces["xmlns:#{ns}"]
             l.error :missing_extension_namespace_uri, ns: ns unless namespace_uri
@@ -81,8 +81,11 @@ class Model3mf
 
       l.context "verifying build items" do |l|
 
-        l.error :build_with_other_item if model_doc.css('build/item').map { |x| x.attributes["objectid"].value }.map{ |id|  model_doc.search(".//xmlns:object[@id=$id][@type=$type]", nil, { :id => id, :type => 'other' } ) }.flatten.any?
+        build_items = model_doc.css('build/item')
+        object_ids = build_items.map { |x| x.attributes["objectid"].value }
+        other_build_items = object_ids.map { |id| find_model_object(model_doc, id, 'other') }.flatten
 
+        l.error :build_with_other_item if other_build_items.any?
       end
 
       l.context "checking metadata" do |l|
@@ -116,5 +119,11 @@ class Model3mf
       end
     end
     model_doc
+  end
+
+  def self.find_model_object(model_doc, id, type)
+    model_doc.css('model/resources/object').select do |item|
+      item.attributes['id'].to_s == id && item.attributes['type'] && item.attributes['type'].value == type
+    end
   end
 end
