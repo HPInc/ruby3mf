@@ -206,3 +206,6 @@ has_xsi_namespace:
 inside_out_cube:
   error:
     inward_facing_normal:
+no_model_ns:
+  error:
+    invalid_xml_core:
