@@ -9,8 +9,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Mike Whitmarsh, Jeff Porter, and William Hertling"]
   spec.email         = ["mwhit@hp.com", "jeff.porter@hp.com", "william.hertling@hp.com"]
 
-  spec.summary       = %q{Read, write and validate 3MF files with Ruby}
-  spec.description   = %q{Read, write and validate 3MF files with Ruby easily.}
+  spec.summary       = %q{Parse and validate 3MF files with Ruby}
+  spec.description   = %q{Parse and validate 3MF files with Ruby easily.}
   spec.homepage      = "https://github.com/IPGPTP/ruby3mf"
   spec.license       = "MIT"
 
