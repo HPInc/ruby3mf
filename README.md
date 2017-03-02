@@ -2,9 +2,7 @@
 
 [![Gem Version](https://badge.fury.io/rb/ruby3mf.svg)](http://badge.fury.io/rb/ruby3mf)
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/ruby3mf`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+The ruby3mf gem provides an API for parsing and validating 3MF files.  It includes a logging mechanism that enables developers to programmatically check a 3MF file for warnings or errors and respond in whatever way is appropriate for their application.  Ruby3mf checks everything in the 3MF core specification, from making sure that the 3MF package contains all content in the right format needed to print the file, to verifying that the geometry represents a manifold solid without holes or incorrectly oriented triangles. 
 
 ## Installation
 
@@ -24,7 +22,16 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+```ruby
+Log3mf.reset_log
+Log3mf.context <filename> do |l|
+    Document.read(<file>)
+end
+ 
+if Log3mf.count_entries(:error, :fatal_error) > 0
+    entries = Log3mf.entries
+end
+```
 
 ## Development
 
