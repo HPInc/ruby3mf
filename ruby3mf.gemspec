@@ -6,8 +6,8 @@ require 'ruby3mf/version'
 Gem::Specification.new do |spec|
   spec.name          = "ruby3mf"
   spec.version       = Ruby3mf::VERSION
-  spec.authors       = ["Mike Whitmarsh, Jeff Porter, and William Hertling"]
-  spec.email         = ["mwhit@hp.com", "jeff.porter@hp.com", "william.hertling@hp.com"]
+  spec.authors       = ["Mike Whitmarsh, Melanie Robertson, and William Hertling"]
+  spec.email         = ["mwhit@hp.com", "melanie.robertson@hp.com", "william.hertling@hp.com"]
 
   spec.summary       = %q{Parse and validate 3MF files with Ruby}
   spec.description   = %q{Parse and validate 3MF files with Ruby easily.}
